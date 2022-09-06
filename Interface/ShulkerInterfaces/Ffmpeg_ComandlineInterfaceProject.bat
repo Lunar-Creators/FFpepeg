@@ -4,9 +4,47 @@ rem Конфигурация Copy - Запрос нового имени, Зап
 rem Конфигурация libx264 - Запрос подраздела кодировщика, пресет кодирования, Выбор профиля, Выбор опции, Изменить разрешение, CBR или CRF битрейт, задать значение, вывод аудио, Выбор кодека или стандартные настройки, задать значение битрейта аудио, Запрос субтитров, дополнительные ключи, Запрос нового имени, Запрос нового формата
 ffmpeg --enable-libfdk-aac --enable-nonfree
 :welcome
+rem Список для очистки переменных во избежание разных ошибок
+set filepath=
+set inputaudio=
+set encoder=
+set outputformat=
+set outputname=
+set preset=
+set Profile=
+set tune=
+set vidbitrate=
+set audiocodec=
+set threads=
+set audiobitrate=
+set flags=
+set subencoder=
+set outputfolder=
+set inputsubtitle=
+set disablevideo=
+set disableaudio=
+set framerate=
+set size=
+set volume=
+set disablesubtitles=
+set audiotype=
+set maxbitrate=
+set tempv=
+set temp1=
+set temp2=
+set temp3=
+set temp4=
+set temp5=
+set temp6=
+set temp7=
+set temp8=
+set temp9=
+set temp10=
+set temp11=
+set temp12=
 cls
 color e
-echo --ScriptVersion 0.7 -alpha --copyright "SHULKER Play" --ffmpeg.org (n5.0.1-7-g7389a49fd3-20220713)
+echo --ScriptVersion 0.8 -alpha --copyright "SHULKER Play" --ffmpeg.org (n5.0.1-7-g7389a49fd3-20220713)
 echo !!! Each person can have their own usage of this script and ffmpeg in general. 
 echo !!! We can't check all the combinations ourselves. 
 echo !!! If you have a problem, or you want to suggest a library to add to the menu, please contact us!
@@ -17,14 +55,14 @@ echo --------------------------
 echo H - FFmpeg Help
 echo Y - Select Preset or tool
 echo N - Configure Video Encoder
-echo A - Configure only Audio Encoder
+echo Q - Half-Manual Mode
 echo K - Audio to Video Encoding
 echo C - Custom mode
 echo X - Contact Us
 echo V - Open Video Downloader (NEW RELEASE!)
 echo E - Exit
 echo --------------------------
-choice /C YNHECAKXV /N
+choice /C YNHECQKXV /N
 
 rem if %errorlevel%==1 goto preset
 if %errorlevel%==1 goto preset
@@ -32,7 +70,7 @@ if %errorlevel%==2 goto configure
 if %errorlevel%==3 goto helpff
 if %errorlevel%==4 exit
 if %errorlevel%==5 goto SUPERCUSTOMMODE
-if %errorlevel%==6 echo IN DEVELOPMENT && pause && goto welcome
+if %errorlevel%==6 goto Conf_custom
 if %errorlevel%==7 echo IN DEVELOPMENT && pause && goto welcome
 if %errorlevel%==8 explorer.exe "https://vk.com/im?sel=-120367298" && goto welcome
 if %errorlevel%==9 yt-dl_init.bat
@@ -43,7 +81,7 @@ color f
 echo In this mode you can run your command with your flags for ffmpeg
 echo Use this mode if you fully know what you are doing. "ffmpeg -h" for help. 
 echo My working Example: (ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -f webm -y "E:\RENDERS\SceneOverlay.webm")
-echo Close the window to exit
+echo Close the window to exit or type goto welcome
 :SUPERCUSTOMMODE1
 set /p SUPERCUSTOMMODE=
 color a
@@ -165,7 +203,7 @@ echo 0 - Select tool preset
 echo 1 - Webm [Transperent support] [VP9, Opus, audio bitrate 0kbps or 320kbps]
 echo 2 - mpeg (Mpeg-1/2, audiocodec mp3, audio bitrate 0kbps or 320kbps)
 echo 3 - avi (Mpeg-4/Xvid, audiocodec mp3, audio bitrate 0kbps or 320kbps)
-echo 4 - GIF (gif) [experimental]
+echo 4 - GIF (gif, Configurable)
 echo 5 - mp4 (H.264, audio bitrate 320kbps, stereo)
 echo 6 - mp4 (H.265, audio bitrate 320kbps, stereo)
 echo 7 - mp4 (av1 or SVT-AV1, audio bitrate 320kbps, stereo)
@@ -188,6 +226,123 @@ if %errorlevel%==9 goto OptimizeYT
 if %errorlevel%==10 goto configure
 if %errorlevel%==11 goto presetTool
 exit
+
+:Preset_gif
+echo Select Input File
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+cls
+echo This preset will create a gif with its own palette of colors
+pause
+:Preset_gifOpt
+cls
+echo Selecting a video fragment
+echo --------------
+echo 1 - Skip "n" seconds of video
+echo 2 - Gif duration
+echo F - Continue
+echo --------------
+echo Skip %temp1% second(s)
+echo Duration %temp3% second(s)
+
+choice /C 12F /N
+
+if %errorlevel%==1 goto Preset_gifSkip
+if %errorlevel%==2 goto Preset_gifDuration
+if %errorlevel%==3 goto Preset_gifRes
+
+:Preset_gifSkip
+cls
+echo Set the number of seconds in the video file that you want to skip (example: 120)
+set /p temp1=
+set temp2=-ss %temp1%
+goto Preset_gifOpt
+
+:Preset_gifDuration
+cls
+echo Set the length of the gif in seconds (example: 5)
+set /p temp3=
+set temp4=-t %temp3%
+goto Preset_gifOpt
+
+:Preset_gifRes
+cls
+echo Select the gif framerate. Smaller framerate - smaller size
+echo --------------
+echo 0 - 5 FPS
+echo 1 - 10 FPS (Recomended)
+echo 2 - 15 FPS
+echo 3 - 30 FPS
+echo 4 - 50 FPS
+echo 5 - 60 FPS
+echo 9 - 100 FPS (Just for fun, this is the maximum gif frame rate, but it is not supported by anything. In browsers it will be slowed down to 10 FPS)
+echo --------------
+
+choice /C 0123459 /N
+
+if %errorlevel%==1 set temp5=fps=5
+if %errorlevel%==2 set temp5=fps=10
+if %errorlevel%==3 set temp5=fps=15
+if %errorlevel%==4 set temp5=fps=30
+if %errorlevel%==5 set temp5=fps=50
+if %errorlevel%==6 set temp5=fps=60
+if %errorlevel%==7 set temp5=fps=100
+
+cls
+echo Select the gif resolution (height). Smaller resolution - smaller size
+echo --------------
+echo 1 - 144px
+echo 2 - 240px (Recomended)
+echo 3 - 360px
+echo 4 - 480px
+echo 5 - 720px
+echo 6 - 1080px (Full hd gif? Funny.)
+echo --------------
+
+choice /C 1234567 /N
+
+if %errorlevel%==1 set temp6=scale=-2:144
+if %errorlevel%==2 set temp6=scale=-2:240
+if %errorlevel%==3 set temp6=scale=-2:360
+if %errorlevel%==4 set temp6=scale=-2:480
+if %errorlevel%==5 set temp6=scale=-2:720
+if %errorlevel%==6 set temp6=scale=-2:1080
+
+cls
+echo How to loop a gif?
+echo --------------
+echo 0 - Infinite looping (recomended)
+echo 1 - No looping
+echo 2 - Loop a specific number of times
+echo --------------
+
+choice /C 012 /N
+
+if %errorlevel%==1 set temp7=-loop 0
+if %errorlevel%==2 set temp7=-loop -1
+if %errorlevel%==3 goto Preset_gifLoop
+
+:Preset_gifEncode
+echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+set /p outputname=
+color a
+color f
+echo select output folder
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+
+ffmpeg %temp2% %temp4% %filepath% -vf "%temp5%,%temp6%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" %temp7% -y "%outputfolder%\%outputname%.gif"
+pause
+goto welcome
+
+:Preset_gifLoop
+cls
+echo For example a value of 10 will cause the GIF to play 11 times
+echo Enter a value (example: 10)
+set /p temp8=
+set temp7=-loop %temp8%
+goto Preset_gifEncode
 
 :preset_mpeg4
 echo Select Input File
@@ -236,6 +391,15 @@ if %errorlevel%==3 set vidbitrate=-qscale:v 15
 if %errorlevel%==4 set vidbitrate=-qscale:v 23
 if %errorlevel%==5 set vidbitrate=-qscale:v 31
 
+cls
+choice /c YN /N /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+if %errorlevel%==1 goto preset_mpeg4F
+if %errorlevel%==2 cls
+echo Enter the frame rate (example: 60)
+set /p temp5=
+set framerate=-r %temp5%
+
+:preset_mpeg4F
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
 color a
@@ -244,7 +408,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% -f avi -y "%outputfolder%\%outputname%.avi"
+ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -f avi -y "%outputfolder%\%outputname%.avi"
 pause
 goto welcome
 
@@ -295,6 +459,14 @@ if %errorlevel%==3 set vidbitrate=-qscale:v 15
 if %errorlevel%==4 set vidbitrate=-qscale:v 23
 if %errorlevel%==5 set vidbitrate=-qscale:v 31
 
+cls
+choice /c YN /N /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+if %errorlevel%==1 goto preset_mpegF
+if %errorlevel%==2 cls
+echo Enter the frame rate (example: 60)
+set /p temp5=
+set framerate=-r %temp5%
+:preset_mpegF
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
 color a
@@ -303,7 +475,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% -f mpeg -y "%outputfolder%\%outputname%.mpeg"
+ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -f mpeg -y "%outputfolder%\%outputname%.mpeg"
 pause
 goto welcome
 
@@ -360,7 +532,14 @@ if %errorlevel%==4 set threads=-threads 6
 if %errorlevel%==5 set threads=-threads 8
 if %errorlevel%==6 set threads=-threads 12
 if %errorlevel%==7 set threads=-threads 16
-
+cls
+choice /c YN /N /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+if %errorlevel%==1 goto Preset_vp9tsF
+if %errorlevel%==2 cls
+echo Enter the frame rate (example: 60)
+set /p temp5=
+set framerate=-r %temp5%
+:Preset_vp9tsF
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
 color a
@@ -369,21 +548,24 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% -lag-in-frames 0 -auto-alt-ref 0 -f webm -y "%outputfolder%\%outputname%.webm"
+ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -f webm -y "%outputfolder%\%outputname%.webm"
 pause
 goto welcome
 
 rem Доступные Инструменты (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
 
 :presetTool
+cls
 echo Choose tool preset (In Development)
 echo --------------------------
 echo 1 - Extract multiple audio streams from video (extract audio to .mp3 up to 6 streams) 
+echo 2 - Upscale or downscale video using different algorithms
 echo N - Back to encoding presets
-choice /C N1 /N
+choice /C N12 /N
 
 if %errorlevel%==1 goto preset
 if %errorlevel%==2 goto PresetTool_ExtractAll
+if %errorlevel%==3 goto PresetTool_Upscaling
 
 :PresetTool_ExtractAll
 echo Select Input File
@@ -400,35 +582,127 @@ for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPat
 set outputfolder=%decode2:?= %
 ffmpeg %filepath% -map 0:v -c copy "%outputfolder%\%outputname%video0.mkv" -map 0:a:0 -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio0.mp3" -map 0:a:1? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio1.mp3" -map 0:a:2? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio2.mp3" -map 0:a:3? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio3.mp3" -map 0:a:4? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio4.mp3" -map 0:a:5? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio5.mp3" -y -strict -2
 pause
+goto welcome
+
+:PresetTool_Upscaling
+cls
+echo Choose a scaling algorithm
+echo --------------------------
+echo 1 - Lanczos (Good Quality, slower, recommended)
+echo 2 - Sinc (Good Quality, A ghostly artifacts is possible when the image is zoomed in)
+echo 3 - Spline
+echo 4 - Bicubic (default)
+echo 5 - Bilinear (Fast but blurry)
+echo 6 - Fast Bilinear
+echo 7 - Neighbor (The fastest, but just takes the color of the pixel from the neighboring ones)
+echo 8 - Gauss
+echo H - Help me, I don't understand a damn thing. What should I choose?
+echo --------------------------
+choice /C 12345678H /N
+if %errorlevel%==1 set temp1=flags=lanczos
+if %errorlevel%==2 set temp1=flags=sinc
+if %errorlevel%==3 set temp1=flags=spline
+if %errorlevel%==4 set temp1=flags=bicubic
+if %errorlevel%==5 set temp1=flags=bilinear
+if %errorlevel%==6 set temp1=flags=fast_bilinear
+if %errorlevel%==7 set temp1=flags=neighbor
+if %errorlevel%==8 set temp1=flags=gauss
+if %errorlevel%==9 exit
+
+rem -vf scale=2560:-1:sws_flags=lanczos 
+rem sinc		187 fps
+rem lanczos		500 fps
+rem bicubic		660 fps
+rem fast_bilinear	1260 fps
+rem neighbor	1300 fps
+cls
+echo Select the resolution to scale with the original aspect ratio preserved
+echo --------------------------
+echo 1 - 144px
+echo 2 - 240px
+echo 3 - 360px
+echo 4 - 480px
+echo 5 - 720px (HD)
+echo 6 - 1080px (Full HD)
+echo 7 - 1440px (2K)
+echo 8 - 2160px (4K)
+echo 9 - 4320px (8K)
+echo C - Custom resolution
+echo --------------------------
+choice /C 12345678H /N
+if %errorlevel%==1 set temp2=-2:144&& goto PresetTool_Upscaling_Encode
+if %errorlevel%==2 set temp2=-2:240&& goto PresetTool_Upscaling_Encode
+if %errorlevel%==3 set temp2=-2:360&& goto PresetTool_Upscaling_Encode
+if %errorlevel%==4 set temp2=-2:480&& goto PresetTool_Upscaling_Encode
+if %errorlevel%==5 set temp2=-2:720&& goto PresetTool_Upscaling_Encode
+if %errorlevel%==6 set temp2=-2:1080&& goto PresetTool_Upscaling_Encode
+if %errorlevel%==7 set temp2=-2:1440&& goto PresetTool_Upscaling_Encode
+if %errorlevel%==8 set temp2=-2:2160&& goto PresetTool_Upscaling_Encode
+if %errorlevel%==9 set temp2=-2:4320&& goto PresetTool_Upscaling_Encode
+if %errorlevel%==10 cls
+
+echo Enter the width in pixels (example: 1280)
+set /p temp3=
+color af
+color 5f
+cls
+echo Enter the height in pixels (example: 720)
+set /p temp4=
+color af
+color 5f
+set temp2=%temp3%:%temp4%
+
+:PresetTool_Upscaling_Encode
+set size=-vf scale=%temp2%:%temp1%
+cls
+echo The video will be encoded by the libx264 codec using the CPU. Support for other codecs for this tool may appear in the future
+pause
+cls
+echo Select quality
+echo --------------------------
+echo 0 - lossless (CRF 0)
+echo 8 - CRF 8 - Large file size, better quality
+echo 6 - CRF 16
+echo 4 - CRF 24
+echo 2 - CRF 32 - Small file size, poor quality
+echo --------------------------
+choice /C 08642 /N
+
+if %errorlevel%==1 set vidbitrate=-crf 0
+if %errorlevel%==2 set vidbitrate=-crf 8
+if %errorlevel%==3 set vidbitrate=-crf 16
+if %errorlevel%==4 set vidbitrate=-crf 24
+if %errorlevel%==5 set vidbitrate=-crf 32
+cls
+choice /c YN /N /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+if %errorlevel%==1 goto PresetTool_Upscaling_EncodeF
+if %errorlevel%==2 cls
+echo Enter the frame rate (example: 60)
+set /p temp5=
+set framerate=-r %temp5%
+
+:PresetTool_Upscaling_EncodeF
+echo Select Input File
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+color a
+color f
+echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+set /p outputname=
+color a
+color f
+echo select output folder
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+
+ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -f mp4 -y "%outputfolder%\%outputname%.mp4"
+pause
+goto welcome
 
 rem Конфигуратор (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
 
 :configure
-rem Список для очистки переменных во избежание разных ошибок
-set filepath=
-set inputaudio=
-set encoder=
-set outputformat=
-set outputname=
-set preset=
-set Profile=
-set tune=
-set vidbitrate=
-set audiocodec=
-set threads=
-set audiobitrate=
-set flags=
-set subencoder=
-set outputfolder=
-set inputsubtitle=
-set disablevideo=
-set disableaudio=
-set framerate=
-set size=
-set volume=
-set disablesubtitles=
-set audiotype=
-set maxbitrate=
 rem CLS Очищает экран командной строки
 cls
 color f
@@ -970,6 +1244,25 @@ rem КОНФИГУРАЦИЯ MPEG-4 --------------------------------------------
 
 rem РУЧНАЯ КОНФИГУРАЦИЯ -------------------------------------------------------------------------------
 
+:Conf_Custom
+cls
+color e
+echo In this mode, you can practice any magic that you like. This is a kind of half-manual input mode.
+pause
+cls
+echo Sounds cool doesn't it?
+choice /c YN
+if %errorlevel%==2 goto Conf_Custom_joke
+echo !Be aware that this mode is experimental, and some codecs may not support the parameters you entered.
+pause
+cls
+echo Errors are also possible due to various incorrect codec combinations, as well as due to the fact that codecs do not fit standard flags
+pause
+echo Do you want to continue?
+choice /c YN
+if %errorlevel%==1 goto Conf_Custom_Start
+if %errorlevel%==2 goto welcome
+
 :Conf_Custom_joke
 color 4
 echo Hey! It was very hurtful by the way :(
@@ -1010,31 +1303,82 @@ pause
 cls
 goto Conf_Custom_Start
 
-:Conf_Custom
+:Conf_Custom_Start
+:1
 cls
 color e
-echo In this mode, you can practice any magic that you like. This is a kind of half-manual input mode.
-pause
-cls
-echo Sounds cool doesn't it?
-choice /c YN
-if %errorlevel%==2 goto Conf_Custom_joke
-echo !Be aware that this mode is experimental, and some codecs may not support the parameters you entered.
-pause
-cls
-echo Errors are also possible due to various incorrect codec combinations, as well as due to the fact that codecs do not fit standard flags
-pause
-echo Do you want to continue?
-choice /c YN
-if %errorlevel%==1 goto Conf_Custom_Start
-if %errorlevel%==2 goto welcome
+echo All settings are optional. Choose everything you need.
+echo To turn off the video/audio, go to the codecs section and enter the value you need to turn off the video/audio. The value is written out separately
+echo When you set what you want, start encoding by pressing "1"
+timeout /T 1
+echo ----------------
+echo VIDEO SETTINGS
+echo Q - Set Video codec
+echo W - Set Video bitrate
+echo E - Set Video Resolution
+echo Y - Set Video Framerate
+echo R - Input Videofile
+echo P - RESET VIDEO SETTINGS
+echo file: %filepath%
+echo ----------------
+echo AUDIO SETTINGS
+echo A - Set Audio codec
+echo S - Set Audio bitrate
+echo D - Input Audiofile (Do not specify a file to take audio from a video file)
+echo L - RESET AUDIO SETTINGS
+echo file: %inputaudio%
+echo ----------------
+echo SUBTITLE SETTINGS
+echo X - Set Subtitle Codec
+echo C - Input Subtitles file (Do not specify a file to take subtitles from a video file)
+echo M - RESET SUBTITLE SETTINGS
+echo file: %inputsubtitle%
+echo ----------------
+echo OTHER
+echo T - Select Threads Count
+echo I - Enter Custom Flags
+echo K - RESET Custom Flags
+echo Custom Flags: %flags%
+echo ----------------
+echo 1 - START ENCODING
+echo FFmpeg Arguments: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -f (your format) -y -strict -2 "(path)"
+echo ----------------
+echo 5 - Back to main Menu
+echo ----------------
+echo Does NOT output an error when Codec is selected:
+if not novid==%temp1% echo Videocodec: %temp1%, Bitrate: %vidbitrate%, %temp3%x%temp4%, %temp5% FPS
+if novid==%temp1% echo VIDEO DISABLED
+if noaud==%temp7% echo AUDIO DISABLED
+if not noaud==%temp7% echo Audiocodec: %temp7%, Audio bitrate: %temp9% kbps
+if nosub==%temp12% echo SUBTITLES DISABLED
+if not nosub==%temp12% echo Subtitles: %temp12%
 
-:Conf_Custom_Start
-color 5f
+choice /C QWERPASDLXCMTIK51Y /N
+
+if %errorlevel%==1 goto Conf_Custom_VCodec
+if %errorlevel%==2 goto Conf_Custom_Vbitrate
+if %errorlevel%==3 goto Conf_Custom_Resolution
+if %errorlevel%==4 goto Conf_Custom_VInput
+if %errorlevel%==5 set disablevideo= && set encoder= && set vidbitrate= && set size= && set framerate= && set temp1= && set temp2= && set temp3= && set temp4= && set temp5= && set filepath= && goto Conf_Custom_Start
+if %errorlevel%==6 goto Conf_Custom_ACodec
+if %errorlevel%==7 goto Conf_Custom_ABitrate
+if %errorlevel%==8 goto Conf_Custom_AInput
+if %errorlevel%==9 set disableaudio= && set audiocodec= && set audiobitrate= && set inputaudio= && set temp7= && set temp8= && set temp9= && set temp10= && set temp6= && goto Conf_Custom_Start
+if %errorlevel%==10 goto Conf_Custom_SCodec
+if %errorlevel%==11 goto Conf_Custom_SubInput
+if %errorlevel%==12 set disablesubtitles= && set subencoder= && set inputsubtitle= && set temp11= && set temp12= && goto Conf_Custom_Start
+if %errorlevel%==13 goto Conf_Custom_threads
+if %errorlevel%==14 goto Conf_Custom_flags
+if %errorlevel%==15 set flags= && goto Conf_Custom_Start
+if %errorlevel%==16 goto welcome
+if %errorlevel%==17 goto Conf_Custom_Render
+if %errorlevel%==18 goto Conf_Custom_Framerate
+
+:Conf_Custom_threads
 cls
 echo Select the number of threads to encode (It should NOT be more than the number of threads of your CPU)
 echo !!! NOTE that some encoders DO NOT SUPPORT multithreading and may crash ffmpeg. If you are not sure of your actions, select "Unset".
-echo Also the number of threads more than 16 is NOT recommended for ffmpeg
+echo Also the number of threads more than 16 is NOT recommended for some codecs
 echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
 echo --------------------------
 echo 1 - Unset (Default recomended)
@@ -1053,19 +1397,18 @@ if %errorlevel%==4 set threads=-threads 6
 if %errorlevel%==5 set threads=-threads 8
 if %errorlevel%==6 set threads=-threads 12
 if %errorlevel%==7 set threads=-threads 16
-set filepath=
-cls
-choice /c YN /N /m "Y - Enable Video, N - Disable Video"
-if %errorlevel%==1 goto Conf_Custom_StartVC
-if %errorlevel%==2 set disablevideo=-vn && goto Conf_Custom_A
+goto Conf_Custom_Start
 
-:Conf_Custom_StartVC
+:Conf_Custom_VInput
+cls
 echo Input Videofile
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
-color a
-color f
+goto Conf_Custom_Start
+
+:Conf_Custom_VCodec
+cls
 echo V..... = Video
 echo .F.... = Frame-level multithreading
 echo ..S... = Slice-level multithreading
@@ -1182,78 +1525,90 @@ echo V....D y41p                 Uncompressed YUV 4:1:1 12-bit
 echo V....D yuv4                 Uncompressed packed 4:2:0
 echo VF.... zlib                 LCL (LossLess Codec Library) ZLIB
 echo -------------               copy          Copies the codec of the source file
+echo -------------               novid         Sets the -vn flag to disable the video
 echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
-echo Use copy for using the codec of the source file
-echo For normal purposes, we strongly recommend libx264, libx265.
-echo Also you could use libvpx/libvpx-vp9 or mpeg4.
+echo WRITE "novid" TO DISABLE THE VIDEO
+echo Use copy for using the codec of the source file. This will save you from completely reencoding the video, and save a lot of time.
+echo For normal purposes, we strongly recommend libx264, libx265 or libaom-av1 (.MP4/.mkv). Also you could use libvpx/libvpx-vp9 (.webm/.mkv).
 echo Use Ctrl+F to search
 echo WRITE THE NAME OF YOUR PREFERRED ENCODER (Example: libx264)
 set /p temp1=
-color af
-color 5f
+color 2
+if %temp1%==novid set disablevideo=-vn && set encoder= && set vidbitrate= && set size= && set framerate= && goto Conf_Custom_Start
 set encoder=-c:v %temp1%
-cls
-echo ENCODER: %temp1%
-if %temp1%==copy goto Conf_Custom_A
-echo Do you want to add bitrate settings and other parameters?
-echo You can skip the user settings, if you use the "copy" codec, all settings will be taken from the source file. This will save you from transcoding and will take less time
-choice /c YN /N /m "Y - Add custom Settings, N - Skip Custom Settings"
-if %errorlevel%==1 goto Conf_Custom_VC_Setup
-if %errorlevel%==2 goto Conf_Custom_A
+set disablevideo=
+goto Conf_Custom_Start
 
-:Conf_Custom_VC_Setup
-echo !!! To reduce the number of errors, the CRF bitrate can only be used in normal mode with the H264 and HEVC encoders. 
+:Conf_Custom_Vbitrate
+cls
+echo What type of bitrate do you want to choose?
+echo --------
+echo 1 - CBR (The usual value in kbps. Works great everywhere. Recommended)
+echo 2 - CRF (Constant Rate Factor, Variable bitrate that depends on the complexity of the image. Not all codecs support CRF, but the most popular ones understand it.)
+echo 3 - QP (Like CRF, lower value means higher quality. However, the maximum value may be different in different codecs)
+echo --------
+choice /c 123 /N
+if %errorlevel%==1 goto Conf_Custom_VbitrateCBR
+if %errorlevel%==2 goto Conf_Custom_VbitrateCRF
+if %errorlevel%==3 goto Conf_Custom_VbitrateQP
+
+:Conf_Custom_VbitrateCBR
+cls
+echo The minimum and maximum bitrate values can be specified with custom flags using -minrate and -maxrate
 echo Enter the video bitrate in kbps (CBR) (example: 20000)
 set /p temp2=
-color af
-color 5f
+color 2
 set vidbitrate=-b:v %temp2%K
-cls
-echo ENCODER: %temp1%, Bitrate %temp2% kbps
-echo Do you want to choose a custom resolution and frame rate?
-choice /c YN /N /m "Y - Yes, N - No"
-if %errorlevel%==1 goto Conf_Custom_VC_visual
-if %errorlevel%==2 goto Conf_Custom_A
+goto Conf_Custom_Start
 
-:Conf_Custom_VC_visual
+:Conf_Custom_VbitrateCRF
+cls
+echo The minimum and maximum bitrate values can be specified with custom flags using -minrate and -maxrate
+echo Enter the CRF value (0-51) (example: 17)
+set /p temp2=
+color 2
+set vidbitrate=-crf %temp2%
+goto Conf_Custom_Start
+
+:Conf_Custom_VbitrateQP
+cls
+echo The minimum and maximum bitrate values can be specified with custom flags using -minrate and -maxrate
+echo Enter the QP value (0-51 in x264) (example: 14)
+set /p temp2=
+color 2
+set vidbitrate=-qp %temp2%
+goto Conf_Custom_Start
+
+:Conf_Custom_Resolution
 cls
 echo Enter the width in pixels (example: 1280)
 set /p temp3=
-color af
-color 5f
+color 2
+color f
 cls
 echo Enter the height in pixels (example: 720)
 set /p temp4=
-color af
-color 5f
+color 2
 set size=-s %temp3%x%temp4%
+goto Conf_Custom_Start
+
+:Conf_Custom_Framerate
 cls
 echo Enter the frame rate (example: 60)
 set /p temp5=
 set framerate=-r %temp5%
+goto Conf_Custom_Start
+
+:Conf_Custom_AInput
 cls
-echo ENCODER: %temp1%, Bitrate %temp2% kbps, %temp3%x%temp4%, %temp5% FPS
-pause
-goto Conf_Custom_A
-
-:Conf_Custom_A
-choice /c YN /N /m "Y - Enable Audio, N - Disable Audio"
-if %errorlevel%==1 goto Conf_Custom_StartA
-if %errorlevel%==2 set disableaudio=-an && goto Conf_Custom_S
-
-:Conf_Custom_StartA
-choice /c YN /N /m "Y - Take Audio from videofile, N - Select Custom Audiofile"
-if %errorlevel%==1 goto Conf_Custom_AC
-if %errorlevel%==2 goto Conf_Custom_SelectA
-
-:Conf_Custom_SelectA
 echo Select Input File
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetAudioFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set temp6=%decode1:?= %
 set inputaudio=-i "%temp6%"
-goto Conf_Custom_AC
+goto Conf_Custom_Start
 
-:Conf_Custom_AC
+:Conf_Custom_ACodec
+cls
 echo A..... = Audio
 echo .F.... = Frame-level multithreading
 echo ..S... = Slice-level multithreading
@@ -1342,56 +1697,39 @@ echo A..... wavpack              WavPack
 echo A..... wmav1                Windows Media Audio 1
 echo A..... wmav2                Windows Media Audio 2
 echo -------------               copy          Copies the codec of the source file
+echo -------------               noaud         Sets the -an flag to disable the audio
 echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
-echo For normal purposes, we strongly recommend: aac, libopus, mp3_mf.
+echo WRITE "noaud" TO DISABLE THE AUDIO
+echo For normal purposes, we strongly recommend: aac, mp3_mf.
 echo Also you could use lossless: flac or pcm (.wav).
 echo Use copy for using the codec of the source file
 echo Use Ctrl+F to search
 echo WRITE THE NAME OF YOUR PREFERRED AUDIOCODEC (Example: aac)
 set /p temp7=
-color af
-color 5f
+color 2
+if %temp7%==noaud set disableaudio=-an && set audiocodec= && set audiobitrate= && goto Conf_Custom_Start
 set audiocodec=-c:a %temp7%
-cls
-echo AUDIOCODEC: %temp7%
-if %temp7%==copy goto Conf_Custom_S
-echo Do you want to set bitrate and audio sampling rate or volume?
-echo You can skip the user settings, if you use the "copy" codec, all settings will be taken from the source file. This will save you from transcoding and will take less time
-choice /c YN /N /m "Y - Add custom Settings, N - Skip Custom Settings"
-if %errorlevel%==1 goto Conf_Custom_AC_Setup
-if %errorlevel%==2 goto Conf_Custom_S
+set disableaudio=
+goto Conf_Custom_Start
 
-:Conf_Custom_AC_Setup
+:Conf_Custom_ABitrate
+cls
 echo Enter the audio bitrate in kbps (example: 256)
 set /p temp9=
-color af
-color 5f
+color 2
 set audiobitrate=-b:a %temp9%K
-cls 
-echo AUDIOCODEC: %temp7%, bitrate: %temp9% kbps
-echo Enter the volume multiplier (example: 1.5) (0.5 = 50% volume, 1.5 = 150% volume)
-echo Enter 1.0 to not change the volume
-set /p temp10=
-set volume=-filter:a "volume=%temp10%"
+goto Conf_Custom_Start
+
+:Conf_Custom_SubInput
 cls
-echo AUDIOCODEC: %temp7%, bitrate: %temp9% kbps, Volume %temp10%
-pause
-goto Conf_Custom_S
-
-:Conf_Custom_S
-choice /c YNC /N /m "Y - Select Subtitle file, N - Disable Subtitles, C - Copy subtitles from videofile"
-if %errorlevel%==1 goto Conf_Custom_selectSC
-if %errorlevel%==2 set disablesubtitles=-sn && goto Conf_Custom_flags
-if %errorlevel%==3 set subencoder=-c:s copy && goto Conf_Custom_flags
-
-:Conf_Custom_selectSC
 echo Select Input File
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetSubtitlesFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set temp11=%decode1:?= %
 set inputsubtitle=-i "%temp11%"
-goto Conf_Custom_SC
+goto Conf_Custom_Start
 
-:Conf_Custom_SC
+:Conf_Custom_SCodec
+cls
 echo S..... = Subtitle
 echo .F.... = Frame-level multithreading
 echo ..S... = Slice-level multithreading
@@ -1410,47 +1748,42 @@ echo S..... ttml                 TTML subtitle
 echo S..... webvtt               WebVTT subtitle
 echo S..... xsub                 DivX subtitles (XSUB)
 echo -------------               copy          Copies the codec of the source file
+echo -------------               nosub         Sets the -sn flag to disable subtitles
 echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
+echo WRITE "nosub" TO DISABLE SUBTITLES
 echo We recommend: srt or ssa. webvtt For webm converter (supports Opus and vp8/vp9)
 echo Use copy for using the codec of the source file
 echo Use Ctrl+F to search
-echo WRITE THE NAME OF YOUR PREFERRED AUDIOCODEC (Example: aac)
+echo WRITE THE NAME OF YOUR PREFERRED AUDIOCODEC (Example: subrip)
 set /p temp12=
-color af
-color 5f
+color 2
+if %temp12%==nosub set disablesubtitles=-sn && set subencoder= && goto Conf_Custom_Start
+set disablesubtitles=
 set subencoder=-c:s %temp12%
-cls
-echo Subtitle codec: %temp12%, Selected file: %temp11%
-pause
-goto Conf_Custom_flags
+goto Conf_Custom_Start
 
 :Conf_Custom_flags
 cls
-echo See the help for information about supported color spaces and sampling rates for different codecs
-echo Parameters such as color space and sampling rate are set only by manually entering the flags
-choice /c YN /N /m "Y - Manually type custom flags, N - Start ffmpeg"
-if %errorlevel%==1 goto Conf_Custom_flagstype
-if %errorlevel%==2 set flags= && goto Conf_Custom_Render
-
-:Conf_Custom_flagstype
-cls
-color f
-echo You can use your additional flags for ffmpeg
+color 4
+color e
 echo Do not make mistakes, otherwise ffmpeg may return an error
 echo Run this one again in a new window and use the flags help (Press H, then 4, select "encoder" and then enter the name of the codec you are interested in)
-pause
-echo Leave the field empty and press enter if you don't want to enter anything
+echo See the help for information about supported color spaces and sampling rates for different codecs
+echo Parameters such as color space, sampling rate, min/max rate, audio/video filters are set only by manually entering the flags
 pause
 cls
 echo Enter your flags for the encoder (example: -preset slow -aq-mode 2 -rc-lookahead 60)
 set /p flags=
-goto Conf_Custom_Render
+goto Conf_Custom_Start
 
 :Conf_Custom_Render
+cls
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
 color a
 color f
+cls
+echo Note that the codec must support this format. Many support .mkv, libvpx (vp8/vp/opus) supports .webm, mpeg-1/2 supports .mpeg, mpeg-4/xvid supports .avi, and so on
 echo Input new file format (example: mkv [NOT .mkv!!!])
 set /p outputformat=
 color a
@@ -1458,18 +1791,19 @@ color f
 echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
-
-echo VIDEO CODEC: %temp1%
-echo Video Container: %outputformat%
-echo Video bitrate: %temp2% kbps
-echo Resolution %temp3%x%temp4%
-echo %temp5% Frames Per Second
-echo AUDIO CODEC: %temp7%
-echo Audio bitrate: %temp9% kbps
-echo Volume %temp10%
-echo SUBTITLE CODEC: %temp12%
-echo Output Folder: %outputfolder%
-echo Name: %outputname%.%outputformat%
+cls
+if not novid==%temp1% echo Videocodec: %temp1%, Bitrate: %vidbitrate%, %temp3%x%temp4%, %temp5% FPS
+if novid==%temp1% echo VIDEO DISABLED
+echo file: %filepath%
+if noaud==%temp7% echo AUDIO DISABLED
+if not noaud==%temp7% echo Audiocodec: %temp7%, Audio bitrate: %temp9% kbps
+echo file: %inputaudio%
+if nosub==%temp12% echo SUBTITLES DISABLED
+if not nosub==%temp12% echo Subtitles: %temp12%
+echo file: %inputsubtitle%
+echo Custom Flags: %flags%
+echo ----------------
+echo FFmpeg Arguments: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -f %outputformat% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 pause
 color 8f
 echo !!! Starting FFMPEG
