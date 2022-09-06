@@ -19,19 +19,16 @@ set folder=
 set subfolder=
 cls
 echo Used Libraries
-echo yt-dlp (2022.06.29): A youtube-dl fork with additional features and fixes
+echo yt-dlp: A youtube-dl fork with additional features and fixes
 echo FORK FROM: youtube-dl - Command-line program to download videos from YouTube and other video sites
-echo --Script-version 1.1 -stable --copyright "SHULKER Play" --yt-dlp
+echo --Script-version 1.3 -stable --copyright "SHULKER Play" --yt-dlp (2022.09.01)
 echo -----
 echo Licence: The Unlicense - A license with no conditions whatsoever which dedicates works to the public domain. http://unlicense.org/
 echo //////////////////////////////
-echo WELCOME TO YOUTUBE (or other platform) VIDEO (or audio and subtitles) DOWNLOADER!
-echo XD
+echo WELCOME TO THE UNIVERSAL VIDEO (or audio and subtitles) DOWNLOADER!
 echo --------------------------
 echo Y - Just Download video for me...
-echo D - Download video (Also choose subtitles or previews or description to download)
-echo P - Download Playlist (Also choose subtitles or previews or description to download)
-echo C - Download All Channel (Also choose subtitles or previews or description to download)
+echo D - Download video/playlist/channel (With optional subtitles or previews or descriptions to download)
 echo V - Download video without audio (Video, Playlist, or Channel)
 echo A - Download Audio only (Video, Playlist, or Channel)
 echo S - Download Subtitles only (Video, Playlist, or Channel)
@@ -46,10 +43,10 @@ echo --------------------------
 echo NOTE! If you need to perform various operations, such as changing the codec or format, or adding subtitles and much more, you can use our ffmpeg tool.
 choice /C DPCHLGEYASFMVR /N
 
-if %errorlevel%==1 goto Dlvid
-if %errorlevel%==2 goto DlPlaylist
-if %errorlevel%==3 goto DlChannel
-if %errorlevel%==4 yt-dlp --help && pause
+rem Свободны: (P - if %errorlevel%==2), (C - if %errorlevel%==3)
+
+if %errorlevel%==1 goto DlWith
+if %errorlevel%==4 cls && yt-dlp --help && pause
 if %errorlevel%==5 goto SUPERCUSTOMMODE
 if %errorlevel%==6 goto git
 if %errorlevel%==7 Ffmpeg_ComandlineInterfaceProject.bat
@@ -61,6 +58,20 @@ if %errorlevel%==12 explorer.exe "yt-dlp_supportedsites.txt"
 if %errorlevel%==13 goto DlVidVid
 if %errorlevel%==14 goto specFormat
 goto welcome
+
+:DlWith
+cls
+echo --------------------------
+echo D - Download video (Also choose subtitles or previews or description to download)
+echo P - Download Playlist (Also choose subtitles or previews or description to download)
+echo C - Download All Channel (Also choose subtitles or previews or description to download)
+echo --------------------------
+echo NOTE! If you need to perform various operations, such as changing the codec or format, or adding subtitles and much more, you can use our ffmpeg tool.
+choice /C DPC /N
+
+if %errorlevel%==1 goto Dlvid
+if %errorlevel%==2 goto DlPlaylist
+if %errorlevel%==3 goto DlChannel
 
 :SUPERCUSTOMMODE
 cls
@@ -129,7 +140,7 @@ if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath=
 if %errorlevel%==2 set subtitles=
 cls
 
-yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --embed-metadata --retries 5
+yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5
 pause
 goto welcome
 
@@ -141,7 +152,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 
-yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --embed-metadata --retries 5
+yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --retries 5
 pause
 goto welcome
 
@@ -174,7 +185,7 @@ if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath=
 if %errorlevel%==2 set subtitles=
 cls
 
-yt-dlp "%url%" -o "%folder%/%%(playlist_title)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --embed-metadata --retries 5 --no-abort-on-error
+yt-dlp "%url%" -o "%folder%/%%(playlist_title)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
 pause
 goto welcome
 
@@ -207,7 +218,7 @@ if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath=
 if %errorlevel%==2 set subtitles=
 cls
 
-yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --embed-metadata --retries 5 --no-abort-on-error
+yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
 pause
 goto welcome
 

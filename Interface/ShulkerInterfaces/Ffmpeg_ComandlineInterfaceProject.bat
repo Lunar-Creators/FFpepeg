@@ -44,25 +44,28 @@ set temp11=
 set temp12=
 cls
 color e
-echo --ScriptVersion 0.8 -alpha --copyright "SHULKER Play" --ffmpeg.org (n5.0.1-7-g7389a49fd3-20220713)
+echo --ScriptVersion 0.9 -alpha --copyright "SHULKER Play" --ffmpeg.org (n5.0.1-7-g7389a49fd3-20220713)
 echo !!! Each person can have their own usage of this script and ffmpeg in general. 
 echo !!! We can't check all the combinations ourselves. 
-echo !!! If you have a problem, or you want to suggest a library to add to the menu, please contact us!
+echo !!! If you have a problem, or you want to suggest a preset to add to the menu, please contact us!
 timeout /t 1
-echo WELCOME TO FFMPEG ENCODE SCRIPT!
+echo WELCOME TO FFMPEG MANAGEMENT SCRIPT!
 
 echo --------------------------
 echo H - FFmpeg Help
-echo Y - Select Preset or tool
+echo Y - Select Video Preset
+echo A - Audio Converting
+echo P - Photo Converting
+echo T - Select Tool
 echo N - Configure Video Encoder
 echo Q - Half-Manual Mode
 echo K - Audio to Video Encoding
-echo C - Custom mode
+echo C - Commandline mode
 echo X - Contact Us
-echo V - Open Video Downloader (NEW RELEASE!)
+echo V - Open Video Downloader
 echo E - Exit
 echo --------------------------
-choice /C YNHECQKXV /N
+choice /C YNHECQAXVPT /N
 
 rem if %errorlevel%==1 goto preset
 if %errorlevel%==1 goto preset
@@ -70,10 +73,12 @@ if %errorlevel%==2 goto configure
 if %errorlevel%==3 goto helpff
 if %errorlevel%==4 exit
 if %errorlevel%==5 goto SUPERCUSTOMMODE
-if %errorlevel%==6 goto Conf_custom
-if %errorlevel%==7 echo IN DEVELOPMENT && pause && goto welcome
+if %errorlevel%==6 goto Conf_Custom_Start
+if %errorlevel%==7 goto audiopreset
 if %errorlevel%==8 explorer.exe "https://vk.com/im?sel=-120367298" && goto welcome
 if %errorlevel%==9 yt-dl_init.bat
+if %errorlevel%==10 goto photoformat
+if %errorlevel%==11 goto presetTool
 goto welcome
 
 :SUPERCUSTOMMODE
@@ -199,7 +204,6 @@ echo To use additional parameters, such as changing the color space, use the con
 echo -
 echo Choose encoding preset
 echo --------------------------
-echo 0 - Select tool preset
 echo 1 - Webm [Transperent support] [VP9, Opus, audio bitrate 0kbps or 320kbps]
 echo 2 - mpeg (Mpeg-1/2, audiocodec mp3, audio bitrate 0kbps or 320kbps)
 echo 3 - avi (Mpeg-4/Xvid, audiocodec mp3, audio bitrate 0kbps or 320kbps)
@@ -212,7 +216,7 @@ echo 8 - ... (-)
 echo 9 - Optimize for Youtube Upload
 echo N - CONFIGURE 
 echo --------------------------
-choice /C 123456789N0 /N
+choice /C 123456789N /N
 
 if %errorlevel%==1 goto Preset_vp9ts
 if %errorlevel%==2 goto Preset_mpeg
@@ -224,7 +228,6 @@ if %errorlevel%==7 goto Preset_libaom
 if %errorlevel%==8 goto Preset_
 if %errorlevel%==9 goto OptimizeYT
 if %errorlevel%==10 goto configure
-if %errorlevel%==11 goto presetTool
 exit
 
 :Preset_gif
@@ -392,7 +395,7 @@ if %errorlevel%==4 set vidbitrate=-qscale:v 23
 if %errorlevel%==5 set vidbitrate=-qscale:v 31
 
 cls
-choice /c YN /N /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
 if %errorlevel%==1 goto preset_mpeg4F
 if %errorlevel%==2 cls
 echo Enter the frame rate (example: 60)
@@ -408,7 +411,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -f avi -y "%outputfolder%\%outputname%.avi"
+ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
 pause
 goto welcome
 
@@ -460,7 +463,7 @@ if %errorlevel%==4 set vidbitrate=-qscale:v 23
 if %errorlevel%==5 set vidbitrate=-qscale:v 31
 
 cls
-choice /c YN /N /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
 if %errorlevel%==1 goto preset_mpegF
 if %errorlevel%==2 cls
 echo Enter the frame rate (example: 60)
@@ -475,7 +478,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -f mpeg -y "%outputfolder%\%outputname%.mpeg"
+ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
 pause
 goto welcome
 
@@ -513,27 +516,31 @@ if %errorlevel%==4 set vidbitrate=-crf 24
 if %errorlevel%==5 set vidbitrate=-crf 32
 
 cls
-echo Select the number of threads to encode (It should NOT be more than the number of threads of your CPU)
+echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
 echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
 echo --------------------------
-echo 1 - 1 thread
+echo 1 - Auto
 echo 2 - 2 threads
 echo 4 - 4 threads
 echo 6 - 6 threads
 echo 8 - 8 threads
 echo 9 - 12 threads
 echo 0 - 16 threads
+echo Q - 24 threads
+echo E - 32 threads
 echo --------------------------
-choice /C 1246890 /N
-if %errorlevel%==1 set threads=-threads 1
+choice /C 1246890QE /N
+if %errorlevel%==1 set threads=
 if %errorlevel%==2 set threads=-threads 2
 if %errorlevel%==3 set threads=-threads 4
 if %errorlevel%==4 set threads=-threads 6
 if %errorlevel%==5 set threads=-threads 8
 if %errorlevel%==6 set threads=-threads 12
 if %errorlevel%==7 set threads=-threads 16
+if %errorlevel%==8 set threads=-threads 24
+if %errorlevel%==9 set threads=-threads 32
 cls
-choice /c YN /N /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
 if %errorlevel%==1 goto Preset_vp9tsF
 if %errorlevel%==2 cls
 echo Enter the frame rate (example: 60)
@@ -548,7 +555,168 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -f webm -y "%outputfolder%\%outputname%.webm"
+ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
+pause
+goto welcome
+
+:photoformat
+cls
+echo Using many programs, such as Photoshop, you can understand that just changing the letters after the dot is not enough to change the photo format to a supported one. We are here to help
+pause
+echo Select Input File
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetPictureFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+cls
+echo Select the format to which the file will be converted
+echo Beta. New features will appear in the future
+echo --------------------------
+echo P - PNG (Portable Network Graphics)
+echo J - JPG (Commonly used method of lossy compression for digital images)
+echo W - WEBP (Image file format developed by Google. Based on VP8. Supports transparency, animation, and keeps the file size small. Adobe programs and some others do not understand it, but browsers understand this format, it is suitable for compressing images for a website.)
+echo T - TIFF (Tagged Image File Format)
+echo B - BMP (Windows bitmap)
+echo --------------------------
+choice /C PJWTB /N
+
+if %errorlevel%==1 set outputformat=png
+if %errorlevel%==2 set outputformat=jpg
+if %errorlevel%==3 set outputformat=webp
+if %errorlevel%==4 set outputformat=tiff
+if %errorlevel%==5 set outputformat=bmp
+
+cls
+echo Input NEW filename (example: lol0 [NOT lol0.png!!!])
+set /p outputname=
+color a
+color f
+echo select output folder
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+
+ffmpeg %filepath% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+pause
+goto welcome
+
+:audiopreset_wav
+cls
+echo pcm_f32be            PCM 32-bit floating point big-endian
+echo pcm_f32le            PCM 32-bit floating point little-endian
+echo pcm_f64be            PCM 64-bit floating point big-endian
+echo pcm_f64le            PCM 64-bit floating point little-endian
+echo pcm_s16be            PCM signed 16-bit big-endian
+echo pcm_s16be_planar     PCM signed 16-bit big-endian planar
+echo pcm_s16le            PCM signed 16-bit little-endian
+echo pcm_s16le_planar     PCM signed 16-bit little-endian planar
+echo pcm_s24be            PCM signed 24-bit big-endian
+echo pcm_s24le            PCM signed 24-bit little-endian
+echo pcm_s24le_planar     PCM signed 24-bit little-endian planar
+echo pcm_s32be            PCM signed 32-bit big-endian
+echo pcm_s32le            PCM signed 32-bit little-endian
+echo pcm_s32le_planar     PCM signed 32-bit little-endian planar
+echo pcm_s64be            PCM signed 64-bit big-endian
+echo pcm_s64le            PCM signed 64-bit little-endian
+echo pcm_s8               PCM signed 8-bit
+echo pcm_s8_planar        PCM signed 8-bit planar
+echo pcm_u16be            PCM unsigned 16-bit big-endian
+echo pcm_u16le            PCM unsigned 16-bit little-endian
+echo pcm_u24be            PCM unsigned 24-bit big-endian
+echo pcm_u24le            PCM unsigned 24-bit little-endian
+echo pcm_u32be            PCM unsigned 32-bit big-endian
+echo pcm_u32le            PCM unsigned 32-bit little-endian
+echo pcm_u8               PCM unsigned 8-bit
+echo -------------------------------
+echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
+echo Adobe Audition Default: pcm_f32be or pcm_f32le
+echo WRITE THE NAME OF YOUR PREFERRED AUDIOCODEC (Example: pcm_f32be)
+set /p temp7=
+set audiocodec=-c:a %temp7%
+goto audiopreset_encode
+
+:audiopreset
+echo Select Audio or Video File
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetAVFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+cls
+echo Select the codec to which the file will be converted
+echo --------------------------
+echo M - MP3 (Coding format for digital audio)
+echo A - AAC (Advanced Audio Coding)
+echo O - Opus (Opus is a lossy audio coding format designed to efficiently code speech and general audio in a single format, while remaining low-latency)
+echo V - Vorbis (.ogg free and open-source software project)
+echo F - FLAC (Free Lossless Audio Codec)
+echo L - ALAC (Apple Lossless Audio Codec (Mediacontainer .m4a))
+echo W - WAV (uncompressed PCM)
+echo --------------------------
+choice /C MAOVFLW /N
+
+if %errorlevel%==1 set outputformat=mp3&& set audiocodec=-c:a libmp3lame
+if %errorlevel%==2 set outputformat=aac&& set audiocodec=-c:a aac
+if %errorlevel%==3 set outputformat=opus&& set audiocodec=-c:a libopus
+if %errorlevel%==4 set outputformat=ogg&& set audiocodec=-c:a libvorbis
+if %errorlevel%==5 set outputformat=flac&& set audiocodec=-c:a flac
+if %errorlevel%==6 set outputformat=m4a&& set audiocodec=-c:a alac
+if %errorlevel%==7 set outputformat=wav&& goto audiopreset_wav
+cls
+if %outputformat%==flac goto audiopreset_encode
+if %outputformat%==m4a goto audiopreset_encode
+echo Select Audio Bitrate
+echo --------------------------
+echo 1 - 96 kbps - generally used for speech or low-quality streaming.
+echo 2 - 128 kbps - mid-range bitrate quality.
+echo 3 - 192 kbps - medium quality bitrate.
+echo 4 - 256 kbps - a commonly used high-quality bitrate.
+echo 5 - 320 kbps - highest level supported by the MP3 standard.
+echo 6 - 384 kbps - Youtube recommended: Stereo
+echo 7 - 512 kbps - Youtube recommended for 5.1 sound
+echo --------------------------
+choice /C 1234567 /N
+
+if %errorlevel%==1 set samplerate=-b:a 96K
+if %errorlevel%==2 set samplerate=-b:a 128K
+if %errorlevel%==3 set samplerate=-b:a 192K
+if %errorlevel%==4 set samplerate=-b:a 256K
+if %errorlevel%==5 set samplerate=-b:a 320K
+if %errorlevel%==6 set samplerate=-b:a 384K
+if %errorlevel%==7 set samplerate=-b:a 512K
+cls
+if %outputformat%==ogg goto audiopreset_encode
+echo Select Audio Sample Rate
+echo (Watch the keys!)
+echo --------------------------
+echo 1 - 8 kHz
+echo 2 - 12 kHz
+echo 3 - 16 kHz
+echo 4 - 24 kHz
+if NOT %outputformat%==opus echo 5 - 32 kHz
+if NOT %outputformat%==opus echo 6 - 44.1 kHz
+echo 7 - 48 kHz (Recomended)
+if %outputformat%==aac echo 8 - 64 kHz
+if %outputformat%==aac echo 9 - 96 kHz
+echo --------------------------
+choice /C 123456789 /N
+
+if %errorlevel%==1 set samplerate=-ar 8000
+if %errorlevel%==2 set samplerate=-ar 12000
+if %errorlevel%==3 set samplerate=-ar 16000
+if %errorlevel%==4 set samplerate=-ar 24000
+if %errorlevel%==5 set samplerate=-ar 32000
+if %errorlevel%==6 set samplerate=-ar 44100
+if %errorlevel%==7 set samplerate=-ar 48000
+if %errorlevel%==8 set samplerate=-ar 64000
+if %errorlevel%==9 set samplerate=-ar 96000
+
+:audiopreset_encode
+cls
+echo Input NEW filename (example: lol0 [NOT lol0.png!!!])
+set /p outputname=
+color a
+color f
+echo select output folder
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+ffmpeg %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 pause
 goto welcome
 
@@ -560,10 +728,10 @@ echo Choose tool preset (In Development)
 echo --------------------------
 echo 1 - Extract multiple audio streams from video (extract audio to .mp3 up to 6 streams) 
 echo 2 - Upscale or downscale video using different algorithms
-echo N - Back to encoding presets
+echo N - Back to main menu
 choice /C N12 /N
 
-if %errorlevel%==1 goto preset
+if %errorlevel%==1 goto welcome
 if %errorlevel%==2 goto PresetTool_ExtractAll
 if %errorlevel%==3 goto PresetTool_Upscaling
 
@@ -580,7 +748,26 @@ color f
 echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
-ffmpeg %filepath% -map 0:v -c copy "%outputfolder%\%outputname%video0.mkv" -map 0:a:0 -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio0.mp3" -map 0:a:1? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio1.mp3" -map 0:a:2? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio2.mp3" -map 0:a:3? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio3.mp3" -map 0:a:4? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio4.mp3" -map 0:a:5? -c:a mp3_mf -b:a 320K "%outputfolder%\%outputname%audio5.mp3" -y -strict -2
+cls
+color e
+echo Since audio codecs are very different, most need a separate audio container.
+echo Most codecs can be placed in a .mka container, but some programs may will not understand .mka.
+pause
+cls
+echo So here's a choice. You can quickly spread out all the audio streams simply in .mka (Matroska audio) format. This will be especially useful if your video is very long (for example, an hour)
+echo But, if you need only .mp3, you can spend more time transcoding the files. Because, let's say, in the obs you record with the aac audio codec, but it cannot be putted into an mp3 container without transcoding to mp3
+pause
+echo --------------------
+echo Your choice:
+echo 1 - Copy streams to .mka (Very Fast)
+echo 2 - Encode streams to .mp3 (Slower)
+echo --------------------
+
+choice /C 12 /N
+if %errorlevel%==1 set audiocodec=-c:a copy && set outputformat=mka
+if %errorlevel%==2 set audiocodec=-c:a libmp3lame -b:a 384K && set outputformat=mp3
+
+ffmpeg %filepath% -vn -map 0:a:0 %audiocodec% "%outputfolder%\%outputname%_audio0.%outputformat%" -map 0:a:1? %audiocodec% "%outputfolder%\%outputname%_audio1.%outputformat%" -map 0:a:2? %audiocodec% "%outputfolder%\%outputname%_audio2.%outputformat%" -map 0:a:3? %audiocodec% "%outputfolder%\%outputname%_audio3.%outputformat%" -map 0:a:4? %audiocodec% "%outputfolder%\%outputname%_audio4.%outputformat%" -map 0:a:5? %audiocodec% "%outputfolder%\%outputname%_audio5.%outputformat%" -y -strict -2
 pause
 goto welcome
 
@@ -588,15 +775,15 @@ goto welcome
 cls
 echo Choose a scaling algorithm
 echo --------------------------
-echo 1 - Lanczos (Good Quality, slower, recommended)
-echo 2 - Sinc (Good Quality, A ghostly artifacts is possible when the image is zoomed in)
+echo 1 - Lanczos (Good Quality, slower, most popular)
+echo 2 - Sinc (Best Quality, A ghostly artifacts is possible when the image is zoomed in)
 echo 3 - Spline
 echo 4 - Bicubic (default)
 echo 5 - Bilinear (Fast but blurry)
 echo 6 - Fast Bilinear
-echo 7 - Neighbor (The fastest, but just takes the color of the pixel from the neighboring ones)
+echo 7 - Neighbor (Not recommended. use only if you want to increase or decrease the resolution by 2 times)
 echo 8 - Gauss
-echo H - Help me, I don't understand a damn thing. What should I choose?
+echo H - (Will appear in future versions) Help me, I don't understand a damn thing. What should I choose?
 echo --------------------------
 choice /C 12345678H /N
 if %errorlevel%==1 set temp1=flags=lanczos
@@ -607,7 +794,7 @@ if %errorlevel%==5 set temp1=flags=bilinear
 if %errorlevel%==6 set temp1=flags=fast_bilinear
 if %errorlevel%==7 set temp1=flags=neighbor
 if %errorlevel%==8 set temp1=flags=gauss
-if %errorlevel%==9 exit
+if %errorlevel%==9 goto PresetTool_Upscaling
 
 rem -vf scale=2560:-1:sws_flags=lanczos 
 rem sinc		187 fps
@@ -674,7 +861,7 @@ if %errorlevel%==3 set vidbitrate=-crf 16
 if %errorlevel%==4 set vidbitrate=-crf 24
 if %errorlevel%==5 set vidbitrate=-crf 32
 cls
-choice /c YN /N /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
 if %errorlevel%==1 goto PresetTool_Upscaling_EncodeF
 if %errorlevel%==2 cls
 echo Enter the frame rate (example: 60)
@@ -696,7 +883,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -f mp4 -y "%outputfolder%\%outputname%.mp4"
+ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
 
@@ -757,7 +944,7 @@ echo --------------------------
 echo 1 - AAC (Advanced Audio Coding)
 echo 2 - AAC via MediaFoundation (codec aac)
 echo 3 - FLAC (Free Lossless Audio Codec)
-echo 4 - MP3 via MediaFoundation (codec mp3)
+echo 4 - MP3 
 echo 5 - libopus Opus (codec opus)
 echo --------------------------
 
@@ -766,7 +953,7 @@ choice /C 12345 /N
 if %errorlevel%==1 set audiocodec=-c:a aac
 if %errorlevel%==2 set audiocodec=-c:a aac_mf
 if %errorlevel%==3 set audiocodec=-c:a flac
-if %errorlevel%==4 set audiocodec=-c:a mp3_mf
+if %errorlevel%==4 set audiocodec=-c:a libmp3lame
 if %errorlevel%==5 set audiocodec=-c:a libopus
 
 cls
@@ -782,7 +969,7 @@ echo 7 - 512 kbps - Youtube recommended: Stereo + 5.1
 echo --------------------------
 choice /C 1234567 /N
 
-if %errorlevel%==1 set set audiobitrate=-b:a 96K && goto Conf_Copy_S
+if %errorlevel%==1 set audiobitrate=-b:a 96K && goto Conf_Copy_S
 if %errorlevel%==2 set audiobitrate=-b:a 128K && goto Conf_Copy_S
 if %errorlevel%==3 set audiobitrate=-b:a 192K && goto Conf_Copy_S
 if %errorlevel%==4 set audiobitrate=-b:a 256K && goto Conf_Copy_S
@@ -947,25 +1134,29 @@ if %errorlevel%==6 set preset=-preset slower
 if %errorlevel%==7 set preset=-preset veryslow
 
 cls
-echo Select the number of threads to encode (It should NOT be more than the number of threads of your CPU)
+echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
 echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
 echo --------------------------
-echo 1 - 1 thread
+echo 1 - Auto
 echo 2 - 2 threads
 echo 4 - 4 threads
 echo 6 - 6 threads
 echo 8 - 8 threads
 echo 9 - 12 threads
 echo 0 - 16 threads
+echo Q - 24 threads
+echo E - 32 threads
 echo --------------------------
-choice /C 1246890 /N
-if %errorlevel%==1 set threads=-threads 1
+choice /C 1246890QE /N
+if %errorlevel%==1 set threads=
 if %errorlevel%==2 set threads=-threads 2
 if %errorlevel%==3 set threads=-threads 4
 if %errorlevel%==4 set threads=-threads 6
 if %errorlevel%==5 set threads=-threads 8
 if %errorlevel%==6 set threads=-threads 12
 if %errorlevel%==7 set threads=-threads 16
+if %errorlevel%==8 set threads=-threads 24
+if %errorlevel%==9 set threads=-threads 32
 
 cls
 echo Note about Audiocodec. For AAC-LC We use aac instead of libfdk_aac. The license of libfdk_aac is not compatible with GPL, so the GPL does not permit distribution of binaries containing incompatible code when GPL-licensed code is also included. Therefore this encoder have been designated as "non-free", and you cannot download a pre-built ffmpeg that supports it. This can be resolved by compiling ffmpeg yourself.
@@ -1103,25 +1294,29 @@ if %errorlevel%==6 set preset=-preset slower
 if %errorlevel%==7 set preset=-preset veryslow
 
 cls
-echo Select the number of threads to encode (It should NOT be more than the number of threads of your CPU)
+echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
 echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
 echo --------------------------
-echo 1 - 1 thread
+echo 1 - Auto
 echo 2 - 2 threads
 echo 4 - 4 threads
 echo 6 - 6 threads
 echo 8 - 8 threads
 echo 9 - 12 threads
 echo 0 - 16 threads
+echo Q - 24 threads
+echo E - 32 threads
 echo --------------------------
-choice /C 1246890 /N
-if %errorlevel%==1 set threads=-threads 1
+choice /C 1246890QE /N
+if %errorlevel%==1 set threads=
 if %errorlevel%==2 set threads=-threads 2
 if %errorlevel%==3 set threads=-threads 4
 if %errorlevel%==4 set threads=-threads 6
 if %errorlevel%==5 set threads=-threads 8
 if %errorlevel%==6 set threads=-threads 12
 if %errorlevel%==7 set threads=-threads 16
+if %errorlevel%==8 set threads=-threads 24
+if %errorlevel%==9 set threads=-threads 32
 
 cls
 echo Note about Audiocodec. For AAC-LC We use aac instead of libfdk_aac. The license of libfdk_aac is not compatible with GPL, so the GPL does not permit distribution of binaries containing incompatible code when GPL-licensed code is also included. Therefore this encoder have been designated as "non-free", and you cannot download a pre-built ffmpeg that supports it. This can be resolved by compiling ffmpeg yourself.
@@ -1304,7 +1499,6 @@ cls
 goto Conf_Custom_Start
 
 :Conf_Custom_Start
-:1
 cls
 color e
 echo All settings are optional. Choose everything you need.
@@ -1341,7 +1535,7 @@ echo K - RESET Custom Flags
 echo Custom Flags: %flags%
 echo ----------------
 echo 1 - START ENCODING
-echo FFmpeg Arguments: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -f (your format) -y -strict -2 "(path)"
+echo FFmpeg Arguments: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "(path)"
 echo ----------------
 echo 5 - Back to main Menu
 echo ----------------
@@ -1376,9 +1570,8 @@ if %errorlevel%==18 goto Conf_Custom_Framerate
 
 :Conf_Custom_threads
 cls
-echo Select the number of threads to encode (It should NOT be more than the number of threads of your CPU)
+echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
 echo !!! NOTE that some encoders DO NOT SUPPORT multithreading and may crash ffmpeg. If you are not sure of your actions, select "Unset".
-echo Also the number of threads more than 16 is NOT recommended for some codecs
 echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
 echo --------------------------
 echo 1 - Unset (Default recomended)
@@ -1388,8 +1581,10 @@ echo 6 - 6 threads
 echo 8 - 8 threads
 echo 9 - 12 threads
 echo 0 - 16 threads
+echo Q - 24 threads
+echo E - 32 threads
 echo --------------------------
-choice /C 1246890 /N
+choice /C 1246890QE /N
 if %errorlevel%==1 set threads=
 if %errorlevel%==2 set threads=-threads 2
 if %errorlevel%==3 set threads=-threads 4
@@ -1397,6 +1592,8 @@ if %errorlevel%==4 set threads=-threads 6
 if %errorlevel%==5 set threads=-threads 8
 if %errorlevel%==6 set threads=-threads 12
 if %errorlevel%==7 set threads=-threads 16
+if %errorlevel%==8 set threads=-threads 24
+if %errorlevel%==9 set threads=-threads 32
 goto Conf_Custom_Start
 
 :Conf_Custom_VInput
@@ -1700,7 +1897,7 @@ echo -------------               copy          Copies the codec of the source fi
 echo -------------               noaud         Sets the -an flag to disable the audio
 echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
 echo WRITE "noaud" TO DISABLE THE AUDIO
-echo For normal purposes, we strongly recommend: aac, mp3_mf.
+echo For normal purposes, we strongly recommend: aac, libmp3lame.
 echo Also you could use lossless: flac or pcm (.wav).
 echo Use copy for using the codec of the source file
 echo Use Ctrl+F to search
@@ -1803,13 +2000,13 @@ if not nosub==%temp12% echo Subtitles: %temp12%
 echo file: %inputsubtitle%
 echo Custom Flags: %flags%
 echo ----------------
-echo FFmpeg Arguments: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -f %outputformat% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+echo FFmpeg Arguments: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 pause
 color 8f
 echo !!! Starting FFMPEG
 TIMEOUT /T 5
 
-ffmpeg %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -f %outputformat% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+ffmpeg %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 color f
 pause
 echo Are you sure you want to exit? This will erase the ffmpeg log
