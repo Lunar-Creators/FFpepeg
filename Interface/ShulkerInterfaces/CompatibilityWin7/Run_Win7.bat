@@ -148,9 +148,9 @@ choice /C FDGCR /N
 
 if %errorlevel%==1 cd ShulkerInterfaces && Ffmpeg_ComandlineInterfaceProject.bat
 if %errorlevel%==2 cd ShulkerInterfaces && yt-dl_init.bat
-if %errorlevel%==3 goto start
+if %errorlevel%==3 explorer.exe "https://github.com/SHULKERPLAY/FFpepeg"
 if %errorlevel%==4 goto Credits
-if %errorlevel%==5 goto start
+if %errorlevel%==5 explorer.exe "https://github.com/SHULKERPLAY/FFpepeg/releases"
 pause
 exit
 

@@ -76,7 +76,7 @@ if %errorlevel%==4 exit
 if %errorlevel%==5 goto SUPERCUSTOMMODE
 if %errorlevel%==6 goto Conf_Custom_Start
 if %errorlevel%==7 goto audiopreset
-if %errorlevel%==8 explorer.exe "https://vk.com/im?sel=-120367298" && goto welcome
+if %errorlevel%==8 explorer.exe "https://github.com/SHULKERPLAY/FFpepeg"
 if %errorlevel%==9 yt-dl_init.bat
 if %errorlevel%==10 goto photoformat
 if %errorlevel%==11 goto presetTool
