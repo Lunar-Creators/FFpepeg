@@ -16,7 +16,6 @@ color 5
 echo Windows XP Detected
 echo Our tool may not work on Windows XP. 
 echo We will try to use the compatibility package, but we have not tested the behavior of the tool on this system
-pause
 goto FileVerify
  
 :W7
@@ -24,7 +23,6 @@ if not exist "ShulkerInterfaces\PS\pwsh.exe" goto GetPowerShell
 color e
 echo Windows 7 Detected
 echo We use the compatibility package for the tool to work on Windows 7...
-pause
 goto FileVerify
 
 :W8
@@ -58,8 +56,8 @@ goto FileVerify
 
 rem :::::::::::::::::::: CHECKING FILES
 :FileVerify
-if not exist "ShulkerInterfaces\ffmpeg.exe" echo FFmpeg not found && goto downloadLibs
-if not exist "ShulkerInterfaces\yt-dlp.exe" echo Yt-Dlp not found && goto downloadLibs
+if not exist "ShulkerInterfaces\ffmpeg.exe" echo Searching for FFmpeg... && goto installLibs
+if not exist "ShulkerInterfaces\yt-dlp.exe" echo Searching for Yt-Dlp... && goto installLibs
 
 if not exist "ShulkerInterfaces\Ffmpeg_ComandlineInterfaceProject.bat" echo Ffmpeg_ComandlineInterfaceProject.bat not found && goto ScriptNotFound
 if not exist "ShulkerInterfaces\yt-dl_init.bat" echo yt-dl_init.bat not found && goto ScriptNotFound
@@ -73,14 +71,20 @@ if not exist "ShulkerInterfaces\GetVideoFileFullPath.ps1" echo GetVideoFileFullP
 if exist "ShulkerInterfaces\PSfunc.7z" del /Q "ShulkerInterfaces\PSfunc.7z"
 goto start
 
-:downloadLibs
-powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/u0nzqardgrrba11/lastest.txt?dl=1','%~p0\ShulkerInterfaces\ffmpegBin.7z')
+:installLibs
+if not exist "ShulkerInterfaces\ffmpegBin.7z" goto downloadLibs
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\ffmpegBin.7z"
 pause
 if not exist "ShulkerInterfaces\ffmpeg.exe" echo FFmpeg still not found && pause && exit
 if not exist "ShulkerInterfaces\yt-dlp.exe" echo Yt-Dlp still not found && pause && exit
 del /Q "ShulkerInterfaces\ffmpegBin.7z"
 goto FileVerify
+
+:downloadLibs
+color 4
+echo Error. The required files were not found. Please reinstall the release.
+pause 
+exit
 
 :ScriptNotFound
 color 4
@@ -91,16 +95,16 @@ exit
 
 :PsScriptNotFound
 color 4
-echo One or more Powershell files were not found. Downloading them from the cloud...
-powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/u0nzqardgrrba11/lastest.txt?dl=1','%~p0\ShulkerInterfaces\PSfunc.7z')
-ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\PSfunc.7z"
-goto FileVerify
+echo Error. The required files were not found. Please reinstall the release.
+pause 
+exit
 
 :GetPowerShell
 cls
 color e 
 echo Installing compatibility package
 if not exist "ShulkerInterfaces\PS.7z" goto PowerShellDownload
+if not exist "ShulkerInterfaces\PScript.7z" goto PowerShellDownload
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\PS.7z"
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\PScript.7z"
 if exist "ShulkerInterfaces\PS\pwsh.exe" del /Q "ShulkerInterfaces\PS.7z"
@@ -108,19 +112,23 @@ if exist "ShulkerInterfaces\compatibility.txt" del /Q "ShulkerInterfaces\PScript
 goto checkOS
 
 :PowerShellDownload
-echo Compatibility package has been removed, or a release for Win 8.1 and higher versions has been downloaded. 
-echo Downloading the latest Compatibility package from the cloud
-echo Connecting to dropbox...
-powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/u0nzqardgrrba11/lastest.txt?dl=1','%~p0\ShulkerInterfaces\PS.7z')
-powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/u0nzqardgrrba11/lastest.txt?dl=1','%~p0\ShulkerInterfaces\PScript.7z')
-timeout /t 5
-goto GetPowerShell
+color 4
+echo Error. The required files were not found. Please reinstall the release.
+pause 
+exit
+
+:DoError
+color 4
+echo Error. The downloaded files could not be found.
+echo Please download a compatible release
+pause
+exit
 
 :start
 cls
 color e
 echo I hope you like our tools
-echo "<3" (Release 0.9.1 sysps) - Click "R" to check lastest release
+echo "<3" (Release 0.9.1 extps) - Click "R" to check lastest release
 echo _______  _______  _______  _______  _______  _______  _______ 
 echo (  ____ \(  ____ \(  ____ )(  ____ \(  ____ )(  ____ \(  ____ \
 echo : (    \/: (    \/: (    ):: (    \/: (    ):: (    \/: (    \/
@@ -133,7 +141,7 @@ echo .
 echo ::::::::::::::::::::::::::
 echo F : Start FFmpeg Interface
 echo D : Start Multiplatform Video Downloader (STABLE!)
-echo G : GitHub
+echo G : Our GitHub
 echo C : Credits
 echo ::::::::::::::::::::::::::
 choice /C FDGCR /N
@@ -147,3 +155,13 @@ pause
 exit
 
 :Credits
+color b
+echo Thank to ffmpeg.org for a wonderful tool: https://ffmpeg.org/
+echo Windows builds of ffmpeg by BtbN: https://github.com/BtbN/FFmpeg-Builds/releases
+echo For downloading Videos we use yt-dlp: https://github.com/yt-dlp/yt-dlp
+echo Fork from yt-dl: https://github.com/ytdl-org/youtube-dl
+echo Compression is provided by 7-zip: https://www.7-zip.org/
+echo Thanks to PowerShell Team for your developments
+echo For windows 7 we use an external powershell (v7.2.6) https://github.com/PowerShell/PowerShell
+pause
+goto start

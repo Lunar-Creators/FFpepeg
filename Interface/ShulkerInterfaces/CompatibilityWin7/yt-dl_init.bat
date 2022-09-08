@@ -120,7 +120,7 @@ echo Input video Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 echo Download thumbnail as a separate file? Y - Yes, N - No
@@ -148,7 +148,7 @@ echo Input video Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --retries 5
@@ -160,7 +160,7 @@ echo Input Playlist Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 echo Create a separate folder for each video? Y - Yes, N - No
@@ -193,7 +193,7 @@ echo Input Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 echo Create a separate folder for each video? Y - Yes, N - No
@@ -226,7 +226,7 @@ echo Input Video/Playlist/Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestaudio[abr<=?51024]" -x --audio-format mp3 --retries 5 --no-abort-on-error
@@ -238,7 +238,7 @@ echo Input Video/Playlist/Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s/%%(title)s" --skip-download --write-subs --sub-langs "all" --retries 5 --no-abort-on-error
@@ -250,7 +250,7 @@ echo Input Video/Playlist/Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]" --retries 5 --no-abort-on-error
@@ -269,7 +269,7 @@ echo Input Video Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 yt-dlp "%url%" --list-formats --skip-download
