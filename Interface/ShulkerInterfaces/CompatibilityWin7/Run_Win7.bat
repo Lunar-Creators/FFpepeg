@@ -74,17 +74,20 @@ goto start
 :installLibs
 if not exist "ShulkerInterfaces\ffmpegBin.7z" goto downloadLibs
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\ffmpegBin.7z"
-pause
 if not exist "ShulkerInterfaces\ffmpeg.exe" echo FFmpeg still not found && pause && exit
 if not exist "ShulkerInterfaces\yt-dlp.exe" echo Yt-Dlp still not found && pause && exit
 del /Q "ShulkerInterfaces\ffmpegBin.7z"
 goto FileVerify
 
 :downloadLibs
-color 4
-echo Error. The required files were not found. Please reinstall the release.
-pause 
-exit
+if not exist "ShulkerInterfaces\PS\pwsh.exe" echo Error. The required files were not found. Please reinstall the release. && pause && exit
+ShulkerInterfaces\PS\pwsh.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/r0t2e6b4z9n8yb9/ffmpegBin.7z?dl=1','%~p0\ShulkerInterfaces\ffmpegBin.7z')
+if not exist "ShulkerInterfaces\ffmpegBin.7z" goto DoError
+ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\ffmpegBin.7z"
+if not exist "ShulkerInterfaces\ffmpeg.exe" echo FFmpeg still not found && pause && exit
+if not exist "ShulkerInterfaces\yt-dlp.exe" echo Yt-Dlp still not found && pause && exit
+del /Q "ShulkerInterfaces\ffmpegBin.7z"
+goto FileVerify
 
 :ScriptNotFound
 color 4
@@ -94,10 +97,12 @@ pause
 exit
 
 :PsScriptNotFound
-color 4
-echo Error. The required files were not found. Please reinstall the release.
-pause 
-exit
+if not exist "ShulkerInterfaces\PS\pwsh.exe" echo Error. The required files were not found. Please reinstall the release. && pause && exit
+echo One or more Powershell files were not found. Downloading them from the cloud...
+ShulkerInterfaces\PS\pwsh.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/9qu8gv7yz9m6nvt/PSfunc.7z?dl=1','%~p0\ShulkerInterfaces\PSfunc.7z')
+if not exist "ShulkerInterfaces\PSfunc.7z" goto DoError
+ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\PSfunc.7z"
+goto FileVerify
 
 :GetPowerShell
 cls
@@ -151,8 +156,7 @@ if %errorlevel%==2 cd ShulkerInterfaces && yt-dl_init.bat
 if %errorlevel%==3 explorer.exe "https://github.com/SHULKERPLAY/FFpepeg"
 if %errorlevel%==4 goto Credits
 if %errorlevel%==5 explorer.exe "https://github.com/SHULKERPLAY/FFpepeg/releases"
-pause
-exit
+goto start
 
 :Credits
 color b

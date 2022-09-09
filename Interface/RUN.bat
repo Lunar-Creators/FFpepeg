@@ -74,7 +74,6 @@ goto start
 :installLibs
 if not exist "ShulkerInterfaces\ffmpegBin.7z" goto downloadLibs
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\ffmpegBin.7z"
-pause
 if not exist "ShulkerInterfaces\ffmpeg.exe" echo FFmpeg still not found && pause && exit
 if not exist "ShulkerInterfaces\yt-dlp.exe" echo Yt-Dlp still not found && pause && exit
 del /Q "ShulkerInterfaces\ffmpegBin.7z"
@@ -84,7 +83,6 @@ goto FileVerify
 powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/r0t2e6b4z9n8yb9/ffmpegBin.7z?dl=1','%~p0\ShulkerInterfaces\ffmpegBin.7z')
 if not exist "ShulkerInterfaces\ffmpegBin.7z" goto DoError
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\ffmpegBin.7z"
-pause
 if not exist "ShulkerInterfaces\ffmpeg.exe" echo FFmpeg still not found && pause && exit
 if not exist "ShulkerInterfaces\yt-dlp.exe" echo Yt-Dlp still not found && pause && exit
 del /Q "ShulkerInterfaces\ffmpegBin.7z"
