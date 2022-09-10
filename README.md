@@ -1,3 +1,4 @@
+> README также доступен на [русском языке](README_RU.md)
 # FFmpeg and Yt-Dlp Batch
 *The script that lets you to convert and perform operations with photos, videos, audio via FFmpeg in a few clicks on the keyboard.*
 
@@ -62,7 +63,7 @@ And much more. This tool is designed to let people to save time on some tasks
  - [ ] Add more info about script for people who want to create a preset for themselves, and help in development
  - [ ] Create a designer of your presets
  
-***This tool is still in development, but it is workable in most cases. We will be very glad if I can help someone by creating this script.***
+***This tool is still in development, but it is workable in most cases. I will be very glad if I can help someone by creating this script.***
 
 In the distant future, if the script is needed to someone, I would like to...
  - [ ] **Release a version of the tool with a UI made on Powershell**
