@@ -56,6 +56,7 @@ goto FileVerify
 
 rem :::::::::::::::::::: CHECKING FILES
 :FileVerify
+if not exist "ShulkerInterfaces\7z\7za.exe" echo ERROR. 7-ZIP NOT FOUND && color c && pause && exit
 if not exist "ShulkerInterfaces\ffmpeg.exe" echo Searching for FFmpeg... && goto installLibs
 if not exist "ShulkerInterfaces\yt-dlp.exe" echo Searching for Yt-Dlp... && goto installLibs
 
