@@ -1,4 +1,8 @@
 > README также доступен на [русском языке](README_RU.md)
+
+*If you have Windows 7 and below, then look for the version with a note in the file name "Windows7" [in the releases](https://github.com/SHULKERPLAY/FFpepeg/releases)*
+
+*The version for Windows 8.1 and higher can be [downloaded in releases](https://github.com/SHULKERPLAY/FFpepeg/releases), or use the script to [automatically build the release from GitHub](https://www.dropbox.com/s/w5wayk86bi8ip8t/ReleaseAutoBuilder.bat?dl=1) with the latest [commits](https://github.com/SHULKERPLAY/FFpepeg/commits/FFmpeg-Batch).*
 # FFmpeg and Yt-Dlp Batch
 *The script that lets you to convert and perform operations with photos, videos, audio via FFmpeg in a few clicks on the keyboard.*
 
