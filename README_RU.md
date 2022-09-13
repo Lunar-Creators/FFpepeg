@@ -1,8 +1,16 @@
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/SHULKERPLAY/FFpepeg)
+![GitHub repo size](https://img.shields.io/github/repo-size/shulkerplay/ffpepeg)
+![Discord](https://img.shields.io/discord/683814496942424078?label=Discord)
+![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCWoypHEOaTh6N9zwCtRzr0w?label=YouTube%20Views&style=flat-square)
+
+
 > The README is also available in [English](README.md)
 
 *Если вы используете Windows 7 и ниже, то вы можете скачать версию с припиской в файле "Windows7" [в релизах](https://github.com/SHULKERPLAY/FFpepeg/releases)*
 
 *Версию для Windows 8.1 и выше можно [скачать в релизах](https://github.com/SHULKERPLAY/FFpepeg/releases), или вы можете использовать скрипт [автоматической сборки релиза с GitHub](https://www.dropbox.com/s/w5wayk86bi8ip8t/ReleaseAutoBuilder.bat?dl=1) с самыми последними [изменениями](https://github.com/SHULKERPLAY/FFpepeg/commits/FFmpeg-Batch).*
+
+*Много о инструменте вы можете узнать на [нашей вики](https://github.com/SHULKERPLAY/FFpepeg/wiki)*
 # FFmpeg and Yt-Dlp Batch
 *Скрипт который поможет вам конвертировать и выполнять другие операции с фото, видео и аудио через FFmpeg несколькими нажатиями на клавиатуру.*
 

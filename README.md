@@ -1,8 +1,15 @@
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/SHULKERPLAY/FFpepeg)
+![GitHub repo size](https://img.shields.io/github/repo-size/shulkerplay/ffpepeg)
+![Discord](https://img.shields.io/discord/683814496942424078?label=Discord)
+![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCWoypHEOaTh6N9zwCtRzr0w?label=YouTube%20Views&style=flat-square)
+
 > README также доступен на [русском языке](README_RU.md)
 
 *If you have Windows 7 and below, then look for the version with a note in the file name "Windows7" [in the releases](https://github.com/SHULKERPLAY/FFpepeg/releases)*
 
 *The version for Windows 8.1 and higher can be [downloaded in releases](https://github.com/SHULKERPLAY/FFpepeg/releases), or use the script to [automatically build the release from GitHub](https://www.dropbox.com/s/w5wayk86bi8ip8t/ReleaseAutoBuilder.bat?dl=1) with the latest [commits](https://github.com/SHULKERPLAY/FFpepeg/commits/FFmpeg-Batch).*
+
+*You can find out a lot about the tool on [our wiki](https://github.com/SHULKERPLAY/FFpepeg/wiki)*
 # FFmpeg and Yt-Dlp Batch
 *The script that lets you to convert and perform operations with photos, videos, audio via FFmpeg in a few clicks on the keyboard.*
 
