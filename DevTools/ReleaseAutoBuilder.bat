@@ -18,7 +18,7 @@ exit
 
 :W7
 color c
-echo Windows XP detected
+echo Windows 7 detected
 echo Unable to build release for Windows 8 and below
 pause
 exit
