@@ -46,7 +46,7 @@ set temp11=
 set temp12=
 cls
 color e
-echo --ScriptVersion 0.9 -alpha --copyright "SHULKER Play" --ffmpeg.org (n5.1.1-1-g4424a6223b-20220905)
+echo --ScriptVersion 0.10 -beta --copyright "SHULKER Play" --ffmpeg.org (n5.1.1-1-g4424a6223b-20220905)
 echo !!! Each person can have their own usage of this script and ffmpeg in general. 
 echo !!! We can't check all the combinations ourselves. 
 echo !!! If you have a problem, or you want to suggest a preset to add to the menu, please contact us!
@@ -727,7 +727,7 @@ rem Доступные Инструменты (В РАЗРАБОТКЕ) --------
 cls
 echo Choose tool preset (In Development)
 echo --------------------------
-echo 1 - Extract multiple audio streams from video (extract audio to .mp3 up to 6 streams) 
+echo 1 - Extract multiple audio streams from video (extract audio to .mp3 or .mka up to 6 streams) 
 echo 2 - Upscale or downscale video using different algorithms
 echo N - Back to main menu
 choice /C N12 /N
@@ -2017,10 +2017,14 @@ TIMEOUT /T 5
 
 ffmpeg %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 color f
+echo ::::::::::::::::::::::::::::::::::::
+echo E - Exit to main menu
+echo Q - Back to configurator
+choice /c EQ
+if %errorlevel%==1 goto welcome
+if %errorlevel%==2 goto Conf_Custom_Start
 pause
-echo Are you sure you want to exit? This will erase the ffmpeg log
-pause
-goto welcome
+exit
 
 rem НЕРАБОЧАЯ ОБЛАСТЬ -------------------------------------------------------------------------------
 exit
