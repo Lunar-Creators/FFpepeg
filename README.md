@@ -3,7 +3,7 @@
 ![Discord](https://img.shields.io/discord/683814496942424078?label=Discord)
 ![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCWoypHEOaTh6N9zwCtRzr0w?label=YouTube%20Views&style=flat-square)
 
-> README также доступен на [русском языке](README_RU.md)
+> Также доступна [ветка на русском языке](https://github.com/SHULKERPLAY/FFpepeg/tree/FFmpeg-Batch-RU)
 
 *If you have Windows 7 and below, then look for the version with a note in the file name "Windows7" [in the releases](https://github.com/SHULKERPLAY/FFpepeg/releases)*
 
