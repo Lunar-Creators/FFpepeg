@@ -1,4 +1,5 @@
 @echo off
+chcp 866
 :checkOS
 set key=HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion
  
@@ -11,23 +12,23 @@ pause
  
 :XP
 color c
-echo Windows XP detected
-echo Unable to build release for Windows 8 and below
+echo Обнаружена Windows XP
+echo Мы не можем собрать релиз на Windows 8 и ниже
 pause
 exit
 
 :W7
 color c
-echo Windows 7 detected
-echo Unable to build release for Windows 8 and below
+echo Обнаружена Windows 7
+echo Мы не можем собрать релиз на Windows 8 и ниже
 pause
 exit
 
 :W8
 color 6
-echo Windows 8 Detected
-echo The tool works stable on Windows 8.1 and higher.
-echo Trying to execute the script
+echo Обнаружена Windows 8
+echo Инструмент работает стабильно на Windows 8.1 и выше.
+echo Пытаемся выполнить скрипт
 pause
 goto Builder
 
@@ -38,18 +39,18 @@ goto Builder
 
 :W10
 color 2
-echo Windows 10 or 11 Detected...
+echo Обнаружена Windows 10 или 11...
 goto Builder
 
 :W11
 color 2
-echo Windows 11 Detected...
+echo Обнаружена Windows 11...
 goto Builder
 
 :Unknown
 color 6
-echo We were unable to identify your operating system.
-echo The tool works stable on Windows 8.1 and higher. We will try to execute the script using Powershell
+echo У нас не вышло определить вашу операционную систему.
+echo Инструмент работает стабильно на Windows 8.1 и выше. Мы попытаемся исполнить скрипт с помощью Powershell
 pause
 goto Builder
 
@@ -71,13 +72,13 @@ exit
 
 :DoError
 color 4
-echo Error. The downloaded files could not be found.
-echo Please download a compatible release
+echo Ошибка. Скачаные файлы не найдены.
+echo Пожалуйста, скачайте совместимый релиз
 pause
 exit
 
 :DoError1
 color 4
-echo Script execution error...
+echo Ошибка исполнения скрипта...
 pause
 exit

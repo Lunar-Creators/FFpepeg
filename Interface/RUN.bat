@@ -1,5 +1,6 @@
 @echo off
 rem :::::::::::::::::::: CHECKING OS
+chcp 866
 :checkOS
 set key=HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion
  
@@ -13,52 +14,52 @@ pause
 :XP
 if not exist "ShulkerInterfaces\PS\pwsh.exe" goto GetPowerShell
 color 5
-echo Windows XP Detected
-echo Our tool may not work on Windows XP. 
-echo We will try to use the compatibility package, but we have not tested the behavior of the tool on this system
+echo Обнаружена Windows XP
+echo Наш инструмент может не работать на Windows XP. 
+echo Мы попробуем использовать пакет совместимости, но мы не тестировали поведение нашего инструмента на этой системе
 goto FileVerify
  
 :W7
 if not exist "ShulkerInterfaces\PS\pwsh.exe" goto GetPowerShell
 color e
-echo Windows 7 Detected
-echo We use the compatibility package for the tool to work on Windows 7...
+echo Обнаружена Windows 7
+echo Используем пакет совместимости для работы инструмента на Windows 7...
 goto FileVerify
 
 :W8
 color e
-echo Windows 8 Detected
-echo The tool works stable on Windows 8.1 and higher. If you are experiencing problems, download the release for Windows 7
+echo Обнаружена Windows 8
+echo Инструмент работает стабильно на Windows 8.1 и выше. Если у вас возникают проблемы с работой, скачайте релиз для Windows 7
 pause
 goto FileVerify
 
 :W81
 color 2
-echo Windows 8.1 Detected...
+echo Обнаружена Windows 8.1...
 goto FileVerify
 
 :W10
 color 2
-echo Windows 10 or 11 Detected...
+echo Обнаружена Windows 10 или 11...
 goto FileVerify
 
 :W11
 color 2
-echo Windows 11 Detected...
+echo Обнаружена Windows 11...
 goto FileVerify
 
 :Unknown
 color 6
-echo We were unable to identify your operating system.
-echo The tool works stable on Windows 8.1 and higher. If you are experiencing problems, download the release for Windows 7
+echo У нас не вышло определить вашу операционную систему.
+echo Инструмент работает стабильно на Windows 8.1 и выше. Если у вас возникают проблемы с работой, скачайте релиз для Windows 7
 pause
 goto FileVerify
 
 rem :::::::::::::::::::: CHECKING FILES
 :FileVerify
-if not exist "ShulkerInterfaces\7z\7za.exe" echo ERROR. 7-ZIP NOT FOUND && color c && pause && exit
-if not exist "ShulkerInterfaces\ffmpeg.exe" echo Searching for FFmpeg... && goto installLibs
-if not exist "ShulkerInterfaces\yt-dlp.exe" echo Searching for Yt-Dlp... && goto installLibs
+if not exist "ShulkerInterfaces\7z\7za.exe" echo ОШИБКА. 7-ZIP НЕ НАЙДЕН! && color c && pause && exit
+if not exist "ShulkerInterfaces\ffmpeg.exe" echo Ищем FFmpeg... && goto installLibs
+if not exist "ShulkerInterfaces\yt-dlp.exe" echo Ищем Yt-Dlp... && goto installLibs
 
 if not exist "ShulkerInterfaces\Ffmpeg_ComandlineInterfaceProject.bat" echo Ffmpeg_ComandlineInterfaceProject.bat not found && goto ScriptNotFound
 if not exist "ShulkerInterfaces\yt-dl_init.bat" echo yt-dl_init.bat not found && goto ScriptNotFound
@@ -91,14 +92,14 @@ goto FileVerify
 
 :ScriptNotFound
 color 4
-echo One or more batch files were not found. Please reinstall the tool.
-echo Exit...
+echo Один или более скриптов отсутствуют. Скачайте релиз заново.
+echo Выход...
 pause
 exit
 
 :PsScriptNotFound
 color 4
-echo One or more Powershell files were not found. Downloading them from the cloud...
+echo Один или несколько скриптов Powershell не найдены. Скачиваем их с облака...
 powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/9qu8gv7yz9m6nvt/PSfunc.7z?dl=1','%~p0\ShulkerInterfaces\PSfunc.7z')
 if not exist "ShulkerInterfaces\PSfunc.7z" goto DoError
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\PSfunc.7z"
@@ -107,7 +108,7 @@ goto FileVerify
 :GetPowerShell
 cls
 color e 
-echo Installing compatibility package
+echo Устанавливаем пакет совместимости
 if not exist "ShulkerInterfaces\PS.7z" goto PowerShellDownload
 if not exist "ShulkerInterfaces\PScript.7z" goto PowerShellDownload
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\PS.7z"
@@ -117,9 +118,9 @@ if exist "ShulkerInterfaces\compatibility.txt" del /Q "ShulkerInterfaces\PScript
 goto checkOS
 
 :PowerShellDownload
-echo Compatibility package has been removed, or a release for Win 8.1 and higher versions has been downloaded. 
-echo Downloading the latest Compatibility package from the cloud
-echo Connecting to dropbox...
+echo Пакет совместимости был удалён, или был скачан релиз для Win 8.1 и выше. 
+echo Скачиваем последний пакет совместимости с облака...
+echo Подключение к dropbox...
 powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/2i1a4b9n7522aqn/PS.7z?dl=1','%~p0\ShulkerInterfaces\PS.7z')
 powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/ercpl507ujp0qnh/PScript.7z?dl=1','%~p0\ShulkerInterfaces\PScript.7z')
 if not exist "ShulkerInterfaces\PS.7z" goto DoError
@@ -128,16 +129,16 @@ goto GetPowerShell
 
 :DoError
 color 4
-echo Error. The downloaded files could not be found.
-echo Please download a compatible release
+echo Ошибка. Скачаные файлы не найдены.
+echo Пожалуйста, скачайте совместимый релиз
 pause
 exit
 
 :start
 cls
 color e
-echo I hope you like our tools
-echo "<3" (Release 0.9.1 sysps) - Click "R" to check lastest release
+echo Мы надеемся вам нравятся наши инструменты
+echo "<3" (Релиз 0.9.1 sysps RU) - Нажмите "R" чтобы посмотреть последние релизы
 echo _______  _______  _______  _______  _______  _______  _______ 
 echo (  ____ \(  ____ \(  ____ )(  ____ \(  ____ )(  ____ \(  ____ \
 echo : (    \/: (    \/: (    ):: (    \/: (    ):: (    \/: (    \/
@@ -148,10 +149,10 @@ echo : )      : )      : )      : (____/\: )      : (____/\: (___) :
 echo :/       :/       :/       (_______/:/       (_______/(_______)
 echo .
 echo ::::::::::::::::::::::::::
-echo F : Start FFmpeg Interface
-echo D : Start Multiplatform Video Downloader (STABLE!)
-echo G : Our GitHub
-echo C : Credits
+echo F : Запустить интерфейс FFmpeg
+echo D : Запустить мультиплатформенный загрузчик видео (STABLE!)
+echo G : Наш GitHub
+echo C : Благодарности
 echo ::::::::::::::::::::::::::
 choice /C FDGCR /N
 
@@ -164,12 +165,12 @@ goto start
 
 :Credits
 color b
-echo Thank to ffmpeg.org for a wonderful tool: https://ffmpeg.org/
-echo Windows builds of ffmpeg by BtbN: https://github.com/BtbN/FFmpeg-Builds/releases
-echo For downloading Videos we use yt-dlp: https://github.com/yt-dlp/yt-dlp
+echo Спасибо ffmpeg.org за прекрасный инструмент: https://ffmpeg.org/
+echo Сборка ffmpeg для Windows от BtbN: https://github.com/BtbN/FFmpeg-Builds/releases
+echo Для скачивания видео мы используем yt-dlp: https://github.com/yt-dlp/yt-dlp
 echo Fork from yt-dl: https://github.com/ytdl-org/youtube-dl
-echo Compression is provided by 7-zip: https://www.7-zip.org/
-echo Thanks to PowerShell Team for your developments
-echo For windows 7 we use an external powershell (v7.2.6) https://github.com/PowerShell/PowerShell
+echo Сжатие релизов благодаря 7-zip: https://www.7-zip.org/
+echo Спасибо команде PowerShell за ваши разработки
+echo Для windows 7 мы используем внешний powershell (v7.2.6) https://github.com/PowerShell/PowerShell
 pause
 goto start
