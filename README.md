@@ -4,7 +4,7 @@
 ![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCWoypHEOaTh6N9zwCtRzr0w?label=YouTube%20Views&style=flat-square)
 
 
-> The README is also available in [English](README.md)
+> The main branch is [available in English](https://github.com/SHULKERPLAY/FFpepeg/tree/FFmpeg-Batch)
 
 *Если вы используете Windows 7 и ниже, то вы можете скачать версию с припиской в файле "Windows7" [в релизах](https://github.com/SHULKERPLAY/FFpepeg/releases)*
 
