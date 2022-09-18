@@ -1,12 +1,10 @@
 @echo off
-rem ╨Ф╨╛╤Б╤В╤Г╨┐╨╜╤Л╨╡ ╨┐╨╡╤А╨╡╨╝╨╡╨╜╨╜╤Л╨╡ - %filepath% %inputaudio% %encoder% %outputformat% %outputname% %preset% %Profile% %tune% %vidbitrate% %maxbitrate% %audiocodec% %audiotype% %threads% %audiobitrate% %volume% %flags% %SUPERCUSTOMMODE% %outputfolder% %subencoder% %inputsubtitle% %disablevideo% %disableaudio% %disablesubtitles% %framerate% %size%
-rem ╨Ъ╨╛╨╜╤Д╨╕╨│╤Г╤А╨░╤Ж╨╕╤П libx264 - ╨Ч╨░╨┐╤А╨╛╤Б ╨┐╨╛╨┤╤А╨░╨╖╨┤╨╡╨╗╨░ ╨║╨╛╨┤╨╕╤А╨╛╨▓╤Й╨╕╨║╨░, ╨┐╤А╨╡╤Б╨╡╤В ╨║╨╛╨┤╨╕╤А╨╛╨▓╨░╨╜╨╕╤П, ╨Т╤Л╨▒╨╛╤А ╨┐╤А╨╛╤Д╨╕╨╗╤П, ╨Т╤Л╨▒╨╛╤А ╨╛╨┐╤Ж╨╕╨╕, ╨Ш╨╖╨╝╨╡╨╜╨╕╤В╤М ╤А╨░╨╖╤А╨╡╤И╨╡╨╜╨╕╨╡, CBR ╨╕╨╗╨╕ CRF ╨▒╨╕╤В╤А╨╡╨╣╤В, ╨╖╨░╨┤╨░╤В╤М ╨╖╨╜╨░╤З╨╡╨╜╨╕╨╡, ╨▓╤Л╨▓╨╛╨┤ ╨░╤Г╨┤╨╕╨╛, ╨Т╤Л╨▒╨╛╤А ╨║╨╛╨┤╨╡╨║╨░ ╨╕╨╗╨╕ ╤Б╤В╨░╨╜╨┤╨░╤А╤В╨╜╤Л╨╡ ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨╕, ╨╖╨░╨┤╨░╤В╤М ╨╖╨╜╨░╤З╨╡╨╜╨╕╨╡ ╨▒╨╕╤В╤А╨╡╨╣╤В╨░ ╨░╤Г╨┤╨╕╨╛, ╨Ч╨░╨┐╤А╨╛╤Б ╤Б╤Г╨▒╤В╨╕╤В╤А╨╛╨▓, ╨┤╨╛╨┐╨╛╨╗╨╜╨╕╤В╨╡╨╗╤М╨╜╤Л╨╡ ╨║╨╗╤О╤З╨╕, ╨Ч╨░╨┐╤А╨╛╤Б ╨╜╨╛╨▓╨╛╨│╨╛ ╨╕╨╝╨╡╨╜╨╕, ╨Ч╨░╨┐╤А╨╛╤Б ╨╜╨╛╨▓╨╛╨│╨╛ ╤Д╨╛╤А╨╝╨░╤В╨░
-echo Script based on FFmpeg. FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video.
+chcp 866
+echo Скрипт основан на FFmpeg. FFmpeg - это полноценное, кроссплатформенное решение для записи, конвертирования и трансляции аудио и видео.
 echo https://ffmpeg.org/
 timeout /t 3
 ffmpeg --enable-libfdk-aac --enable-nonfree
 :welcome
-rem ╨б╨┐╨╕╤Б╨╛╨║ ╨┤╨╗╤П ╨╛╤З╨╕╤Б╤В╨║╨╕ ╨┐╨╡╤А╨╡╨╝╨╡╨╜╨╜╤Л╤Е ╨▓╨╛ ╨╕╨╖╨▒╨╡╨╢╨░╨╜╨╕╨╡ ╤А╨░╨╖╨╜╤Л╤Е ╨╛╤И╨╕╨▒╨╛╨║
 set filepath=
 set inputaudio=
 set encoder=
@@ -47,25 +45,24 @@ set temp12=
 cls
 color e
 echo --ScriptVersion 0.10 -beta --copyright "SHULKER Play" --ffmpeg.org (n5.1.1-1-g4424a6223b-20220905)
-echo !!! Each person can have their own usage of this script and ffmpeg in general. 
-echo !!! We can't check all the combinations ourselves. 
-echo !!! If you have a problem, or you want to suggest a preset to add to the menu, please contact us!
+echo !!! Каждый человек может иметь свою цель использования этого скрипта и FFmpeg в целом. 
+echo !!! Мы не можем проверить все возможные комбинации самостоятельно. 
+echo !!! Если у вас возникла проблема, или вы хотите предложить пресет который можно добавить в меню, свяжитесь с нами!
 timeout /t 1
-echo WELCOME TO FFMPEG MANAGEMENT SCRIPT!
+echo ДОБРО ПОЖАЛОВАТЬ В СКРИПТ УПРАВЛЕНИЯ FFMPEG!
 
 echo --------------------------
-echo H - FFmpeg Help
-echo Y - Select Video Preset
-echo A - Audio Converting
-echo P - Photo Converting
-echo T - Select Tool
-echo N - Configure Video Encoder
-echo Q - Half-Manual Mode
-echo K - Audio to Video Encoding
-echo C - Commandline mode
-echo X - Our Github
-echo V - Open Video Downloader
-echo E - Exit
+echo H - Помощь по FFmpeg
+echo Y - Выбрать пресет видео
+echo A - Аудио Конвертер
+echo P - Фото Конвертер
+echo T - Выбрать инструмент
+echo N - Конфигуратор кодировщика видео
+echo Q - Режим наполовину ручного ввода
+echo C - Режим командной строки
+echo X - Наш Github
+echo V - Открыть загрузчик видео
+echo E - Выход
 echo --------------------------
 choice /C YNHECQAXVPT /N
 
@@ -84,10 +81,10 @@ goto welcome
 
 :SUPERCUSTOMMODE
 color f
-echo In this mode you can run your command with your flags for ffmpeg
-echo Use this mode if you fully know what you are doing. "ffmpeg -h" for help. 
-echo My working Example: (ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -f webm -y "E:\RENDERS\SceneOverlay.webm")
-echo Close the window to exit or type goto welcome
+echo В этом режиме вы можете запустить ffmpeg со своими флагами
+echo Используйте этот режим только если вы полностью уверены в том что делаете. "ffmpeg -h" for help. 
+echo Мой рабочий пример: (ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx-vp9 -crf 16 -an -threads 8 -lag-in-frames 16 -auto-alt-ref 0 -y "E:\RENDERS\SceneOverlay.webm")
+echo Для выхода закройте окно или напишите "goto welcome"
 :SUPERCUSTOMMODE1
 set /p SUPERCUSTOMMODE=
 color a
@@ -95,10 +92,9 @@ color f
 %SUPERCUSTOMMODE%
 goto SUPERCUSTOMMODE1
 
-rem ╨б╨Я╨а╨Р╨Т╨Ъ╨Р ╨Я╨Ю╨Ы╨м╨Ч╨Ю╨Т╨Р╨в╨Х╨Ы╨о -------------------------------------------------------------------------------
-
 :helpff
 color f
+echo Вся справка идёт из исполнительного файла ffmpeg, и она полностью на английском языке. Мы не станем переводить далее этот раздел
 echo How can ffmpeg help you?
 echo --------------------------
 echo 1 - Standart list of help
@@ -149,13 +145,12 @@ cls
 color b
 ffmpeg -%helptype%s
 echo Enter the one you are interested in from the list
-echo Enter the one you are interested in from the list
-echo (example: xsub)
-echo (example: libvpx)
-echo (example: yuv4mpegpipe)
-echo (example: buffersink)
-echo (example: vp9_superframe_split)
-echo (example: prompeg)
+echo (Например: xsub)
+echo (Например: libvpx)
+echo (Например: yuv4mpegpipe)
+echo (Например: buffersink)
+echo (Например: vp9_superframe_split)
+echo (Например: prompeg)
 echo !!! Please Note that this script was created to configure the ENCODER. For the rest, use the custom mode for manual command input.
 
 set /p helpname=
@@ -197,22 +192,20 @@ ffmpeg -%helptype%s
 pause
 goto lhelpselect
 
-rem ╨Ф╨╛╤Б╤В╤Г╨┐╨╜╤Л╨╡ ╨┐╤А╨╡╤Б╨╡╤В╤Л (╨Т ╨а╨Р╨Ч╨а╨Р╨С╨Ю╨в╨Ъ╨Х) -------------------------------------------------------------------------------
-
 :preset
 cls
-echo To use additional parameters, such as changing the color space, use the configurator, not presets. Also, if you just want to change the video container, then try to use a remux. Believe me, if you need a video, for example in mkv format, you definitely should not reencode it in Mpeg or Xvid.
+echo Чтобы использовать дополнительные параметры, такие как смена цветового пространства - используйте конфигуратор, не пресеты. Также если вы хотите просто сменить видеоконтейнер, то попробуйте использовать ремультиплексирование. Поверьте, если вам нужно видео, например, в формате mkv, вы точно не захотите заново кодировать это в Mpeg или Xvid кодеки.
 echo -
-echo Choose encoding preset
+echo Выберите пресет кодирования
 echo --------------------------
-echo 1 - Webm [Transperent support] [VP9, Opus, audio bitrate 0kbps or 320kbps]
-echo 2 - mpeg (Mpeg-1/2, audiocodec mp3, audio bitrate 0kbps or 320kbps)
-echo 3 - avi (Mpeg-4/Xvid, audiocodec mp3, audio bitrate 0kbps or 320kbps)
-echo 4 - GIF (gif, Configurable)
-echo 5 - mp4 (H.264, In Development)
-echo 6 - mp4 (H.265, In Development)
-echo 7 - mp4 (av1 or SVT-AV1, In Development)
-rem av1 ╨╕╨╝╨╡╨╡╤В ╨╗╤Г╤З╤И╤Г╤О ╤Б╤В╨╡╨┐╨╡╨╜╤М ╤Б╨╢╨░╤В╨╕╤П, ╨▓ ╤В╨╛ ╨▓╤А╨╡╨╝╤П ╨║╨░╨║ svt-av1 ╨╛╨▒╨╗╨░╨┤╨░╨╡╤В ╤Б╨║╨╛╤А╨╛╤Б╤В╤М╤О ╤Б╨╢╨░╤В╨╕╤П ╨▓╤Л╤И╨╡ ╤З╨╡╨╝ ╤Г ╨┐╤А╨╡╨┤╤И╨╡╤Б╤В╨▓╨╡╨╜╨╜╨╕╨║╨░
+echo 1 - Webm [Поддержка прозрачности] [VP9, Opus, Аудиобитрейт 0kbps или 320kbps]
+echo 2 - mpeg (Mpeg-1/2, аудиокодек mp3, Аудиобитрейт 0kbps или 320kbps)
+echo 3 - avi (Mpeg-4/Xvid, аудиокодек mp3, Аудиобитрейт 0kbps или 320kbps)
+echo 4 - GIF (gif, конфигурируемый)
+echo 5 - mp4 (H.264, в разработке)
+echo 6 - mp4 (H.265, в разработке)
+echo 7 - mp4 (av1 или SVT-AV1, в разработке)
+rem av1 имеет лучшую степень сжатия, в то время как svt-av1 обладает скоростью сжатия выше чем у предшественника
 echo 8 - ... (-)
 echo 9 - Optimize for Youtube Upload
 echo N - CONFIGURE 
@@ -232,7 +225,7 @@ if %errorlevel%==10 goto configure
 exit
 
 :Preset_gif
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
@@ -241,14 +234,14 @@ echo This preset will create a gif with its own palette of colors
 pause
 :Preset_gifOpt
 cls
-echo Selecting a video fragment
+echo Выбрать фрагмент из видео
 echo --------------
-echo 1 - Skip "n" seconds of video
-echo 2 - Gif duration
-echo F - Continue
+echo 1 - Пропустить "n" секунд видео
+echo 2 - Длительность GIF
+echo F - Продолжить
 echo --------------
-echo Skip %temp1% second(s)
-echo Duration %temp3% second(s)
+echo Пропустить %temp1% секунд(у)
+echo Длительность %temp3% секунд(а)
 
 choice /C 12F /N
 
@@ -258,24 +251,24 @@ if %errorlevel%==3 goto Preset_gifRes
 
 :Preset_gifSkip
 cls
-echo Set the number of seconds in the video file that you want to skip (example: 120)
+echo Впишите количество секунд от видео, которое нужно пропустить (Например: 120)
 set /p temp1=
 set temp2=-ss %temp1%
 goto Preset_gifOpt
 
 :Preset_gifDuration
 cls
-echo Set the length of the gif in seconds (example: 5)
+echo Впишите длинну Gif в секундах (Например: 5)
 set /p temp3=
 set temp4=-t %temp3%
 goto Preset_gifOpt
 
 :Preset_gifRes
 cls
-echo Select the gif framerate. Smaller framerate - smaller size
+echo Выберите частоту кадров gif. Меньше частота кадров - меньше размер
 echo --------------
 echo 0 - 5 FPS
-echo 1 - 10 FPS (Recomended)
+echo 1 - 10 FPS (Рекомендуется)
 echo 2 - 15 FPS
 echo 3 - 30 FPS
 echo 4 - 50 FPS
@@ -294,14 +287,14 @@ if %errorlevel%==6 set temp5=fps=60
 if %errorlevel%==7 set temp5=fps=100
 
 cls
-echo Select the gif resolution (height). Smaller resolution - smaller size
+echo Выберите разрешение для Gif (Высота в пикселях). Меньше разрешение - меньше размер
 echo --------------
 echo 1 - 144px
-echo 2 - 240px (Recomended)
+echo 2 - 240px (Рекомендуется)
 echo 3 - 360px
 echo 4 - 480px
 echo 5 - 720px
-echo 6 - 1080px (Full hd gif? Funny.)
+echo 6 - 1080px (Full hd gif? Смешно.)
 echo --------------
 
 choice /C 1234567 /N
@@ -314,11 +307,11 @@ if %errorlevel%==5 set temp6=scale=-2:720
 if %errorlevel%==6 set temp6=scale=-2:1080
 
 cls
-echo How to loop a gif?
+echo Как зациклить gif?
 echo --------------
-echo 0 - Infinite looping (recomended)
-echo 1 - No looping
-echo 2 - Loop a specific number of times
+echo 0 - Бесконечное зацикливание (Рекомендуется)
+echo 1 - Без зацикливания
+echo 2 - Повторить определённое количество раз
 echo --------------
 
 choice /C 012 /N
@@ -328,11 +321,11 @@ if %errorlevel%==2 set temp7=-loop -1
 if %errorlevel%==3 goto Preset_gifLoop
 
 :Preset_gifEncode
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -342,19 +335,19 @@ goto welcome
 
 :Preset_gifLoop
 cls
-echo For example a value of 10 will cause the GIF to play 11 times
-echo Enter a value (example: 10)
+echo Наприпер число 10 заставит повторить GIF 11 раз
+echo Введите число (Например: 10)
 set /p temp8=
 set temp7=-loop %temp8%
 goto Preset_gifEncode
 
 :preset_mpeg4
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Выберите кодек
 echo --------------------------
 echo 1 - Mpeg-4
 echo 2 - Microsoft Mpeg-4 Ver.3 
@@ -369,8 +362,8 @@ if %errorlevel%==3 set encoder=-c:v libxvid
 
 cls
 echo --------------------------
-echo E - Enable Audio
-echo D - Disable Audio
+echo E - Включить Аудио
+echo D - Выключить Аудио
 echo --------------------------
 
 choice /C ED /N
@@ -379,13 +372,13 @@ if %errorlevel%==1 set audiocodec=-c:a libmp3lame -b:a 320K
 if %errorlevel%==2 set audiocodec=-an
 
 cls
-echo Select quality
+echo Выберите качество
 echo --------------------------
-echo 0 - Best quality (Can output a bunch of warnings during encoding)
-echo 1 - Good (recomended)
-echo 2 - Medium
-echo 3 - Low
-echo 4 - The lowest quality (Low file size)
+echo 0 - Лучшее качество (Может выводить кучу предупреждений во время кодирования)
+echo 1 - Хорошее (Рекомендуется)
+echo 2 - Среднее
+echo 3 - Низкое
+echo 4 - Наинизшее (Маленький размер файла)
 echo --------------------------
 choice /C 01234 /N
 
@@ -396,19 +389,19 @@ if %errorlevel%==4 set vidbitrate=-qscale:v 23
 if %errorlevel%==5 set vidbitrate=-qscale:v 31
 
 cls
-choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+choice /c YN /N /T 3 /D Y /m "Y - Автоматически определить частоту кадров, N - Установить свою частоту кадров"
 if %errorlevel%==1 goto preset_mpeg4F
 if %errorlevel%==2 cls
-echo Enter the frame rate (example: 60)
+echo Введите частоту кадров (Например: 60)
 set /p temp5=
 set framerate=-r %temp5%
 
 :preset_mpeg4F
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -417,12 +410,12 @@ pause
 goto welcome
 
 :preset_mpeg
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Выберите кодек
 echo --------------------------
 echo 1 - Mpeg-1
 echo 2 - Mpeg-2
@@ -437,8 +430,8 @@ if %errorlevel%==3 set encoder=-c:v mpeg2_qsv
 
 cls
 echo --------------------------
-echo E - Enable Audio
-echo D - Disable Audio
+echo E - Включить Аудио
+echo D - Выключить Аудио
 echo --------------------------
 
 choice /C ED /N
@@ -447,13 +440,13 @@ if %errorlevel%==1 set audiocodec=-c:a libmp3lame -b:a 320K
 if %errorlevel%==2 set audiocodec=-an
 
 cls
-echo Select quality
+echo Выберите качество
 echo --------------------------
-echo 0 - Best quality (Highest file size)
-echo 1 - Good (recomended)
-echo 2 - Medium
-echo 3 - Low
-echo 4 - The lowest quality (Low file size)
+echo 0 - Лучшее качество (Может выводить кучу предупреждений во время кодирования)
+echo 1 - Хорошее (Рекомендуется)
+echo 2 - Среднее
+echo 3 - Низкое
+echo 4 - Наинизшее (Маленький размер файла)
 echo --------------------------
 choice /C 01234 /N
 
@@ -464,18 +457,18 @@ if %errorlevel%==4 set vidbitrate=-qscale:v 23
 if %errorlevel%==5 set vidbitrate=-qscale:v 31
 
 cls
-choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+choice /c YN /N /T 3 /D Y /m "Y - Автоматически определить частоту кадров, N - Установить свою частоту кадров"
 if %errorlevel%==1 goto preset_mpegF
 if %errorlevel%==2 cls
-echo Enter the frame rate (example: 60)
+echo Введите частоту кадров (Например: 60)
 set /p temp5=
 set framerate=-r %temp5%
 :preset_mpegF
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -484,14 +477,14 @@ pause
 goto welcome
 
 :Preset_vp9ts
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo --------------------------
-echo E - Enable Audio
-echo D - Disable Audio
+echo E - Включить Аудио
+echo D - Выключить Аудио
 echo --------------------------
 
 choice /C ED /N
@@ -500,13 +493,13 @@ if %errorlevel%==1 set audiocodec=-c:a libopus -b:a 320K
 if %errorlevel%==2 set audiocodec=-an
 
 cls
-echo Select quality
+echo Выберите качество
 echo --------------------------
 echo 0 - lossless
-echo 8 - CRF 8 - Large file size, better quality
+echo 8 - CRF 8 - Больше размер файла, лучше качество
 echo 6 - CRF 16
 echo 4 - CRF 24
-echo 2 - CRF 32 - Small file size, poor quality
+echo 2 - CRF 32 - Меньше размер файла, хуже качество
 echo --------------------------
 choice /C 08642 /N
 
@@ -517,18 +510,18 @@ if %errorlevel%==4 set vidbitrate=-crf 24
 if %errorlevel%==5 set vidbitrate=-crf 32
 
 cls
-echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
-echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
+echo Выберите количество потоков для кодирования, чем больше значения, тем больше ресурсов процессора будет использоваться для кодирования
+echo Мы рекомендуем оставить немного свободных ядер процессора. Если вы выберите все ядра, ваш процессор вероятно будет загружен на все 100% до окончания кодирования.
 echo --------------------------
-echo 1 - Auto
-echo 2 - 2 threads
-echo 4 - 4 threads
-echo 6 - 6 threads
-echo 8 - 8 threads
-echo 9 - 12 threads
-echo 0 - 16 threads
-echo Q - 24 threads
-echo E - 32 threads
+echo 1 - Автоматически
+echo 2 - 2 потока
+echo 4 - 4 потока
+echo 6 - 6 потоков
+echo 8 - 8 потоков
+echo 9 - 12 потоков
+echo 0 - 16 потоков
+echo Q - 24 потокоа
+echo E - 32 потокоа
 echo --------------------------
 choice /C 1246890QE /N
 if %errorlevel%==1 set threads=
@@ -541,18 +534,18 @@ if %errorlevel%==7 set threads=-threads 16
 if %errorlevel%==8 set threads=-threads 24
 if %errorlevel%==9 set threads=-threads 32
 cls
-choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+choice /c YN /N /T 3 /D Y /m "Y - Автоматически определить частоту кадров, N - Установить свою частоту кадров"
 if %errorlevel%==1 goto Preset_vp9tsF
 if %errorlevel%==2 cls
-echo Enter the frame rate (example: 60)
+echo Введите частоту кадров (Например: 60)
 set /p temp5=
 set framerate=-r %temp5%
 :Preset_vp9tsF
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -562,19 +555,19 @@ goto welcome
 
 :photoformat
 cls
-echo Using many programs, such as Photoshop, you can understand that just changing the letters after the dot is not enough to change the photo format to a supported one. We are here to help
+echo Используя множество программ похожих на Photoshop, вы можете понять что просто сменив название файла после точки недостаточно чтобы сменить формат фото на поддерживаемый. Мы создали это чтобы помочь
 pause
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetPictureFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select the format to which the file will be converted
-echo Beta. New features will appear in the future
+echo Выберите формат в который будет конвертировано фото
+echo Бета. Новые функции появятся позже
 echo --------------------------
 echo P - PNG (Portable Network Graphics)
-echo J - JPG (Commonly used method of lossy compression for digital images)
-echo W - WEBP (Image file format developed by Google. Based on VP8. Supports transparency, animation, and keeps the file size small. Adobe programs and some others do not understand it, but browsers understand this format, it is suitable for compressing images for a website.)
+echo J - JPG (Популярный метод сжатия с потерями для цифровых изображений)
+echo W - WEBP (Файл изображения разработанный Google. Основан на VP8. Поддерживает прозрачность, анимацию, и сохраняет малый размер файла. Программы от Adobe и некоторые другие не поддерживают его, но браузеры понимают этот формат, он особенно годен для сжатия изображений для сайтов.)
 echo T - TIFF (Tagged Image File Format)
 echo B - BMP (Windows bitmap)
 echo --------------------------
@@ -587,11 +580,11 @@ if %errorlevel%==4 set outputformat=tiff
 if %errorlevel%==5 set outputformat=bmp
 
 cls
-echo Input NEW filename (example: lol0 [NOT lol0.png!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.png!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -627,28 +620,28 @@ echo pcm_u32be            PCM unsigned 32-bit big-endian
 echo pcm_u32le            PCM unsigned 32-bit little-endian
 echo pcm_u8               PCM unsigned 8-bit
 echo -------------------------------
-echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
-echo Adobe Audition Default: pcm_f32be or pcm_f32le
-echo WRITE THE NAME OF YOUR PREFERRED AUDIOCODEC (Example: pcm_f32be)
+echo Если введённое имя кодировщика неверно, ffmpeg выдаст ошибку в конце процесса!!!
+echo Стандарт Adobe Audition: pcm_f32be или pcm_f32le
+echo ВПИШИТЕ ИМЯ ПРЕДПОЧИТАЕМОГО АУДИОКОДЕКА (Например: pcm_f32be)
 set /p temp7=
 set audiocodec=-c:a %temp7%
 goto audiopreset_encode
 
 :audiopreset
-echo Select Audio or Video File
+echo Выберите аудио или видеофайл
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetAVFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select the codec to which the file will be converted
+echo Выберите кодек в который будет конвертирован файл
 echo --------------------------
-echo M - MP3 (Coding format for digital audio)
+echo M - MP3 (Формат кодирования для цифрового аудио)
 echo A - AAC (Advanced Audio Coding)
-echo O - Opus (Opus is a lossy audio coding format designed to efficiently code speech and general audio in a single format, while remaining low-latency)
-echo V - Vorbis (.ogg free and open-source software project)
+echo O - Opus (Opus это формат кодирования аудио с потерями для эффективного кодирования речи и аудио в целом в одном формате при этом оставаясь кодеком с низкой задержкой)
+echo V - Vorbis (.ogg. Свободный проект с открытым исходным кодом)
 echo F - FLAC (Free Lossless Audio Codec)
 echo L - ALAC (Apple Lossless Audio Codec (Mediacontainer .m4a))
-echo W - WAV (uncompressed PCM)
+echo W - WAV (Несжатый PCM)
 echo --------------------------
 choice /C MAOVFLW /N
 
@@ -662,15 +655,15 @@ if %errorlevel%==7 set outputformat=wav&& goto audiopreset_wav
 cls
 if %outputformat%==flac goto audiopreset_encode
 if %outputformat%==m4a goto audiopreset_encode
-echo Select Audio Bitrate
+echo Выберите битрейт аудио
 echo --------------------------
-echo 1 - 96 kbps - generally used for speech or low-quality streaming.
-echo 2 - 128 kbps - mid-range bitrate quality.
-echo 3 - 192 kbps - medium quality bitrate.
-echo 4 - 256 kbps - a commonly used high-quality bitrate.
-echo 5 - 320 kbps - highest level supported by the MP3 standard.
-echo 6 - 384 kbps - Youtube recommended: Stereo
-echo 7 - 512 kbps - Youtube recommended for 5.1 sound
+echo 1 - 96 kbps - Обычно используется для речи или стриминга в низком качестве.
+echo 2 - 128 kbps - Качество близкое к среднему.
+echo 3 - 192 kbps - Среднее качество.
+echo 4 - 256 kbps - Популярный битрейт с высоким качеством звука.
+echo 5 - 320 kbps - Наивысший уровень поддерживаемый стандартом MP3.
+echo 6 - 384 kbps - Рекомендация Youtube для стерео
+echo 7 - 512 kbps - Рекомендация Youtube для 5.1 звука
 echo --------------------------
 choice /C 1234567 /N
 
@@ -683,8 +676,8 @@ if %errorlevel%==6 set audiobitrate=-b:a 384K
 if %errorlevel%==7 set audiobitrate=-b:a 512K
 cls
 if %outputformat%==ogg goto audiopreset_encode
-echo Select Audio Sample Rate
-echo (Watch the keys!)
+echo Выберите частоту дескритизации аудио
+echo (Следите за клавишами!)
 echo --------------------------
 echo 1 - 8 kHz
 echo 2 - 12 kHz
@@ -692,7 +685,7 @@ echo 3 - 16 kHz
 echo 4 - 24 kHz
 if NOT %outputformat%==opus echo 5 - 32 kHz
 if NOT %outputformat%==opus echo 6 - 44.1 kHz
-echo 7 - 48 kHz (Recomended)
+echo 7 - 48 kHz (Рекомендуется)
 if %outputformat%==aac echo 8 - 64 kHz
 if %outputformat%==aac echo 9 - 96 kHz
 echo --------------------------
@@ -710,26 +703,26 @@ if %errorlevel%==9 set samplerate=-ar 96000
 
 :audiopreset_encode
 cls
-echo Input NEW filename (example: lol0 [NOT lol0.png!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.png!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 ffmpeg %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 pause
 goto welcome
 
-rem ╨Ф╨╛╤Б╤В╤Г╨┐╨╜╤Л╨╡ ╨Ш╨╜╤Б╤В╤А╤Г╨╝╨╡╨╜╤В╤Л (╨Т ╨а╨Р╨Ч╨а╨Р╨С╨Ю╨в╨Ъ╨Х) -------------------------------------------------------------------------------
+rem Доступные Инструменты (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
 
 :presetTool
 cls
-echo Choose tool preset (In Development)
+echo Выберите инструмент (В разработке)
 echo --------------------------
-echo 1 - Extract multiple audio streams from video (extract audio to .mp3 or .mka up to 6 streams) 
-echo 2 - Upscale or downscale video using different algorithms
-echo N - Back to main menu
+echo 1 - Извлечь несколько аудиодорожек из видео (извлечь аудио в .mp3 или .mka вплоть до 6 разных потоков) 
+echo 2 - Повысить или понизиить разрешение видео используя разные алгоритмы
+echo N - Вернуться в главное меню
 choice /C N12 /N
 
 if %errorlevel%==1 goto welcome
@@ -737,31 +730,31 @@ if %errorlevel%==2 goto PresetTool_ExtractAll
 if %errorlevel%==3 goto PresetTool_Upscaling
 
 :PresetTool_ExtractAll
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Input filenames prefix (example: lol0 [NOT lol0.mkv!!!])
+echo Введите префикс к именам файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 cls
 color e
-echo Since audio codecs are very different, most need a separate audio container.
-echo Most codecs can be placed in a .mka container, but some programs may will not understand .mka.
+echo Так как большинство аудиокодеков очень разные, большинство требует отдельный медиаконтейнер.
+echo Большинство кодеков может быть кодировано в .mka контейнер, но некоторые программы могут не принимать .mka.
 pause
 cls
-echo So here's a choice. You can quickly spread out all the audio streams simply in .mka (Matroska audio) format. This will be especially useful if your video is very long (for example, an hour)
-echo But, if you need only .mp3, you can spend more time transcoding the files. Because, let's say, in the obs you record with the aac audio codec, but it cannot be putted into an mp3 container without transcoding to mp3
+echo Поэтому вам предстоит выбор. Вы можете быстро, без перекодирования, извлечь все потоки в файлы .mka (Matroska audio). Это будет особенно полезно если у вас очень длинное видео (например, час)
+echo Но если вам нужен именно .mp3 вы можете потратить больше времени перекодируя файлы. Почему? Допустим, в OBS вы записываете звук видео по умолчанию с кодеком AAC, но он не может быть вставлен в mp3 контейнер без перекодирования в mp3
 pause
 echo --------------------
-echo Your choice:
-echo 1 - Copy streams to .mka (Very Fast)
-echo 2 - Encode streams to .mp3 (Slower)
+echo Ваш выбор:
+echo 1 - Перенести все потоки в .mka (Очень быстро)
+echo 2 - Кодировать потоки в .mp3 (Медленно)
 echo --------------------
 
 choice /C 12 /N
@@ -774,17 +767,17 @@ goto welcome
 
 :PresetTool_Upscaling
 cls
-echo Choose a scaling algorithm
+echo Выберите алгоритм масштабирования
 echo --------------------------
-echo 1 - Lanczos (Good Quality, slower, most popular)
-echo 2 - Sinc (Best Quality, A ghostly artifacts is possible when the image is zoomed in)
+echo 1 - Lanczos (Хорошее качество, медленнее, самый популярный)
+echo 2 - Sinc (Лучшее качество, возможны "призрачные" артефакты которые видны при приближении картинки)
 echo 3 - Spline
-echo 4 - Bicubic (default)
-echo 5 - Bilinear (Fast but blurry)
+echo 4 - Bicubic (Стандартное)
+echo 5 - Bilinear (Быстрый но мыльный)
 echo 6 - Fast Bilinear
-echo 7 - Neighbor (Not recommended. use only if you want to increase or decrease the resolution by 2 times)
+echo 7 - Neighbor (Не рекомендуется. Используйте только если вам нужно увеличить или уменьшить изображение ровно в 2 раза)
 echo 8 - Gauss
-echo H - (Will appear in future versions) Help me, I don't understand a damn thing. What should I choose?
+echo H - (Появится в будущих версиях) Помогите, я нихрена не понимаю. Что мне стоит выбрать?
 echo --------------------------
 choice /C 12345678H /N
 if %errorlevel%==1 set temp1=flags=lanczos
@@ -797,14 +790,8 @@ if %errorlevel%==7 set temp1=flags=neighbor
 if %errorlevel%==8 set temp1=flags=gauss
 if %errorlevel%==9 goto PresetTool_Upscaling
 
-rem -vf scale=2560:-1:sws_flags=lanczos 
-rem sinc		187 fps
-rem lanczos		500 fps
-rem bicubic		660 fps
-rem fast_bilinear	1260 fps
-rem neighbor	1300 fps
 cls
-echo Select the resolution to scale with the original aspect ratio preserved
+echo Выберите разрешение в которое вы хотите масштабировать видео сохраняя исходное соотношение сторон
 echo --------------------------
 echo 1 - 144px
 echo 2 - 240px
@@ -829,12 +816,12 @@ if %errorlevel%==8 set temp2=-2:2160&& goto PresetTool_Upscaling_Encode
 if %errorlevel%==9 set temp2=-2:4320&& goto PresetTool_Upscaling_Encode
 if %errorlevel%==10 cls
 
-echo Enter the width in pixels (example: 1280)
+echo Введите ширину в пикселях (Например: 1280)
 set /p temp3=
 color af
 color 5f
 cls
-echo Enter the height in pixels (example: 720)
+echo Введите высоту в пикселях (Например: 720)
 set /p temp4=
 color af
 color 5f
@@ -843,16 +830,16 @@ set temp2=%temp3%:%temp4%
 :PresetTool_Upscaling_Encode
 set size=-vf scale=%temp2%:%temp1%
 cls
-echo The video will be encoded by the libx264 codec using the CPU. Support for other codecs for this tool may appear in the future
+echo Видео будет кодированно кодировщиком libx264 используя процессор. Поддержка других кодеков может появиться в будущем
 pause
 cls
-echo Select quality
+echo Выберите качество
 echo --------------------------
-echo 0 - lossless (CRF 0)
-echo 8 - CRF 8 - Large file size, better quality
+echo 0 - Без потерь (CRF 0)
+echo 8 - CRF 8 - Больше размер файла, лучше качество
 echo 6 - CRF 16
 echo 4 - CRF 24
-echo 2 - CRF 32 - Small file size, poor quality
+echo 2 - CRF 32 - Меньше размер файла, хуже качество
 echo --------------------------
 choice /C 08642 /N
 
@@ -862,25 +849,25 @@ if %errorlevel%==3 set vidbitrate=-crf 16
 if %errorlevel%==4 set vidbitrate=-crf 24
 if %errorlevel%==5 set vidbitrate=-crf 32
 cls
-choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+choice /c YN /N /T 3 /D Y /m "Y - Автоматически определить частоту кадров, N - Установить свою частоту кадров"
 if %errorlevel%==1 goto PresetTool_Upscaling_EncodeF
 if %errorlevel%==2 cls
-echo Enter the frame rate (example: 60)
+echo Введите частоту кадров (Например: 60)
 set /p temp5=
 set framerate=-r %temp5%
 
 :PresetTool_Upscaling_EncodeF
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 color a
 color f
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -888,23 +875,20 @@ ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%ou
 pause
 goto welcome
 
-rem ╨Ъ╨╛╨╜╤Д╨╕╨│╤Г╤А╨░╤В╨╛╤А (╨Т ╨а╨Р╨Ч╨а╨Р╨С╨Ю╨в╨Ъ╨Х) -------------------------------------------------------------------------------
+rem Конфигуратор (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
 
 :configure
-rem CLS ╨Ю╤З╨╕╤Й╨░╨╡╤В ╤Н╨║╤А╨░╨╜ ╨║╨╛╨╝╨░╨╜╨┤╨╜╨╛╨╣ ╤Б╤В╤А╨╛╨║╨╕
 cls
 color f
-rem ╨Т╨▓╨╛╨┤ ╨╕╨╝╨╡╨╜╨╕ ╨▓╤Е╨╛╨┤╤П╤Й╨╡╨│╨╛ ╤Д╨░╨╣╨╗╨░
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 color a
 color f
-rem ╨Т╤Л╨▒╨╛╤А ╨▒╨╕╨▒╨╗╨╕╨╛╤В╨╡╨║╨╕ ╨║╨╛╨┤╨╕╤А╨╛╨▓╤Й╨╕╨║╨░
-echo Select encoder
+echo Выберите кодировщик
 echo --------------------------
-echo 0 - Copy Encoder settings from Input File (Remux)
+echo 0 - Копировать настройки кодировщика из входного файла (Ремультиплексирование)
 echo 1 - libx264 (H.264)
 echo 2 - libx265 (H.265 aka. HEVC)
 echo 3 - libsvtav1 (SVT-AV1)
@@ -928,25 +912,25 @@ if %errorlevel%==7 goto Conf_vp9
 if %errorlevel%==8 goto Conf_gif
 if %errorlevel%==9 goto Conf_Custom
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п ╨а╨Х╨Ь╨г╨Ы╨м╨в╨Ш╨Я╨Ы╨Х╨Ъ╨б╨Ш╨а╨Ю╨Т╨Р╨Э╨Ш╨п (╨Я╤А╨╛╤В╨╡╤Б╤В╨╕╤А╨╛╨▓╨░╨╜╨╜╨░) -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ РЕМУЛЬТИПЛЕКСИРОВАНИЯ (Протестированна) -------------------------------------------------------------------------------
 
 :Conf_copy
 cls
-rem ╨Ч╨░╨┤╨░╤С╤В ╨┐╨╡╤А╨╡╨╝╨╡╨╜╨╜╤Г╤О ╨║╨╛╨┤╨╕╤А╨╛╨▓╤Й╨╕╨║╨░
+rem Задаёт переменную кодировщика
 set encoder=-c:v copy
-choice /c YN /N /m "Y - Change Audiocodec, N - Copy Audiocodec"
+choice /c YN /N /m "Y - Сменить аудиокодек, N - Копировать аудиокодек"
 if %errorlevel%==1 goto conf_copy_AC
 if %errorlevel%==2 set audiocodec=-c:a copy && goto Conf_Copy_S
 
 :conf_copy_AC
 cls
-echo Select Audiocodec
+echo Выберите Аудиокодек
 echo --------------------------
 echo 1 - AAC (Advanced Audio Coding)
-echo 2 - AAC via MediaFoundation (codec aac)
+echo 2 - AAC via MediaFoundation (Кодек aac)
 echo 3 - FLAC (Free Lossless Audio Codec)
 echo 4 - MP3 
-echo 5 - libopus Opus (codec opus)
+echo 5 - libopus Opus (Кодек opus)
 echo --------------------------
 
 choice /C 12345 /N
@@ -958,15 +942,15 @@ if %errorlevel%==4 set audiocodec=-c:a libmp3lame
 if %errorlevel%==5 set audiocodec=-c:a libopus
 
 cls
-echo Select Audio Bitrate
+echo Выберите битрейт аудио
 echo --------------------------
-echo 1 - 96 kbps - generally used for speech or low-quality streaming.
-echo 2 - 128 kbps - mid-range bitrate quality.
-echo 3 - 192 kbps - medium quality bitrate.
-echo 4 - 256 kbps - a commonly used high-quality bitrate.
-echo 5 - 320 kbps - highest level supported by the MP3 standard.
-echo 6 - 384 kbps - Youtube recommended: Stereo
-echo 7 - 512 kbps - Youtube recommended: Stereo + 5.1
+echo 1 - 96 kbps - Обычно используется для речи или стриминга в низком качестве.
+echo 2 - 128 kbps - Качество близкое к среднему.
+echo 3 - 192 kbps - Среднее качество.
+echo 4 - 256 kbps - Популярный битрейт с высоким качеством звука.
+echo 5 - 320 kbps - Наивысший уровень поддерживаемый стандартом MP3.
+echo 6 - 384 kbps - Рекомендация Youtube для стерео
+echo 7 - 512 kbps - Рекомендация Youtube для 5.1 звука
 echo --------------------------
 choice /C 1234567 /N
 
@@ -980,24 +964,24 @@ if %errorlevel%==7 set audiobitrate=-b:a 512K && goto Conf_Copy_S
 
 :Conf_Copy_S
 cls
-choice /c YNC /N /m "Y - Add subtitles to encoded video, N - Disable Subtitles, C - Copy subtitles from videofile"
+choice /c YNC /N /m "Y - Добавить субтитры без перекодирования видео, N - Отключить субтитры, C - Копировать субтитры из исходного файла"
 if %errorlevel%==1 goto Conf_Copy_selectSC
 if %errorlevel%==2 set disablesubtitles=-sn && goto copyLib
 if %errorlevel%==3 set subencoder=-c:s copy && goto copyLib
 
 :Conf_Copy_selectSC
 cls
-echo Select Subtitles File
+echo Выберите файл субтитров
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetSubtitlesFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set temp11=%decode1:?= %
 set inputsubtitle=-i "%temp11%"
 cls
-echo Choose subtitles format
+echo Выберите формат субтитров
 echo --------------------------
-echo 1 - DVD subtitles (codec dvd_subtitle)
+echo 1 - DVD subtitles (Кодек dvd_subtitle)
 echo 2 - 3GPP Timed Text subtitle
-echo 3 - SubRip subtitle (codec subrip)
-echo 4 - ASS (Advanced SubStation Alpha) subtitle (codec ass)
+echo 3 - SubRip subtitle (Кодек subrip)
+echo 4 - ASS (Advanced SubStation Alpha) subtitle (Кодек ass)
 echo 5 - TTML subtitle
 echo 6 - Raw text subtitle
 echo 7 - WebVTT subtitle
@@ -1013,17 +997,17 @@ if %errorlevel%==6 set subencoder=-c:s text && goto copyLib
 if %errorlevel%==7 set subencoder=-c:s webvtt && goto copyLib
 
 :copyLib
-rem ╨Ш╨╝╤П ╨▓╤Л╤Е╨╛╨┤╨╜╨╛╨│╨╛ ╤Д╨░╨╣╨╗╨░
+rem Имя выходного файла
 cls
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo Input new file format (example: mkv [NOT .mkv!!!])
+echo Введите новый формат файла (Например: mkv [НЕ .mkv!!!])
 set /p outputformat=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -1031,7 +1015,7 @@ ffmpeg %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitr
 pause
 goto welcome
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п H264 -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ H264 -------------------------------------------------------------------------------
 
 :Conf_h264
 echo Choose H.264 encoder
@@ -1068,20 +1052,19 @@ if %errorlevel%==7 set encoder=-c:v h264_qsv && goto next_h264_qsv
 
 :next_h264_qsv
 
-rem ╨д╨╗╨░╨│╨╕ h264_nvenc - ffmpeg -h encoder=h264_nvenc
-rem ╨Ю╨Я╨в╨Ш╨Ь╨Ш╨Ч╨Р╨ж╨Ш╨п ╨а╨Ю╨Ы╨Ш╨Ъ╨Р ╨Ф╨Ы╨п YOUTUBE -------------------------------------------------------------------------------
+rem Флаги h264_nvenc - ffmpeg -h encoder=h264_nvenc
 :OptimizeYT
 cls
-echo In this section, you can adjust your video to the recommended uploading parameters and with minimal loss of quality.
-echo The video will be optimized for Youtube, but it will also be suitable for other services
+echo В этом разделе, вы можете подогнать своё видео к рекомендуемым параметрам загружаемых видео с минимальной потерей качества.
+echo Видео будет оптимизировано для Youtube, но оно также может подойти для остальных сервисов
 
-echo What to do with the video?
+echo Что вы хотите сделать с видео?
 echo --------------------------
-echo 1 - Just add faststart* in my video (fastest) (remux to mp4)
-echo 2 - Encode my video to the YouTube recommended parameters
-echo 3 - Encode my HDR video to the YouTube recommended parameters (EXPERIMENTAL)
+echo 1 - Просто добавить быстрый старт* в моё видео (Самое быстрое) (мультиплексирование в mp4)
+echo 2 - Кодировать моё видео с рекомендуемыми для YouTube параметрами
+echo 3 - Кодировать моё HDR видео с рекомендуемыми для YouTube параметрами (ЭКСПЕРЕМЕНТАЛЬНАЯ ФУНКЦИЯ)
 echo --------------------------
-echo *Fast Start refers to, by optimizing MP4, moving the moov atom to the beginning of a video, so that browser will easily locate the moov atom to load and play the video faster, it can progressively stream while it's buffering. You don't have to wait for it to finish downloading.
+echo *Быстрый старт, оптимизирует файл MP4, двигая moov atom в начало файла видео, чтобы браузеры могли легко найти moov atom для загрузки и проигрывания видео быстрее, и оно могло постепенно подгружаться при воспроизведении. Вам не нужно будет ожидать окончания загрузки для воспроизведения.
 choice /C 123 /N
 
 if %errorlevel%==1 goto OptimizeYT_faststart
@@ -1089,16 +1072,16 @@ if %errorlevel%==2 goto OptimizeYT_Encode
 if %errorlevel%==3 goto OptimizeYT_EncodeHDR
 
 :OptimizeYT_faststart
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -1107,23 +1090,23 @@ pause
 goto welcome
 
 :OptimizeYT_Encode
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Choose x264 encoding preset
-echo ultrafast and superfast? Seriously? Don't use them. In addition Youtube recommends using CABAC which is not used in these presets
+echo Выберите пресет кодирования x264
+echo ultrafast и superfast? Серьёзно? Не используйте их. К тому же Youtube рекомендует использовать CABAC который не используется в тех пресетах
 echo --------------------------
-echo 1 - veryfast - Fast encoding, The quality is worse
+echo 1 - veryfast - Быстрое кодирование, ниже качество
 echo 2 - faster
 echo 3 - fast
-echo 4 - medium (Default)
-echo 5 - slow (RECOMENDED)
+echo 4 - medium (По умолчанию)
+echo 5 - slow (Рекомендуется)
 echo 6 - slower
-echo 7 - veryslow - Best Quality, Slowest encoding (excluding placebo of course)
+echo 7 - veryslow - Лучшее качество, самое медленное кодирование (Не считая placebo естественно)
 echo --------------------------
-echo PLACEBO? You're kidding me, right? I would like to see AT LEAST ONE person who uses this preset to upload videos to the Internet.
+echo PLACEBO? Ты должно быть шутишь, верно? Я хотел бы видеть ХОТЬ ОДНОГО человека который использует этот пресет чтобы выкладывать видео в интернет.
 choice /C 1234567 /N
 
 if %errorlevel%==1 set preset=-preset veryfast
@@ -1135,18 +1118,18 @@ if %errorlevel%==6 set preset=-preset slower
 if %errorlevel%==7 set preset=-preset veryslow
 
 cls
-echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
-echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
+echo Выберите количество потоков для кодирования, чем больше значения, тем больше ресурсов процессора будет использоваться для кодирования
+echo Мы рекомендуем оставить немного свободных ядер процессора. Если вы выберите все ядра, ваш процессор вероятно будет загружен на все 100% до окончания кодирования.
 echo --------------------------
-echo 1 - Auto
-echo 2 - 2 threads
-echo 4 - 4 threads
-echo 6 - 6 threads
-echo 8 - 8 threads
-echo 9 - 12 threads
-echo 0 - 16 threads
-echo Q - 24 threads
-echo E - 32 threads
+echo 1 - Автоматически
+echo 2 - 2 потока
+echo 4 - 4 потока
+echo 6 - 6 потоков
+echo 8 - 8 потоков
+echo 9 - 12 потоков
+echo 0 - 16 потоков
+echo Q - 24 потокоа
+echo E - 32 потокоа
 echo --------------------------
 choice /C 1246890QE /N
 if %errorlevel%==1 set threads=
@@ -1160,12 +1143,12 @@ if %errorlevel%==8 set threads=-threads 24
 if %errorlevel%==9 set threads=-threads 32
 
 cls
-echo Note about Audiocodec. For AAC-LC We use aac instead of libfdk_aac. The license of libfdk_aac is not compatible with GPL, so the GPL does not permit distribution of binaries containing incompatible code when GPL-licensed code is also included. Therefore this encoder have been designated as "non-free", and you cannot download a pre-built ffmpeg that supports it. This can be resolved by compiling ffmpeg yourself.
+echo Заметка про аудиокодек. Для AAC-LC мы используем AAC вместо libfdk_aac. Лицензия libfdk_aac не совместима с GPL, так что GPL не разрешает распространение двоичных файлов содержащих несовместимый код когда код с лицензией GPL также в комплекте. В любом случае, этот кодировщик помечен как "не бесплатный", и вы не сможете заранее скачать сборку ffmpeg которая его поддерживает. Это может быть решено если вы компилируете сборку ffmpeg самостоятельно.
 echo -----
-echo Select the audio type
+echo Выберите тип аудио
 echo --------------------------
-echo 0 - mono
-echo 1 - Stereo (RECOMENDED)
+echo 0 - Моно
+echo 1 - Стерео (Рекомендуется)
 echo 2 - 5.1
 echo --------------------------
 choice /C 012 /N
@@ -1175,10 +1158,10 @@ if %errorlevel%==2 set audiotype=-ac 2 && set audiobitrate=-b:a 384k
 if %errorlevel%==3 set audiotype=-ac 6 && set audiobitrate=-b:a 512k
 
 cls 
-echo Follow the recommended Youtube bitrate?
+echo Следовать рекомендуемым ограничениям битрейта для Youtube?
 echo --------------------------
-echo Y - Recomended bitrate
-echo N - Unlimited bitrate
+echo Y - Рекомендумый битрейт
+echo N - Битрейт без ограничений 
 echo --------------------------
 choice /C YN /N
 
@@ -1187,7 +1170,7 @@ if %errorlevel%==2 goto OptimizeYT_Encode_Unlimited
 
 :OptimizeYT_Encode_Follow
 cls
-echo Please select quality. This will help us stay within the recommended bitrate
+echo Пожалуйста Выберите качество. Это поможет нам оставаться в рамках рекомендуемого битрейта
 echo --------------------------
 echo V - 144p
 echo B - 240p
@@ -1204,7 +1187,7 @@ echo I - 4K, 48-60 FPS (2160p50/2160p60)
 echo O - 8K, 24-30 FPS (4320p)
 echo P - 8K, 48-60 FPS (4320p50/4320p60)
 echo --------------------------
-echo Choose the REAL quality of your video. Otherwise we will not be able to follow the recommended values
+echo Выбирайте НАСТОЯЩЕЕ разрешение вашего видео. В противном случае мы не сможем следовать рекомендованным значениям
 choice /C VBNMQWERTYUIOP /N
 
 if %errorlevel%==1 set vidbitrate=-b:v 1000K -maxrate 1500K -bufsize 2000K -g 15
@@ -1223,11 +1206,11 @@ if %errorlevel%==13 set vidbitrate=-b:v 150M -minrate 80M -maxrate 160M -bufsize
 if %errorlevel%==14 set vidbitrate=-b:v 220M -minrate 120M -maxrate 240M -bufsize 360M -g 30
 
 cls
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -1237,13 +1220,13 @@ goto welcome
 
 :OptimizeYT_Encode_Unlimited
 cls
-echo Please select quality. This will help us stay within the recommended bitrate
+echo Пожалуйста выберите качество.
 echo --------------------------
-echo 1 - CRF 0 (x264 LOSSLESS)
-echo 2 - CRF 8 - Large file size, better quality
-echo 3 - CRF 16 (RECOMENDED)
+echo 1 - CRF 0 (x264 БЕЗ ПОТЕРЬ)
+echo 2 - CRF 8 - Больше размер файла, лучше качество
+echo 3 - CRF 16 (Рекомендуется)
 echo 4 - CRF 24
-echo 5 - CRF 32 - Small file size, poor quality
+echo 5 - CRF 32 - Меньше размер файла, хуже качество
 echo --------------------------
 choice /C 12345 /N
 
@@ -1254,11 +1237,11 @@ if %errorlevel%==4 set vidbitrate=-crf 24
 if %errorlevel%==5 set vidbitrate=-crf 32
 
 cls
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -1267,23 +1250,23 @@ pause
 goto welcome
 
 :OptimizeYT_EncodeHDR
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Choose x264 encoding preset
-echo ultrafast and superfast? Seriously? Don't use them. In addition Youtube recommends using CABAC which is not used in these presets
+echo Выберите пресет кодирования x264
+echo ultrafast и superfast? Серьёзно? Не используйте их. К тому же Youtube рекомендует использовать CABAC который не используется в тех пресетах
 echo --------------------------
-echo 1 - veryfast - Fast encoding, The quality is worse
+echo 1 - veryfast - Быстрое кодирование, ниже качество
 echo 2 - faster
 echo 3 - fast
-echo 4 - medium (Default)
-echo 5 - slow (RECOMENDED)
+echo 4 - medium (По умолчанию)
+echo 5 - slow (Рекомендуется)
 echo 6 - slower
-echo 7 - veryslow - Best Quality, Slowest encoding (excluding placebo of course)
+echo 7 - veryslow - Лучшее качество, самое медленное кодирование (Не считая placebo естественно)
 echo --------------------------
-echo PLACEBO? You're kidding me, right? I would like to see AT LEAST ONE person who uses this preset to upload videos to the Internet.
+echo PLACEBO? Ты должно быть шутишь, верно? Я хотел бы видеть ХОТЬ ОДНОГО человека который использует этот пресет чтобы выкладывать видео в интернет.
 choice /C 1234567 /N
 
 if %errorlevel%==1 set preset=-preset veryfast
@@ -1295,18 +1278,18 @@ if %errorlevel%==6 set preset=-preset slower
 if %errorlevel%==7 set preset=-preset veryslow
 
 cls
-echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
-echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
+echo Выберите количество потоков для кодирования, чем больше значения, тем больше ресурсов процессора будет использоваться для кодирования
+echo Мы рекомендуем оставить немного свободных ядер процессора. Если вы выберите все ядра, ваш процессор вероятно будет загружен на все 100% до окончания кодирования.
 echo --------------------------
-echo 1 - Auto
-echo 2 - 2 threads
-echo 4 - 4 threads
-echo 6 - 6 threads
-echo 8 - 8 threads
-echo 9 - 12 threads
-echo 0 - 16 threads
-echo Q - 24 threads
-echo E - 32 threads
+echo 1 - Автоматически
+echo 2 - 2 потока
+echo 4 - 4 потока
+echo 6 - 6 потоков
+echo 8 - 8 потоков
+echo 9 - 12 потоков
+echo 0 - 16 потоков
+echo Q - 24 потокоа
+echo E - 32 потокоа
 echo --------------------------
 choice /C 1246890QE /N
 if %errorlevel%==1 set threads=
@@ -1320,12 +1303,12 @@ if %errorlevel%==8 set threads=-threads 24
 if %errorlevel%==9 set threads=-threads 32
 
 cls
-echo Note about Audiocodec. For AAC-LC We use aac instead of libfdk_aac. The license of libfdk_aac is not compatible with GPL, so the GPL does not permit distribution of binaries containing incompatible code when GPL-licensed code is also included. Therefore this encoder have been designated as "non-free", and you cannot download a pre-built ffmpeg that supports it. This can be resolved by compiling ffmpeg yourself.
+echo Заметка про аудиокодек. Для AAC-LC мы используем AAC вместо libfdk_aac. Лицензия libfdk_aac не совместима с GPL, так что GPL не разрешает распространение двоичных файлов содержащих несовместимый код когда код с лицензией GPL также в комплекте. В любом случае, этот кодировщик помечен как "не бесплатный", и вы не сможете заранее скачать сборку ffmpeg которая его поддерживает. Это может быть решено если вы компилируете сборку ffmpeg самостоятельно.
 echo -----
-echo Select the audio type
+echo Выберите тип аудио
 echo --------------------------
-echo 0 - mono
-echo 1 - Stereo (RECOMENDED)
+echo 0 - Моно
+echo 1 - Стерео (Рекомендуется)
 echo 2 - 5.1
 echo --------------------------
 choice /C 012 /N
@@ -1335,10 +1318,10 @@ if %errorlevel%==2 set audiotype=-ac 2 && set audiobitrate=-b:a 384k
 if %errorlevel%==3 set audiotype=-ac 6 && set audiobitrate=-b:a 512k
 
 cls 
-echo Follow the recommended Youtube bitrate?
+echo Следовать рекомендуемым ограничениям битрейта для Youtube?
 echo --------------------------
-echo Y - Recomended bitrate
-echo N - Unlimited bitrate
+echo Y - Рекомендумый битрейт
+echo N - Битрейт без ограничений 
 echo --------------------------
 choice /C YN /N
 
@@ -1347,9 +1330,9 @@ if %errorlevel%==2 goto OptimizeYT_EncodeHDR_Unlimited
 
 :OptimizeYT_EncodeHDR_Follow
 cls
-echo Please select quality. This will help us stay within the recommended bitrate
+echo Пожалуйста Выберите качество. Это поможет нам оставаться в рамках рекомендуемого битрейта
 echo --------------------------
-echo Lower resolutions for HDR are not Supported on YouTube
+echo Низкие разрешения HDR видео не поддерживаются на YouTube
 echo Q - HD, 24-30 FPS (720p)
 echo W - HD, 48-60 FPS (720p50/720p60)
 echo E - Full HD, 24-30 FPS (1080p)
@@ -1361,7 +1344,7 @@ echo I - 4K, 48-60 FPS (2160p50/2160p60)
 echo O - 8K, 24-30 FPS (4320p)
 echo P - 8K, 48-60 FPS (4320p50/4320p60)
 echo --------------------------
-echo Choose the REAL quality of your video. Otherwise we will not be able to follow the recommended values
+echo Выбирайте НАСТОЯЩЕЕ разрешение вашего видео. В противном случае мы не сможем следовать рекомендованным значениям
 choice /C QWERTYUIOP /N
 
 if %errorlevel%==1 set vidbitrate=-b:v 6.5M -minrate 6M -maxrate 7M -bufsize 13M -g 15
@@ -1376,11 +1359,11 @@ if %errorlevel%==9 set vidbitrate=-b:v 180M -minrate 100M -maxrate 200M -bufsize
 if %errorlevel%==10 set vidbitrate=-b:v 250M -minrate 150M -maxrate 300M -bufsize 500M -g 30
 
 cls
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -1390,13 +1373,13 @@ goto welcome
 
 :OptimizeYT_EncodeHDR_Unlimited
 cls
-echo Please select quality. This will help us stay within the recommended bitrate
+echo Пожалуйста выберите качество.
 echo --------------------------
-echo 1 - CRF 0 (x264 LOSSLESS)
-echo 2 - CRF 8 - Large file size, better quality (RECOMENDED)
-echo 3 - CRF 16
+echo 1 - CRF 0 (x264 БЕЗ ПОТЕРЬ)
+echo 2 - CRF 8 - Больше размер файла, лучше качество
+echo 3 - CRF 16 (Рекомендуется)
 echo 4 - CRF 24
-echo 5 - CRF 32 - Small file size, poor quality
+echo 5 - CRF 32 - Меньше размер файла, хуже качество
 echo --------------------------
 choice /C 12345 /N
 
@@ -1407,11 +1390,11 @@ if %errorlevel%==4 set vidbitrate=-crf 24
 if %errorlevel%==5 set vidbitrate=-crf 32
 
 cls
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
@@ -1420,81 +1403,81 @@ pause
 goto welcome
 
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п HEVC -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ HEVC -------------------------------------------------------------------------------
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п SVT-AV1 -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ SVT-AV1 -------------------------------------------------------------------------------
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п AV1 -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ AV1 -------------------------------------------------------------------------------
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п VP8 -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ VP8 -------------------------------------------------------------------------------
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п VP9 -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ VP9 -------------------------------------------------------------------------------
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п GIF -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ GIF -------------------------------------------------------------------------------
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п MPEG-1 -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ MPEG-1 -------------------------------------------------------------------------------
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п MPEG-2 -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ MPEG-2 -------------------------------------------------------------------------------
 
-rem ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п MPEG-4 -------------------------------------------------------------------------------
+rem КОНФИГУРАЦИЯ MPEG-4 -------------------------------------------------------------------------------
 
-rem ╨а╨г╨з╨Э╨Р╨п ╨Ъ╨Ю╨Э╨д╨Ш╨У╨г╨а╨Р╨ж╨Ш╨п -------------------------------------------------------------------------------
+rem РУЧНАЯ КОНФИГУРАЦИЯ -------------------------------------------------------------------------------
 
 :Conf_Custom
 cls
 color e
-echo In this mode, you can practice any magic that you like. This is a kind of half-manual input mode.
+echo В этом режиме вы можете творить любую магию которую вы захотите. Это что-то вроде наполовину ручного режима.
 pause
 cls
-echo Sounds cool doesn't it?
+echo Звучит круто, не так ли?
 choice /c YN
 if %errorlevel%==2 goto Conf_Custom_joke
-echo !Be aware that this mode is experimental, and some codecs may not support the parameters you entered.
+echo !Обратите внимание что этот режим эксперементален, и некоторые кодеки могут не поддерживать введённые вами параметры.
 pause
 cls
-echo Errors are also possible due to various incorrect codec combinations, as well as due to the fact that codecs do not fit standard flags
+echo Также возможны ошибки из-за неверных комбинаций кодеков, а также потому что некоторые кодеки не поддерживают стандартные флаги
 pause
-echo Do you want to continue?
+echo Вы хотите продолжить?
 choice /c YN
 if %errorlevel%==1 goto Conf_Custom_Start
 if %errorlevel%==2 goto welcome
 
 :Conf_Custom_joke
 color 4
-echo Hey! It was very hurtful by the way :(
+echo Эй! Это было обидно между прочим :(
 pause
 cls
 color c
-echo Since you said that this script is bad, then I won't run it for you.
+echo Раз этот скрипт по твоему мнению плохой, тогда я не запущу его для тебя.
 pause
 cls
-echo Goodbye...
+echo Прощай...
 pause
 cls
 color 8
 TIMEOUT /T 15 /NOBREAK
 cls
 color e
-echo It's okay, I'm just kidding. I know this script is cool
+echo Всё нормально, я просто шучу. Я знаю что этот скрипт крутой
 pause
 cls
-echo !Be aware that this mode is experimental, and some codecs may not support the parameters you entered.
+echo !Обратите внимание что этот режим эксперементален, и некоторые кодеки могут не поддерживать введённые вами параметры.
 pause
 cls
-echo Errors are also possible due to various incorrect codec combinations, as well as due to the fact that codecs do not fit standard flags
+echo Также возможны ошибки из-за неверных комбинаций кодеков, а также потому что некоторые кодеки не поддерживают стандартные флаги
 pause
-echo Do you want to continue?
+echo Вы хотите продолжить?
 choice /c YN
 if %errorlevel%==2 goto welcome
 cls
 color b
-echo And again... Don't say hurtful things to anyone.
+echo И ещё раз... Не говори никому ничего плохого.
 pause
 cls
-echo Even if it's just a script...
+echo Даже если это просто скрипт...
 pause
 cls
-echo Please...
+echo Пожалуйста...
 pause
 cls
 goto Conf_Custom_Start
@@ -1502,51 +1485,51 @@ goto Conf_Custom_Start
 :Conf_Custom_Start
 cls
 color e
-echo All settings are optional. Choose everything you need.
-echo To turn off the video/audio, go to the codecs section and enter the value you need to turn off the video/audio. The value is written out separately
+echo Все настройки необязательны. Выбирайте всё что вам нужно.
+echo Чтобы отключить Видео или Аудио, войдите в раздел кодеков и введите значение которое нужно для отключения Видео или Аудио. Эти значения выписаны отдельно.
 echo When you set what you want, start encoding by pressing "1"
 timeout /T 1
 echo ----------------
-echo VIDEO SETTINGS
-echo Q - Set Video codec
-echo W - Set Video bitrate
-echo E - Set Video Resolution
-echo Y - Set Video Framerate
-echo R - Input Videofile
-echo P - RESET VIDEO SETTINGS
-echo file: %filepath%
+echo НАСТРОЙКИ ВИДЕО
+echo Q - Выбрать видеокодек
+echo W - Выбрать битрейт видео
+echo E - Выбрать разрешение видео
+echo Y - Выбрать частоту кадров видео
+echo R - Укажите видеофайл...
+echo P - СБРОСИТЬ НАСТРОЙКИ ВИДЕО
+echo Файл: %filepath%
 echo ----------------
-echo AUDIO SETTINGS
-echo A - Set Audio codec
-echo S - Set Audio bitrate
-echo D - Input Audiofile (Do not specify a file to take audio from a video file)
-echo L - RESET AUDIO SETTINGS
-echo file: %inputaudio%
+echo НАСТРОЙКИ АУДИО
+echo A - Выбрать аудиокодек
+echo S - Выбрать битрейт аудио
+echo D - Укажите аудиофайл... (Не указывайте файл чтобы взять аудио из видеофайла)
+echo L - СБРОСИТЬ НАСТРОЙКИ АУДИО
+echo Файл: %inputaudio%
 echo ----------------
-echo SUBTITLE SETTINGS
-echo X - Set Subtitle Codec
-echo C - Input Subtitles file (Do not specify a file to take subtitles from a video file)
-echo M - RESET SUBTITLE SETTINGS
-echo file: %inputsubtitle%
+echo НАСТРОЙКИ СУБТИТРОВ
+echo X - Выбрать кодек субтитров
+echo C - Укажите файл субтитров... (Не указывайте файл чтобы взять субтитры из видеофайла)
+echo M - СБРОСИТЬ НАСТРОЙКИ СУБТИТРОВ
+echo Файл: %inputsubtitle%
 echo ----------------
-echo OTHER
-echo T - Select Threads Count
-echo I - Enter Custom Flags
-echo K - RESET Custom Flags
-echo Custom Flags: %flags%
+echo ПРОЧЕЕ
+echo T - Выбрать количество потоков для кодирования
+echo I - Ввести пользовательские флаги
+echo K - СБРОСИТЬ ПОЛЬЗОВАТЕЛЬСКИЕ ФЛАГИ
+echo Пользовательские флаги: %flags%
 echo ----------------
-echo 1 - START ENCODING
-echo FFmpeg Arguments: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "(path)"
+echo 1 - ЗАПУСТИТЬ КОДИРОВАНИЕ
+echo Аргументы FFmpeg: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "(path)"
 echo ----------------
-echo 5 - Back to main Menu
+echo 5 - Вернуться в главное меню
 echo ----------------
-echo Does NOT output an error when Codec is selected:
-if not novid==%temp1% echo Videocodec: %temp1%, Bitrate: %vidbitrate%, %temp3%x%temp4%, %temp5% FPS
-if novid==%temp1% echo VIDEO DISABLED
-if noaud==%temp7% echo AUDIO DISABLED
-if not noaud==%temp7% echo Audiocodec: %temp7%, Audio bitrate: %temp9% kbps
-if nosub==%temp12% echo SUBTITLES DISABLED
-if not nosub==%temp12% echo Subtitles: %temp12%
+echo НЕ выводит ошибку когда вы выберете кодек:
+if not novid==%temp1% echo Видеокодек: %temp1%, Битрейт: %vidbitrate%, %temp3%x%temp4%, %temp5% FPS
+if novid==%temp1% echo ВИДЕО ОТКЛЮЧЕНО
+if noaud==%temp7% echo АУДИО ОТКЛЮЧЕНО
+if not noaud==%temp7% echo Аудиокодек: %temp7%, Аудио битрейт: %temp9% kbps
+if nosub==%temp12% echo СУБТИТРЫ ОТКЛЮЧЕНЫ
+if not nosub==%temp12% echo Субтитры: %temp12%
 
 choice /C QWERPASDLXCMTIK51Y /N
 
@@ -1571,19 +1554,19 @@ if %errorlevel%==18 goto Conf_Custom_Framerate
 
 :Conf_Custom_threads
 cls
-echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
-echo !!! NOTE that some encoders DO NOT SUPPORT multithreading and may crash ffmpeg. If you are not sure of your actions, select "Unset".
-echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
+echo Выберите количество потоков для кодирования, чем больше значения, тем больше ресурсов процессора будет использоваться для кодирования
+echo !!! ЗАМЕТЬТЕ что НЕ ВСЕ кодировщики поддерживают многопоточность, и могут крашнуть ffmpeg. Если вы не уверены в своих действиях, выберите "Не назначено".
+echo Мы рекомендуем оставить немного свободных ядер процессора. Если вы выберите все ядра, ваш процессор вероятно будет загружен на все 100% до окончания кодирования.
 echo --------------------------
-echo 1 - Unset (Default recomended)
-echo 2 - 2 threads
-echo 4 - 4 threads
-echo 6 - 6 threads
-echo 8 - 8 threads
-echo 9 - 12 threads
-echo 0 - 16 threads
-echo Q - 24 threads
-echo E - 32 threads
+echo 1 - Не назначено (По умолчанию. Рекомендуется)
+echo 2 - 2 потока
+echo 4 - 4 потока
+echo 6 - 6 потоков
+echo 8 - 8 потоков
+echo 9 - 12 потоков
+echo 0 - 16 потоков
+echo Q - 24 потокоа
+echo E - 32 потокоа
 echo --------------------------
 choice /C 1246890QE /N
 if %errorlevel%==1 set threads=
@@ -1599,7 +1582,7 @@ goto Conf_Custom_Start
 
 :Conf_Custom_VInput
 cls
-echo Input Videofile
+echo Выберите видеофайл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
@@ -1728,14 +1711,14 @@ echo V....D y41p                 Uncompressed YUV 4:1:1 12-bit
 echo V....D yuv4                 Uncompressed packed 4:2:0
 echo VF.... zlib                 LCL (LossLess Codec Library) ZLIB
 echo V....D zmbv                 Zip Motion Blocks Video
-echo -------------               copy          Copies the codec of the source file
-echo -------------               novid         Sets the -vn flag to disable the video
-echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
-echo WRITE "novid" TO DISABLE THE VIDEO
-echo Use copy for using the codec of the source file. This will save you from completely reencoding the video, and save a lot of time.
-echo For normal purposes, we strongly recommend libx264, libx265 or libaom-av1 (.MP4/.mkv). Also you could use libvpx/libvpx-vp9 (.webm/.mkv).
-echo Use Ctrl+F to search
-echo WRITE THE NAME OF YOUR PREFERRED ENCODER (Example: libx264)
+echo -------------               copy          Берёт кодек из исходного файла
+echo -------------               novid         Ставит -vn флаг чтобы отключить видео
+echo Если имя кодировщика введено неверно, ffmpeg выдаст ошибку в конце процесса!!!
+echo НАПИШИТЕ "novid" ЧТОБЫ ОТКЛЮЧИТЬ ВИДЕО
+echo Используйте "copy" чтобы использовать кодек исходного файла. это спасёт вас от полного перекодирования видео и спасёт кучу времени.
+echo Для обычных применений мы рекомендуем libx264, libx265 или libaom-av1 (.MP4/.mkv). Также вы можете использовать libvpx/libvpx-vp9 (.webm/.mkv).
+echo Используйте Ctrl+F Для поиска
+echo ВПИШИТЕ ИМЯ ПРЕДПОЧИТАЕМОГО КОДЕКА (Например: libx264)
 set /p temp1=
 color 2
 if %temp1%==novid set disablevideo=-vn && set encoder= && set vidbitrate= && set size= && set framerate= && goto Conf_Custom_Start
@@ -1745,11 +1728,11 @@ goto Conf_Custom_Start
 
 :Conf_Custom_Vbitrate
 cls
-echo What type of bitrate do you want to choose?
+echo Какой тип битрейта вы хотите выбрать?
 echo --------
-echo 1 - CBR (The usual value in kbps. Works great everywhere. Recommended)
-echo 2 - CRF (Constant Rate Factor, Variable bitrate that depends on the complexity of the image. Not all codecs support CRF, but the most popular ones understand it.)
-echo 3 - QP (Like CRF, lower value means higher quality. However, the maximum value may be different in different codecs)
+echo 1 - CBR (Постоянное количество в kbps. Везде работает отлично. Рекомендуется)
+echo 2 - CRF (Constant Rate Factor, Переменный битрейт который зависит от сложности картинки. Не все кодеки поддерживают CRF, но самые популярные понимают его.)
+echo 3 - QP (Как CRF, низкие значения означают высокое качество. Тем не менее, максимальное значение может быть разным в разных кодеках.)
 echo --------
 choice /c 123 /N
 if %errorlevel%==1 goto Conf_Custom_VbitrateCBR
@@ -1758,8 +1741,8 @@ if %errorlevel%==3 goto Conf_Custom_VbitrateQP
 
 :Conf_Custom_VbitrateCBR
 cls
-echo The minimum and maximum bitrate values can be specified with custom flags using -minrate and -maxrate
-echo Enter the video bitrate in kbps (CBR) (example: 20000)
+echo Минимальные и максимальные значения битрейта можно указать во флагах используя -minrate и -maxrate
+echo Введите битрейт в kbps (CBR) (Например: 20000)
 set /p temp2=
 color 2
 set vidbitrate=-b:v %temp2%K
@@ -1767,8 +1750,8 @@ goto Conf_Custom_Start
 
 :Conf_Custom_VbitrateCRF
 cls
-echo The minimum and maximum bitrate values can be specified with custom flags using -minrate and -maxrate
-echo Enter the CRF value (0-51) (example: 17)
+echo Минимальные и максимальные значения битрейта можно указать во флагах используя -minrate и -maxrate
+echo Введите значение CRF (0-51) (Например: 17)
 set /p temp2=
 color 2
 set vidbitrate=-crf %temp2%
@@ -1776,8 +1759,8 @@ goto Conf_Custom_Start
 
 :Conf_Custom_VbitrateQP
 cls
-echo The minimum and maximum bitrate values can be specified with custom flags using -minrate and -maxrate
-echo Enter the QP value (0-51 in x264) (example: 14)
+echo Минимальные и максимальные значения битрейта можно указать во флагах используя -minrate и -maxrate
+echo Введите значение QP (0-51 in x264) (Например: 14)
 set /p temp2=
 color 2
 set vidbitrate=-qp %temp2%
@@ -1785,12 +1768,12 @@ goto Conf_Custom_Start
 
 :Conf_Custom_Resolution
 cls
-echo Enter the width in pixels (example: 1280)
+echo Введите ширину в пикселях (Например: 1280)
 set /p temp3=
 color 2
 color f
 cls
-echo Enter the height in pixels (example: 720)
+echo Введите высоту в пикселях (Например: 720)
 set /p temp4=
 color 2
 set size=-s %temp3%x%temp4%
@@ -1798,14 +1781,14 @@ goto Conf_Custom_Start
 
 :Conf_Custom_Framerate
 cls
-echo Enter the frame rate (example: 60)
+echo Введите частоту кадров (Например: 60)
 set /p temp5=
 set framerate=-r %temp5%
 goto Conf_Custom_Start
 
 :Conf_Custom_AInput
 cls
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetAudioFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set temp6=%decode1:?= %
 set inputaudio=-i "%temp6%"
@@ -1902,15 +1885,15 @@ echo A....D libvorbis            libvorbis (codec vorbis)
 echo A..... wavpack              WavPack
 echo A..... wmav1                Windows Media Audio 1
 echo A..... wmav2                Windows Media Audio 2
-echo -------------               copy          Copies the codec of the source file
-echo -------------               noaud         Sets the -an flag to disable the audio
-echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
-echo WRITE "noaud" TO DISABLE THE AUDIO
-echo For normal purposes, we strongly recommend: aac, libmp3lame.
-echo Also you could use lossless: flac or pcm (.wav).
-echo Use copy for using the codec of the source file
-echo Use Ctrl+F to search
-echo WRITE THE NAME OF YOUR PREFERRED AUDIOCODEC (Example: aac)
+echo -------------               copy          Берёт кодек из исходного файла
+echo -------------               noaud         Ставит -an флаг чтобы отключить аудио
+echo Если имя кодировщика введено неверно, ffmpeg выдаст ошибку в конце процесса!!!
+echo НАПИШИТЕ "noaud" ЧТОБЫ ОТКЛЮЧИТЬ АУДИО
+echo Используйте "copy" чтобы использовать кодек исходного файла.
+echo Для обычных применений мы рекомендуем: aac, libmp3lame.
+echo Также вы можете использовать кодеки без потерь: flac or pcm (.wav).
+echo Используйте Ctrl+F Для поиска
+echo ВПИШИТЕ ИМЯ ПРЕДПОЧИТАЕМОГО АУДИОКОДЕКА (Например: aac)
 set /p temp7=
 color 2
 if %temp7%==noaud set disableaudio=-an && set audiocodec= && set audiobitrate= && goto Conf_Custom_Start
@@ -1920,7 +1903,7 @@ goto Conf_Custom_Start
 
 :Conf_Custom_ABitrate
 cls
-echo Enter the audio bitrate in kbps (example: 256)
+echo Введите аудиобитрейт в kbps (Например: 256)
 set /p temp9=
 color 2
 set audiobitrate=-b:a %temp9%K
@@ -1928,7 +1911,7 @@ goto Conf_Custom_Start
 
 :Conf_Custom_SubInput
 cls
-echo Select Input File
+echo Выберите файл...
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetSubtitlesFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set temp11=%decode1:?= %
 set inputsubtitle=-i "%temp11%"
@@ -1953,14 +1936,14 @@ echo S..... text                 Raw text subtitle
 echo S..... ttml                 TTML subtitle
 echo S..... webvtt               WebVTT subtitle
 echo S..... xsub                 DivX subtitles (XSUB)
-echo -------------               copy          Copies the codec of the source file
-echo -------------               nosub         Sets the -sn flag to disable subtitles
-echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
-echo WRITE "nosub" TO DISABLE SUBTITLES
-echo We recommend: srt or ssa. webvtt For webm converter (supports Opus and vp8/vp9)
-echo Use copy for using the codec of the source file
-echo Use Ctrl+F to search
-echo WRITE THE NAME OF YOUR PREFERRED AUDIOCODEC (Example: subrip)
+echo -------------               copy          Берёт кодек из исходного файла
+echo -------------               nosub         Ставит -sn флаг для отключения субтитров
+echo Если имя кодировщика введено неверно, ffmpeg выдаст ошибку в конце процесса!!!
+echo НАПИШИТЕ "nosub" ЧТОБЫ ОТКЛЮЧИТЬ СУБТИТРЫ
+echo Мы рекомендуем: srt или ssa. webvtt для webm контейнер (Поддерживает Opus и vp8/vp9)
+echo Используйте "copy" чтобы использовать кодек исходного файла.
+echo Используйте Ctrl+F Для поиска
+echo ВПИШИТЕ ИМЯ ПРЕДПОЧИТАЕМОГО КОДЕКА СУБТИТРОВ (Например: subrip)
 set /p temp12=
 color 2
 if %temp12%==nosub set disablesubtitles=-sn && set subencoder= && goto Conf_Custom_Start
@@ -1972,61 +1955,61 @@ goto Conf_Custom_Start
 cls
 color 4
 color e
-echo Do not make mistakes, otherwise ffmpeg may return an error
-echo Run this one again in a new window and use the flags help (Press H, then 4, select "encoder" and then enter the name of the codec you are interested in)
-echo See the help for information about supported color spaces and sampling rates for different codecs
-echo Parameters such as color space, sampling rate, min/max rate, audio/video filters are set only by manually entering the flags
+echo Не делайте ошибок, иначе FFmpeg может вернуть вам ошибку
+echo Вы можете запустить скрипт в новом окну и использовать помощь по флагам (Нажмите H, замем 4, выберите "encoder" и введите имя кодировщика который вам нужен)
+echo Смотрите помощь за информацией о поддержке цветовых пространст в разных кодеков
+echo Такие параметры как цветовое пространство, частота сэмплов, минимальный/максимальный битрейт, аудио/видео фильтры могут быть выставлены только флагами вручную
 pause
 cls
-echo Enter your flags for the encoder (example: -preset slow -aq-mode 2 -rc-lookahead 60)
+echo Введите ваши флаги для кодировщика (Например: -preset slow -aq-mode 2 -rc-lookahead 60)
 set /p flags=
 goto Conf_Custom_Start
 
 :Conf_Custom_Render
 cls
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+echo Введите НОВОЕ имя файла (Например: lol0 [НЕ lol0.mkv!!!])
 set /p outputname=
 color a
 color f
 cls
-echo Note that the codec must support this format. Many support .mkv, libvpx (vp8/vp/opus) supports .webm, mpeg-1/2 supports .mpeg, mpeg-4/xvid supports .avi, and so on
-echo Input new file format (example: mkv [NOT .mkv!!!])
+echo Заметьте что кодек должен поддерживать этот формат. Многие поддерживают .mkv, libvpx (vp8/vp/opus) поддерживают .webm, mpeg-1/2 поддерживают .mpeg, mpeg-4/xvid поддерживают .avi, и так далее
+echo Введите новый формат файла (Например: mkv [НЕ .mkv!!!])
 set /p outputformat=
 color a
 color f
-echo select output folder
+echo Выберите папку вывода
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 cls
-if not novid==%temp1% echo Videocodec: %temp1%, Bitrate: %vidbitrate%, %temp3%x%temp4%, %temp5% FPS
-if novid==%temp1% echo VIDEO DISABLED
-echo file: %filepath%
-if noaud==%temp7% echo AUDIO DISABLED
-if not noaud==%temp7% echo Audiocodec: %temp7%, Audio bitrate: %temp9% kbps
-echo file: %inputaudio%
-if nosub==%temp12% echo SUBTITLES DISABLED
-if not nosub==%temp12% echo Subtitles: %temp12%
-echo file: %inputsubtitle%
-echo Custom Flags: %flags%
+if not novid==%temp1% echo Видеокодек: %temp1%, Битрейт: %vidbitrate%, %temp3%x%temp4%, %temp5% FPS
+if novid==%temp1% echo ВИДЕО ОТКЛЮЧЕНО
+echo Файл: %filepath%
+if noaud==%temp7% echo АУДИО ОТКЛЮЧЕНО
+if not noaud==%temp7% echo Аудиокодек: %temp7%, Аудио битрейт: %temp9% kbps
+echo Файл: %inputaudio%
+if nosub==%temp12% echo СУБТИТРЫ ОТКЛЮЧЕНЫ
+if not nosub==%temp12% echo Субтитры: %temp12%
+echo Файл: %inputsubtitle%
+echo Пользовательские флаги: %flags%
 echo ----------------
-echo FFmpeg Arguments: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+echo Аргументы FFmpeg: %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 pause
 color 8f
-echo !!! Starting FFMPEG
+echo !!! Запуск FFMPEG
 TIMEOUT /T 5
 
 ffmpeg %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 color f
 echo ::::::::::::::::::::::::::::::::::::
-echo E - Exit to main menu
-echo Q - Back to configurator
+echo E - Выйти в главное меню
+echo Q - Вернуться в конфигуратор
 choice /c EQ
 if %errorlevel%==1 goto welcome
 if %errorlevel%==2 goto Conf_Custom_Start
 pause
 exit
 
-rem ╨Э╨Х╨а╨Р╨С╨Ю╨з╨Р╨п ╨Ю╨С╨Ы╨Р╨б╨в╨м -------------------------------------------------------------------------------
+rem НЕРАБОЧАЯ ОБЛАСТЬ -------------------------------------------------------------------------------
 exit
 #:ex
 set /p gnida=
