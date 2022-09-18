@@ -65,8 +65,8 @@ del /f /q "FFpepeg-FFmpeg-Batch-RU.zip"
 ren "Build\Interface" FFpepeg
 if exist "build\FFpepeg\RUN.bat" rd /s /q FFpepeg-FFmpeg-Batch-RU
 if not exist "build\FFpepeg\RUN.bat" goto DoError1
-cd build\FFpepeg
-RUN.bat
+color a
+echo Готово! Запустите файл RUN внутри папки FFpepeg вручную
 pause
 exit
 
