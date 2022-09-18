@@ -56,12 +56,12 @@ goto Builder
 
 :Builder
 color e
-powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://github.com/SHULKERPLAY/FFpepeg/archive/refs/heads/FFmpeg-Batch-RU.zip','%~p0FFmpeg-Batch-RU.zip')
-if not exist "FFmpeg-Batch-RU.zip" goto DoError
-powershell.exe Expand-Archive '%~p0\FFmpeg-Batch-RU.zip' -DestinationPath '%~p0'
+powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://github.com/SHULKERPLAY/FFpepeg/archive/refs/heads/FFmpeg-Batch-RU.zip','%~p0FFpepeg-FFmpeg-Batch-RU.zip')
+if not exist "FFpepeg-FFmpeg-Batch-RU.zip" goto DoError
+powershell.exe Expand-Archive '%~p0\FFpepeg-FFmpeg-Batch-RU.zip' -DestinationPath '%~p0'
 md build
 move /Y "FFpepeg-FFmpeg-Batch-RU\Interface" "Build"
-del /f /q "FFmpeg-Batch-RU.zip"
+del /f /q "FFpepeg-FFmpeg-Batch-RU.zip"
 ren "Build\Interface" FFpepeg
 if exist "build\FFpepeg\RUN.bat" rd /s /q FFpepeg-FFmpeg-Batch-RU
 if not exist "build\FFpepeg\RUN.bat" goto DoError1
