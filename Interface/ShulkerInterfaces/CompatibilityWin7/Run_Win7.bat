@@ -149,14 +149,16 @@ echo F : Start FFmpeg Interface
 echo D : Start Multiplatform Video Downloader (STABLE!)
 echo G : Our GitHub
 echo C : Credits
+echo L : Change Language
 echo ::::::::::::::::::::::::::
-choice /C FDGCR /N
+choice /C FDGCRL /N
 
 if %errorlevel%==1 cd ShulkerInterfaces && Ffmpeg_ComandlineInterfaceProject.bat
 if %errorlevel%==2 cd ShulkerInterfaces && yt-dl_init.bat
 if %errorlevel%==3 explorer.exe "https://github.com/SHULKERPLAY/FFpepeg"
 if %errorlevel%==4 goto Credits
 if %errorlevel%==5 explorer.exe "https://github.com/SHULKERPLAY/FFpepeg/releases"
+if %errorlevel%==6 LanguageW7.bat
 goto start
 
 :Credits
