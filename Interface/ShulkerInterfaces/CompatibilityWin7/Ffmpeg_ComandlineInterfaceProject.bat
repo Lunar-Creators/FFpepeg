@@ -1,6 +1,7 @@
 @echo off
 rem Доступные переменные - %filepath% %inputaudio% %encoder% %outputformat% %outputname% %preset% %Profile% %tune% %vidbitrate% %maxbitrate% %audiocodec% %audiotype% %threads% %audiobitrate% %volume% %flags% %SUPERCUSTOMMODE% %outputfolder% %subencoder% %inputsubtitle% %disablevideo% %disableaudio% %disablesubtitles% %framerate% %size%
 rem Конфигурация libx264 - Запрос подраздела кодировщика, пресет кодирования, Выбор профиля, Выбор опции, Изменить разрешение, CBR или CRF битрейт, задать значение, вывод аудио, Выбор кодека или стандартные настройки, задать значение битрейта аудио, Запрос субтитров, дополнительные ключи, Запрос нового имени, Запрос нового формата
+rem %globalredirect% Created for global parameters to specify the goto value at the end
 echo Script based on FFmpeg. FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video.
 echo https://ffmpeg.org/
 timeout /t 3
@@ -44,6 +45,7 @@ set temp9=
 set temp10=
 set temp11=
 set temp12=
+set globalredirect=
 cls
 color e
 echo --ScriptVersion 0.10 -beta --copyright "SHULKER Play" --ffmpeg.org (n5.1.1-1-g4424a6223b-20220905)
@@ -209,7 +211,7 @@ echo 1 - Webm [Transperent support] [VP9, Opus, audio bitrate 0kbps or 320kbps]
 echo 2 - mpeg (Mpeg-1/2, audiocodec mp3, audio bitrate 0kbps or 320kbps)
 echo 3 - avi (Mpeg-4/Xvid, audiocodec mp3, audio bitrate 0kbps or 320kbps)
 echo 4 - GIF (gif, Configurable)
-echo 5 - mp4 (H.264, In Development)
+echo 5 - mp4 (H.264, AAC, audio bitrate 0kbps or 320kbps)
 echo 6 - mp4 (H.265, In Development)
 echo 7 - mp4 (av1 or SVT-AV1, In Development)
 rem av1 имеет лучшую степень сжатия, в то время как svt-av1 обладает скоростью сжатия выше чем у предшественника
@@ -230,6 +232,88 @@ if %errorlevel%==8 goto Preset_
 if %errorlevel%==9 goto OptimizeYT
 if %errorlevel%==10 goto configure
 exit
+
+:preset_h264
+echo Select Input File
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+cls
+echo Select a codec
+echo --------------------------
+echo 1 - H.264 (libx264) - The standard H264 encoder. Uses CPU
+echo ::::::::::
+echo 2 - AMF H.264 Encoder (h264_amf) - H264 encoder with AMD acceleration. Uses the resources of the graphics card. If your AMD graphics card does not support AMF, the encoder will return an error
+echo ::::::::::
+echo 3 - NVENC H.264 Encoder (h264_nvenc) - H264 encoder with NVIDIA acceleration. Uses the resources of the graphics card. If your Nvidia graphics card does not support Nvenc, the encoder will return an error
+echo ::::::::::
+echo 4 - H.264 QSV (Intel Quick Sync acceleration) H264 encoder with Intel acceleration. Uses the resources of the graphics chip. If your Intel graphics does not support Intel Quick Sync acceleration, the encoder will return an error
+echo :::::::::: Other Encoders
+echo 5 - H.264 RGB (libx264rgb) - perfect for lossless encoding
+echo 6 - OpenH264 (libopenh264)
+echo 7 - H264 via MediaFoundation (h264_mf)
+echo --------------------------
+
+choice /C 1234567 /N
+
+if %errorlevel%==1 set encoder=libx264
+if %errorlevel%==2 set encoder=h264_amf
+if %errorlevel%==3 set encoder=h264_nvenc
+if %errorlevel%==4 set encoder=h264_qsv
+if %errorlevel%==5 set encoder=libx264rgb
+if %errorlevel%==6 set encoder=libopenh264
+if %errorlevel%==7 set encoder=h264_mf
+
+cls
+echo --------------------------
+echo E - Enable Audio
+echo D - Disable Audio
+echo --------------------------
+
+choice /C ED /N
+
+if %errorlevel%==1 set audiocodec=-c:a aac -b:a 384K -ar 48000
+if %errorlevel%==2 set audiocodec=-an
+
+cls
+echo Select quality
+echo --------------------------
+echo 0 - lossless
+echo 8 - CRF 8 - Large file size, better quality
+echo 6 - CRF 16
+echo 4 - CRF 24
+echo 2 - CRF 32 - Small file size, poor quality
+echo --------------------------
+choice /C 08642 /N
+
+if %errorlevel%==1 set vidbitrate=-crf 0
+if %errorlevel%==2 set vidbitrate=-crf 8
+if %errorlevel%==3 set vidbitrate=-crf 16
+if %errorlevel%==4 set vidbitrate=-crf 24
+if %errorlevel%==5 set vidbitrate=-crf 32
+
+cls
+choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
+if %errorlevel%==2 set framerate=-r %temp5%
+
+if %encoder%==libx264 set globalredirect=preset_h264F&&goto globalthreads
+if %encoder%==libx264rgb set globalredirect=preset_h264F&&goto globalthreads
+if %encoder%==libopenh264 set globalredirect=preset_h264F&&goto globalthreads
+if %encoder%==h264_mf set globalredirect=preset_h264F&&goto globalthreads
+
+:preset_h264F
+echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+set /p outputname=
+color a
+color f
+echo select output folder
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+
+ffmpeg %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+pause
+goto welcome
 
 :Preset_gif
 echo Select Input File
@@ -397,13 +481,9 @@ if %errorlevel%==5 set vidbitrate=-qscale:v 31
 
 cls
 choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
-if %errorlevel%==1 goto preset_mpeg4F
-if %errorlevel%==2 cls
-echo Enter the frame rate (example: 60)
-set /p temp5=
-set framerate=-r %temp5%
+if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
+if %errorlevel%==2 set framerate=-r %temp5%
 
-:preset_mpeg4F
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
 color a
@@ -465,12 +545,9 @@ if %errorlevel%==5 set vidbitrate=-qscale:v 31
 
 cls
 choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
-if %errorlevel%==1 goto preset_mpegF
-if %errorlevel%==2 cls
-echo Enter the frame rate (example: 60)
-set /p temp5=
-set framerate=-r %temp5%
-:preset_mpegF
+if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
+if %errorlevel%==2 set framerate=-r %temp5%
+
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
 color a
@@ -515,38 +592,13 @@ if %errorlevel%==2 set vidbitrate=-crf 8
 if %errorlevel%==3 set vidbitrate=-crf 16
 if %errorlevel%==4 set vidbitrate=-crf 24
 if %errorlevel%==5 set vidbitrate=-crf 32
-
-cls
-echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
-echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
-echo --------------------------
-echo 1 - Auto
-echo 2 - 2 threads
-echo 4 - 4 threads
-echo 6 - 6 threads
-echo 8 - 8 threads
-echo 9 - 12 threads
-echo 0 - 16 threads
-echo Q - 24 threads
-echo E - 32 threads
-echo --------------------------
-choice /C 1246890QE /N
-if %errorlevel%==1 set threads=
-if %errorlevel%==2 set threads=-threads 2
-if %errorlevel%==3 set threads=-threads 4
-if %errorlevel%==4 set threads=-threads 6
-if %errorlevel%==5 set threads=-threads 8
-if %errorlevel%==6 set threads=-threads 12
-if %errorlevel%==7 set threads=-threads 16
-if %errorlevel%==8 set threads=-threads 24
-if %errorlevel%==9 set threads=-threads 32
 cls
 choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
-if %errorlevel%==1 goto Preset_vp9tsF
-if %errorlevel%==2 cls
-echo Enter the frame rate (example: 60)
-set /p temp5=
-set framerate=-r %temp5%
+if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
+if %errorlevel%==2 set framerate=-r %temp5%
+
+set globalredirect=Preset_vp9tsF&&goto globalthreads
+
 :Preset_vp9tsF
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
@@ -556,7 +608,7 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
+ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% %threads% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
 pause
 goto welcome
 
@@ -863,13 +915,9 @@ if %errorlevel%==4 set vidbitrate=-crf 24
 if %errorlevel%==5 set vidbitrate=-crf 32
 cls
 choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
-if %errorlevel%==1 goto PresetTool_Upscaling_EncodeF
-if %errorlevel%==2 cls
-echo Enter the frame rate (example: 60)
-set /p temp5=
-set framerate=-r %temp5%
+if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
+if %errorlevel%==2 set framerate=-r %temp5%
 
-:PresetTool_Upscaling_EncodeF
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
@@ -1726,7 +1774,7 @@ echo V....D xface                X-face image
 echo V....D xwd                  XWD (X Window Dump) image
 echo V....D y41p                 Uncompressed YUV 4:1:1 12-bit
 echo V....D yuv4                 Uncompressed packed 4:2:0
-echo VF.... zlib                 LCL (LossLess Codec Library) ZLIB
+echo VF.... zlib                 LCL (Lossless Codec Library) ZLIB
 echo V....D zmbv                 Zip Motion Blocks Video
 echo -------------               copy          Copies the codec of the source file
 echo -------------               novid         Sets the -vn flag to disable the video
@@ -2025,6 +2073,34 @@ if %errorlevel%==1 goto welcome
 if %errorlevel%==2 goto Conf_Custom_Start
 pause
 exit
+
+rem GLOBAL FUNCTIONS -------------------------------------------------------------------------------
+:globalthreads
+cls
+echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
+echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.
+echo --------------------------
+echo 1 - Auto
+echo 2 - 2 threads
+echo 4 - 4 threads
+echo 6 - 6 threads
+echo 8 - 8 threads
+echo 9 - 12 threads
+echo 0 - 16 threads
+echo Q - 24 threads
+echo E - 32 threads
+echo --------------------------
+choice /C 1246890QE /N
+if %errorlevel%==1 set threads=
+if %errorlevel%==2 set threads=-threads 2
+if %errorlevel%==3 set threads=-threads 4
+if %errorlevel%==4 set threads=-threads 6
+if %errorlevel%==5 set threads=-threads 8
+if %errorlevel%==6 set threads=-threads 12
+if %errorlevel%==7 set threads=-threads 16
+if %errorlevel%==8 set threads=-threads 24
+if %errorlevel%==9 set threads=-threads 32
+goto %globalredirect%
 
 rem НЕРАБОЧАЯ ОБЛАСТЬ -------------------------------------------------------------------------------
 exit
