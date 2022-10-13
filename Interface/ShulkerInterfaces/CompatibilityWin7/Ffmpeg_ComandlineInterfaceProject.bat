@@ -207,12 +207,12 @@ echo To use additional parameters, such as changing the color space, use the con
 echo -
 echo Choose encoding preset
 echo --------------------------
-echo 1 - Webm [Transperent support] [VP9, Opus, audio bitrate 0kbps or 320kbps]
-echo 2 - mpeg (Mpeg-1/2, audiocodec mp3, audio bitrate 0kbps or 320kbps)
-echo 3 - avi (Mpeg-4/Xvid, audiocodec mp3, audio bitrate 0kbps or 320kbps)
+echo 1 - Webm [Transperent support] [VP9, Opus, audio bitrate 320kbps]
+echo 2 - mpeg (Mpeg-1/2, audiocodec mp3, audio bitrate 320kbps)
+echo 3 - avi (Mpeg-4/Xvid, audiocodec mp3, audio bitrate 320kbps)
 echo 4 - GIF (gif, Configurable)
-echo 5 - mp4 (H.264, AAC, audio bitrate 0kbps or 320kbps)
-echo 6 - mp4 (H.265, In Development)
+echo 5 - mp4 (H.264, AAC, audio bitrate 384kbps)
+echo 6 - mp4 (H.265 (HEVC), AAC, audio bitrate 384kbps)
 echo 7 - mp4 (av1 or SVT-AV1, In Development)
 rem av1 имеет лучшую степень сжатия, в то время как svt-av1 обладает скоростью сжатия выше чем у предшественника
 echo 8 - ... (-)
@@ -232,6 +232,75 @@ if %errorlevel%==8 goto Preset_
 if %errorlevel%==9 goto OptimizeYT
 if %errorlevel%==10 goto configure
 exit
+
+:preset_h265
+echo Select Input File
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+cls
+echo Select a codec
+echo H.265 == HEVC
+echo --------------------------
+echo 1 - H.265 (libx265) - The standard HEVC encoder. Uses CPU
+echo ::::::::::
+echo 2 - AMF HEVC encoder (hevc_amf) - H265 encoder with AMD acceleration. Uses the resources of the graphics card. If your AMD graphics card does not support AMF HEVC, the encoder will return an error
+echo ::::::::::
+echo 3 - NVENC HEVC Encoder (hevc_nvenc) - H265 encoder with NVIDIA acceleration. Uses the resources of the graphics card. If your Nvidia graphics card does not support HEVC Nvenc, the encoder will return an error
+echo ::::::::::
+echo 4 - HEVC QSV (Intel Quick Sync acceleration) H265 encoder with Intel acceleration. Uses the resources of the graphics chip. If your Intel graphics does not support HEVC Intel Quick Sync acceleration, the encoder will return an error
+echo :::::::::: Other Encoders
+echo 5 - libkvazaar H.265 (libkvazaar)
+echo 6 - HEVC via MediaFoundation (hevc_mf)
+echo --------------------------
+
+choice /C 1234567 /N
+
+if %errorlevel%==1 set encoder=libx265
+if %errorlevel%==2 set encoder=hevc_amf
+if %errorlevel%==3 set encoder=hevc_nvenc
+if %errorlevel%==4 set encoder=hevc_qsv
+if %errorlevel%==5 set encoder=libkvazaar
+if %errorlevel%==6 set encoder=hevc_mf
+
+cls
+echo --------------------------
+echo E - Enable Audio
+echo D - Disable Audio
+echo --------------------------
+
+choice /C ED /N
+
+if %errorlevel%==1 set audiocodec=-c:a aac -b:a 384K -ar 48000
+if %errorlevel%==2 set audiocodec=-an
+
+cls
+echo Higher bitrate = larger file size = better quality
+echo Enter the video bitrate in kbps (CBR) (example: 20000)
+set /p temp2=
+set vidbitrate=-b:v %temp2%K
+
+cls
+choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
+if %errorlevel%==2 set framerate=-r %temp5%
+
+if %encoder%==libx265 set globalredirect=preset_h26xF&&goto globalthreads
+if %encoder%==libkvazaar set globalredirect=preset_h26xF&&goto globalthreads
+if %encoder%==hevc_mf set globalredirect=preset_h26xF&&goto globalthreads
+
+:preset_h26xF
+echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+set /p outputname=
+color a
+color f
+echo select output folder
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+
+ffmpeg %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+pause
+goto welcome
 
 :preset_h264
 echo Select Input File
@@ -276,44 +345,20 @@ if %errorlevel%==1 set audiocodec=-c:a aac -b:a 384K -ar 48000
 if %errorlevel%==2 set audiocodec=-an
 
 cls
-echo Select quality
-echo --------------------------
-echo 0 - lossless
-echo 8 - CRF 8 - Large file size, better quality
-echo 6 - CRF 16
-echo 4 - CRF 24
-echo 2 - CRF 32 - Small file size, poor quality
-echo --------------------------
-choice /C 08642 /N
-
-if %errorlevel%==1 set vidbitrate=-crf 0
-if %errorlevel%==2 set vidbitrate=-crf 8
-if %errorlevel%==3 set vidbitrate=-crf 16
-if %errorlevel%==4 set vidbitrate=-crf 24
-if %errorlevel%==5 set vidbitrate=-crf 32
+echo Higher bitrate = larger file size = better quality
+echo Enter the video bitrate in kbps (CBR) (example: 20000)
+set /p temp2=
+set vidbitrate=-b:v %temp2%K
 
 cls
 choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
 if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
 if %errorlevel%==2 set framerate=-r %temp5%
 
-if %encoder%==libx264 set globalredirect=preset_h264F&&goto globalthreads
-if %encoder%==libx264rgb set globalredirect=preset_h264F&&goto globalthreads
-if %encoder%==libopenh264 set globalredirect=preset_h264F&&goto globalthreads
-if %encoder%==h264_mf set globalredirect=preset_h264F&&goto globalthreads
-
-:preset_h264F
-echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
-set /p outputname=
-color a
-color f
-echo select output folder
-for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
-
-ffmpeg %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
-pause
-goto welcome
+if %encoder%==libx264 set globalredirect=preset_h26xF&&goto globalthreads
+if %encoder%==libx264rgb set globalredirect=preset_h26xF&&goto globalthreads
+if %encoder%==libopenh264 set globalredirect=preset_h26xF&&goto globalthreads
+if %encoder%==h264_mf set globalredirect=preset_h26xF&&goto globalthreads
 
 :Preset_gif
 echo Select Input File
@@ -597,9 +642,6 @@ choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame r
 if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
 if %errorlevel%==2 set framerate=-r %temp5%
 
-set globalredirect=Preset_vp9tsF&&goto globalthreads
-
-:Preset_vp9tsF
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
 color a
@@ -608,7 +650,7 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% %threads% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
+ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
 pause
 goto welcome
 
