@@ -695,37 +695,22 @@ goto welcome
 
 :audiopreset_wav
 cls
-echo pcm_f32be            PCM 32-bit floating point big-endian
-echo pcm_f32le            PCM 32-bit floating point little-endian
-echo pcm_f64be            PCM 64-bit floating point big-endian
-echo pcm_f64le            PCM 64-bit floating point little-endian
-echo pcm_s16be            PCM signed 16-bit big-endian
-echo pcm_s16be_planar     PCM signed 16-bit big-endian planar
-echo pcm_s16le            PCM signed 16-bit little-endian
-echo pcm_s16le_planar     PCM signed 16-bit little-endian planar
-echo pcm_s24be            PCM signed 24-bit big-endian
-echo pcm_s24le            PCM signed 24-bit little-endian
-echo pcm_s24le_planar     PCM signed 24-bit little-endian planar
-echo pcm_s32be            PCM signed 32-bit big-endian
-echo pcm_s32le            PCM signed 32-bit little-endian
-echo pcm_s32le_planar     PCM signed 32-bit little-endian planar
-echo pcm_s64be            PCM signed 64-bit big-endian
-echo pcm_s64le            PCM signed 64-bit little-endian
-echo pcm_s8               PCM signed 8-bit
-echo pcm_s8_planar        PCM signed 8-bit planar
-echo pcm_u16be            PCM unsigned 16-bit big-endian
-echo pcm_u16le            PCM unsigned 16-bit little-endian
-echo pcm_u24be            PCM unsigned 24-bit big-endian
-echo pcm_u24le            PCM unsigned 24-bit little-endian
-echo pcm_u32be            PCM unsigned 32-bit big-endian
-echo pcm_u32le            PCM unsigned 32-bit little-endian
-echo pcm_u8               PCM unsigned 8-bit
-echo -------------------------------
-echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
-echo Adobe Audition Default: pcm_f32be or pcm_f32le
-echo WRITE THE NAME OF YOUR PREFERRED AUDIOCODEC (Example: pcm_f32be)
-set /p temp7=
-set audiocodec=-c:a %temp7%
+echo F - PCM 32-bit floating point little-endian (pcm_f32le)
+echo D - PCM 64-bit floating point little-endian (pcm_f64le)
+echo 1 - PCM signed 16-bit little-endian (pcm_s16le)
+echo 2 - PCM signed 24-bit little-endian (pcm_s24le)
+echo 3 - PCM signed 32-bit little-endian (pcm_s32le)
+echo 4 - PCM signed 64-bit little-endian (pcm_s64le)
+echo ::::::::::::::::::::::::::
+echo Adobe Audition Default: pcm_f32le
+echo SELECT YOUR PREFERRED AUDIOCODEC
+choice /C FD1234 /N
+if %errorlevel%==1 set audiocodec=-c:a pcm_f32le
+if %errorlevel%==2 set audiocodec=-c:a pcm_f64le
+if %errorlevel%==3 set audiocodec=-c:a pcm_s16le
+if %errorlevel%==4 set audiocodec=-c:a pcm_s24le
+if %errorlevel%==5 set audiocodec=-c:a pcm_s32le
+if %errorlevel%==6 set audiocodec=-c:a pcm_s64le
 goto audiopreset_encode
 
 :audiopreset
