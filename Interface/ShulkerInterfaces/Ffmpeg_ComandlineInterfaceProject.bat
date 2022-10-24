@@ -88,7 +88,7 @@ goto welcome
 color f
 echo In this mode you can run your command with your flags for ffmpeg
 echo Use this mode if you fully know what you are doing. "ffmpeg -h" for help. 
-echo My working Example: (ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -f webm -y "E:\RENDERS\SceneOverlay.webm")
+echo My working Example: (ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -y "E:\RENDERS\SceneOverlay.webm")
 echo Close the window to exit or type goto welcome
 :SUPERCUSTOMMODE1
 set /p SUPERCUSTOMMODE=
@@ -409,18 +409,16 @@ echo 2 - 15 FPS
 echo 3 - 30 FPS
 echo 4 - 50 FPS
 echo 5 - 60 FPS
-echo 9 - 100 FPS (Just for fun, this is the maximum gif frame rate, but it is not supported by anything. In browsers it will be slowed down to 10 FPS)
 echo --------------
 
 choice /C 0123459 /N
 
-if %errorlevel%==1 set temp5=fps=5
-if %errorlevel%==2 set temp5=fps=10
-if %errorlevel%==3 set temp5=fps=15
-if %errorlevel%==4 set temp5=fps=30
-if %errorlevel%==5 set temp5=fps=50
-if %errorlevel%==6 set temp5=fps=60
-if %errorlevel%==7 set temp5=fps=100
+if %errorlevel%==1 set temp5=fps=5&&set math1=5
+if %errorlevel%==2 set temp5=fps=10&&set math1=10
+if %errorlevel%==3 set temp5=fps=15&&set math1=15
+if %errorlevel%==4 set temp5=fps=30&&set math1=30
+if %errorlevel%==5 set temp5=fps=50&&set math1=50
+if %errorlevel%==6 set temp5=fps=60&&set math1=60
 
 cls
 echo Select the gif resolution (height). Smaller resolution - smaller size
@@ -430,17 +428,14 @@ echo 2 - 240px (Recomended)
 echo 3 - 360px
 echo 4 - 480px
 echo 5 - 720px
-echo 6 - 1080px (Full hd gif? Funny.)
 echo --------------
 
 choice /C 1234567 /N
-
 if %errorlevel%==1 set temp6=scale=-2:144
 if %errorlevel%==2 set temp6=scale=-2:240
 if %errorlevel%==3 set temp6=scale=-2:360
 if %errorlevel%==4 set temp6=scale=-2:480
 if %errorlevel%==5 set temp6=scale=-2:720
-if %errorlevel%==6 set temp6=scale=-2:1080
 
 cls
 echo How to loop a gif?
@@ -457,6 +452,7 @@ if %errorlevel%==2 set temp7=-loop -1
 if %errorlevel%==3 goto Preset_gifLoop
 
 :Preset_gifEncode
+cls
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
 color a
@@ -466,7 +462,13 @@ for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPat
 set outputfolder=%decode2:?= %
 
 ffmpeg %temp2% %temp4% %filepath% -vf "%temp5%,%temp6%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" %temp7% -y "%outputfolder%\%outputname%.gif"
-pause
+color e
+echo ::::::::::::::::::::
+echo Check the GIF size. Does it match your size limit?
+echo For example, the Discord file size limit is 8MB
+echo Do you want to change the settings or continue?
+choice /c YN /N /m "Y - Continue, N - Change settings"
+if %errorlevel%==2 goto Preset_gifRes
 goto welcome
 
 :Preset_gifLoop
