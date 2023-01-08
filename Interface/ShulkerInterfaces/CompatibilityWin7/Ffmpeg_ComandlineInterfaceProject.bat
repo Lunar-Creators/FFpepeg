@@ -7,6 +7,7 @@ echo https://ffmpeg.org/
 timeout /t 3
 ffmpeg --enable-libfdk-aac --enable-nonfree
 :welcome
+title Main Menu - FFpepeg script (v0.11b)
 rem Список для очистки переменных во избежание разных ошибок
 set filepath=
 set inputaudio=
@@ -48,7 +49,7 @@ set temp12=
 set globalredirect=
 cls
 color e
-echo --ScriptVersion 0.10 -beta --copyright "SHULKER Play" --ffmpeg.org (n5.1.1-1-g4424a6223b-20220905)
+echo --ScriptVersion 0.11 -beta --copyright "SHULKER Play" --ffmpeg.org (n5.1.1-1-g4424a6223b-20220905)
 echo !!! Each person can have their own usage of this script and ffmpeg in general. 
 echo !!! We can't check all the combinations ourselves. 
 echo !!! If you have a problem, or you want to suggest a preset to add to the menu, please contact us!
@@ -61,7 +62,7 @@ echo Y - Select Video Preset
 echo A - Audio Converting
 echo P - Photo Converting
 echo T - Select Tool
-echo N - Configure Video Encoder
+echo N - Configure Video Encoder (In Development...)
 echo Q - Half-Manual Mode
 echo K - Audio to Video Encoding
 echo C - Commandline mode
@@ -85,10 +86,11 @@ if %errorlevel%==11 goto presetTool
 goto welcome
 
 :SUPERCUSTOMMODE
+title Free CMD - FFpepeg script [FFmpeg]
 color f
 echo In this mode you can run your command with your flags for ffmpeg
 echo Use this mode if you fully know what you are doing. "ffmpeg -h" for help. 
-echo My working Example: (ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -f webm -y "E:\RENDERS\SceneOverlay.webm")
+echo My working Example: (ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -y "E:\RENDERS\SceneOverlay.webm")
 echo Close the window to exit or type goto welcome
 :SUPERCUSTOMMODE1
 set /p SUPERCUSTOMMODE=
@@ -100,6 +102,7 @@ goto SUPERCUSTOMMODE1
 rem СПРАВКА ПОЛЬЗОВАТЕЛЮ -------------------------------------------------------------------------------
 
 :helpff
+title FFmpeg Help - FFpepeg script [FFmpeg]
 color f
 echo How can ffmpeg help you?
 echo --------------------------
@@ -202,6 +205,7 @@ goto lhelpselect
 rem Доступные пресеты (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
 
 :preset
+title Preset Selector - FFpepeg script [FFmpeg]
 cls
 echo To use additional parameters, such as changing the color space, use the configurator, not presets. Also, if you just want to change the video container, then try to use a remux. Believe me, if you need a video, for example in mkv format, you definitely should not reencode it in Mpeg or Xvid.
 echo -
@@ -213,9 +217,7 @@ echo 3 - avi (Mpeg-4/Xvid, audiocodec mp3, audio bitrate 320kbps)
 echo 4 - GIF (gif, Configurable)
 echo 5 - mp4 (H.264, AAC, audio bitrate 384kbps)
 echo 6 - mp4 (H.265 (HEVC), AAC, audio bitrate 384kbps)
-echo 7 - mp4 (av1 or SVT-AV1, In Development)
-rem av1 имеет лучшую степень сжатия, в то время как svt-av1 обладает скоростью сжатия выше чем у предшественника
-echo 8 - ... (-)
+echo 7 - mp4 (av1 or SVT-AV1, AAC, audio bitrate 384kbps)
 echo 9 - Optimize for Youtube Upload
 echo N - CONFIGURE 
 echo --------------------------
@@ -228,18 +230,90 @@ if %errorlevel%==4 goto Preset_gif
 if %errorlevel%==5 goto Preset_h264
 if %errorlevel%==6 goto Preset_h265
 if %errorlevel%==7 goto Preset_libaom
-if %errorlevel%==8 goto Preset_
+if %errorlevel%==8 goto Preset
 if %errorlevel%==9 goto OptimizeYT
 if %errorlevel%==10 goto configure
 exit
 
-:preset_h265
+:preset_libaom
+title Preset AV1 - FFpepeg script [FFmpeg]
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Select encoder
+echo --------------------------
+echo 1 - AV1 - Better Compression
+echo 2 - SVT-AV1 - Higher enconing speed (Scalable Video Technology for AV1)
+echo --------------------------
+
+choice /C 123 /N
+
+if %errorlevel%==1 set encoder=libaom-av1
+if %errorlevel%==2 set encoder=libsvtav1
+
+cls
+echo --------------------------
+echo E - Enable Audio
+echo D - Disable Audio
+echo --------------------------
+
+choice /C ED /N
+
+if %errorlevel%==1 set audiocodec=-c:a aac -b:a 384K -ar 48000
+if %errorlevel%==2 set audiocodec=-an
+
+cls
+echo Select quality
+echo --------------------------
+echo 0 - lossless
+echo 8 - CRF 8 - Large file size, better quality
+echo 6 - CRF 16
+echo 4 - CRF 24
+echo 2 - CRF 32 - Small file size, poor quality
+echo --------------------------
+choice /C 08642 /N
+
+if %errorlevel%==1 set vidbitrate=-crf 0
+if %errorlevel%==2 set vidbitrate=-crf 8
+if %errorlevel%==3 set vidbitrate=-crf 16
+if %errorlevel%==4 set vidbitrate=-crf 24
+if %errorlevel%==5 set vidbitrate=-crf 32
+cls
+choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
+if %errorlevel%==2 set framerate=-r %temp5%
+set errorlevel=7
+if %encoder%==libsvtav1 cls && echo Select Encoding preset && echo Lower presets produce a smaller file, for a given visual quality and also require more compute time during the encode process && echo -------------------------- && echo 1 - represent extremely high efficiency, for use when encode time is not important and quality/size of the resulting video file is critical && echo 2 - commonly used by home enthusiasts as they represent a balance of efficiency and reasonable compute time && echo 3 - used for fast encoding && echo -------------------------- && choice /C 123 /N
+if %errorlevel%==1 set preset=-preset 3
+if %errorlevel%==2 set preset=-preset 5
+if %errorlevel%==3 set preset=-preset 9
+
+if %encoder%==libaom-av1 set preset=-cpu-used 5
+
+cls
+echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+set /p outputname=
+color a
+color f
+echo select output folder
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
+ffmpeg %filepath% -c:v %encoder% %preset% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+pause
+goto welcome
+
+:preset_h265
+title Preset H265/HEVC - FFpepeg script [FFmpeg]
+echo Select Input File
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+cls
+echo Select encoder
 echo H.265 == HEVC
 echo --------------------------
 echo 1 - H.265 (libx265) - The standard HEVC encoder. Uses CPU
@@ -298,17 +372,19 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
 
 :preset_h264
+title Preset H264/AVC/MPEG-4 Part 10 - FFpepeg script [FFmpeg]
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Select encoder
 echo --------------------------
 echo 1 - H.264 (libx264) - The standard H264 encoder. Uses CPU
 echo ::::::::::
@@ -369,6 +445,7 @@ cls
 echo This preset will create a gif with its own palette of colors
 pause
 :Preset_gifOpt
+title GIF Creating - FFpepeg script [FFmpeg]
 cls
 echo Selecting a video fragment
 echo --------------
@@ -400,6 +477,7 @@ set temp4=-t %temp3%
 goto Preset_gifOpt
 
 :Preset_gifRes
+title GIF Settings - FFpepeg script [FFmpeg]
 cls
 echo Select the gif framerate. Smaller framerate - smaller size
 echo --------------
@@ -409,18 +487,15 @@ echo 2 - 15 FPS
 echo 3 - 30 FPS
 echo 4 - 50 FPS
 echo 5 - 60 FPS
-echo 9 - 100 FPS (Just for fun, this is the maximum gif frame rate, but it is not supported by anything. In browsers it will be slowed down to 10 FPS)
 echo --------------
 
 choice /C 0123459 /N
 
 if %errorlevel%==1 set temp5=fps=5
 if %errorlevel%==2 set temp5=fps=10
-if %errorlevel%==3 set temp5=fps=15
 if %errorlevel%==4 set temp5=fps=30
 if %errorlevel%==5 set temp5=fps=50
 if %errorlevel%==6 set temp5=fps=60
-if %errorlevel%==7 set temp5=fps=100
 
 cls
 echo Select the gif resolution (height). Smaller resolution - smaller size
@@ -430,17 +505,14 @@ echo 2 - 240px (Recomended)
 echo 3 - 360px
 echo 4 - 480px
 echo 5 - 720px
-echo 6 - 1080px (Full hd gif? Funny.)
 echo --------------
 
 choice /C 1234567 /N
-
 if %errorlevel%==1 set temp6=scale=-2:144
 if %errorlevel%==2 set temp6=scale=-2:240
 if %errorlevel%==3 set temp6=scale=-2:360
 if %errorlevel%==4 set temp6=scale=-2:480
 if %errorlevel%==5 set temp6=scale=-2:720
-if %errorlevel%==6 set temp6=scale=-2:1080
 
 cls
 echo How to loop a gif?
@@ -457,6 +529,7 @@ if %errorlevel%==2 set temp7=-loop -1
 if %errorlevel%==3 goto Preset_gifLoop
 
 :Preset_gifEncode
+cls
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
 color a
@@ -465,8 +538,15 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.gif"
 ffmpeg %temp2% %temp4% %filepath% -vf "%temp5%,%temp6%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" %temp7% -y "%outputfolder%\%outputname%.gif"
-pause
+color e
+echo ::::::::::::::::::::
+echo Check the GIF size. Does it match your size limit?
+echo For example, the Discord file size limit is 8MB
+echo Do you want to change the settings or continue?
+choice /c YN /N /m "Y - Continue, N - Change settings"
+if %errorlevel%==2 goto Preset_gifRes
 goto welcome
 
 :Preset_gifLoop
@@ -478,12 +558,13 @@ set temp7=-loop %temp8%
 goto Preset_gifEncode
 
 :preset_mpeg4
+title Preset MPEG-4/Xvid - FFpepeg script [FFmpeg]
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Select encoder
 echo --------------------------
 echo 1 - Mpeg-4
 echo 2 - Microsoft Mpeg-4 Ver.3 
@@ -537,17 +618,19 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.avi"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
 pause
 goto welcome
 
 :preset_mpeg
+title Preset MPEG-1/MPEG-2 - FFpepeg script [FFmpeg]
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Select encoder
 echo --------------------------
 echo 1 - Mpeg-1
 echo 2 - Mpeg-2
@@ -601,11 +684,13 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mpeg"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
 pause
 goto welcome
 
 :Preset_vp9ts
+title Preset VP9 - FFpepeg script [FFmpeg]
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
@@ -650,11 +735,13 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.webm"
 ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
 pause
 goto welcome
 
 :photoformat
+title Image Converting - FFpepeg script [FFmpeg]
 cls
 echo Using many programs, such as Photoshop, you can understand that just changing the letters after the dot is not enough to change the photo format to a supported one. We are here to help
 pause
@@ -694,41 +781,28 @@ pause
 goto welcome
 
 :audiopreset_wav
+title WAVE AUDIO CONVERTING - FFpepeg script [FFmpeg]
 cls
-echo pcm_f32be            PCM 32-bit floating point big-endian
-echo pcm_f32le            PCM 32-bit floating point little-endian
-echo pcm_f64be            PCM 64-bit floating point big-endian
-echo pcm_f64le            PCM 64-bit floating point little-endian
-echo pcm_s16be            PCM signed 16-bit big-endian
-echo pcm_s16be_planar     PCM signed 16-bit big-endian planar
-echo pcm_s16le            PCM signed 16-bit little-endian
-echo pcm_s16le_planar     PCM signed 16-bit little-endian planar
-echo pcm_s24be            PCM signed 24-bit big-endian
-echo pcm_s24le            PCM signed 24-bit little-endian
-echo pcm_s24le_planar     PCM signed 24-bit little-endian planar
-echo pcm_s32be            PCM signed 32-bit big-endian
-echo pcm_s32le            PCM signed 32-bit little-endian
-echo pcm_s32le_planar     PCM signed 32-bit little-endian planar
-echo pcm_s64be            PCM signed 64-bit big-endian
-echo pcm_s64le            PCM signed 64-bit little-endian
-echo pcm_s8               PCM signed 8-bit
-echo pcm_s8_planar        PCM signed 8-bit planar
-echo pcm_u16be            PCM unsigned 16-bit big-endian
-echo pcm_u16le            PCM unsigned 16-bit little-endian
-echo pcm_u24be            PCM unsigned 24-bit big-endian
-echo pcm_u24le            PCM unsigned 24-bit little-endian
-echo pcm_u32be            PCM unsigned 32-bit big-endian
-echo pcm_u32le            PCM unsigned 32-bit little-endian
-echo pcm_u8               PCM unsigned 8-bit
-echo -------------------------------
-echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
-echo Adobe Audition Default: pcm_f32be or pcm_f32le
-echo WRITE THE NAME OF YOUR PREFERRED AUDIOCODEC (Example: pcm_f32be)
-set /p temp7=
-set audiocodec=-c:a %temp7%
+echo F - PCM 32-bit floating point little-endian (pcm_f32le)
+echo D - PCM 64-bit floating point little-endian (pcm_f64le)
+echo 1 - PCM signed 16-bit little-endian (pcm_s16le)
+echo 2 - PCM signed 24-bit little-endian (pcm_s24le)
+echo 3 - PCM signed 32-bit little-endian (pcm_s32le)
+echo 4 - PCM signed 64-bit little-endian (pcm_s64le)
+echo ::::::::::::::::::::::::::
+echo Adobe Audition Default: pcm_f32le
+echo SELECT YOUR PREFERRED AUDIOCODEC
+choice /C FD1234 /N
+if %errorlevel%==1 set audiocodec=-c:a pcm_f32le
+if %errorlevel%==2 set audiocodec=-c:a pcm_f64le
+if %errorlevel%==3 set audiocodec=-c:a pcm_s16le
+if %errorlevel%==4 set audiocodec=-c:a pcm_s24le
+if %errorlevel%==5 set audiocodec=-c:a pcm_s32le
+if %errorlevel%==6 set audiocodec=-c:a pcm_s64le
 goto audiopreset_encode
 
 :audiopreset
+title Audio Converting - FFpepeg script [FFmpeg]
 echo Select Audio or Video File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetAVFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
@@ -811,6 +885,8 @@ color f
 echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
+
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 pause
 goto welcome
@@ -818,6 +894,7 @@ goto welcome
 rem Доступные Инструменты (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
 
 :presetTool
+title Tools - FFpepeg script [FFmpeg]
 cls
 echo Choose tool preset (In Development)
 echo --------------------------
@@ -831,6 +908,7 @@ if %errorlevel%==2 goto PresetTool_ExtractAll
 if %errorlevel%==3 goto PresetTool_Upscaling
 
 :PresetTool_ExtractAll
+title Extract multiple audio streams from video - FFpepeg script [FFmpeg]
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
@@ -862,11 +940,13 @@ choice /C 12 /N
 if %errorlevel%==1 set audiocodec=-c:a copy && set outputformat=mka
 if %errorlevel%==2 set audiocodec=-c:a libmp3lame -b:a 384K && set outputformat=mp3
 
+title ENCODING [FFmpeg] "%outputfolder%\"
 ffmpeg %filepath% -vn -map 0:a:0 %audiocodec% "%outputfolder%\%outputname%_audio0.%outputformat%" -map 0:a:1? %audiocodec% "%outputfolder%\%outputname%_audio1.%outputformat%" -map 0:a:2? %audiocodec% "%outputfolder%\%outputname%_audio2.%outputformat%" -map 0:a:3? %audiocodec% "%outputfolder%\%outputname%_audio3.%outputformat%" -map 0:a:4? %audiocodec% "%outputfolder%\%outputname%_audio4.%outputformat%" -map 0:a:5? %audiocodec% "%outputfolder%\%outputname%_audio5.%outputformat%" -y -strict -2
 pause
 goto welcome
 
 :PresetTool_Upscaling
+title Scaling Tool - FFpepeg script [FFmpeg]
 cls
 echo Choose a scaling algorithm
 echo --------------------------
@@ -891,12 +971,6 @@ if %errorlevel%==7 set temp1=flags=neighbor
 if %errorlevel%==8 set temp1=flags=gauss
 if %errorlevel%==9 goto PresetTool_Upscaling
 
-rem -vf scale=2560:-1:sws_flags=lanczos 
-rem sinc		187 fps
-rem lanczos		500 fps
-rem bicubic		660 fps
-rem fast_bilinear	1260 fps
-rem neighbor	1300 fps
 cls
 echo Select the resolution to scale with the original aspect ratio preserved
 echo --------------------------
@@ -974,6 +1048,7 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -981,6 +1056,7 @@ goto welcome
 rem Конфигуратор (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
 
 :configure
+title IN DEVELOPMENT
 rem CLS Очищает экран командной строки
 cls
 color f
@@ -1021,6 +1097,7 @@ if %errorlevel%==9 goto Conf_Custom
 rem КОНФИГУРАЦИЯ РЕМУЛЬТИПЛЕКСИРОВАНИЯ (Протестированна) -------------------------------------------------------------------------------
 
 :Conf_copy
+title Remux - FFpepeg script [FFmpeg]
 cls
 rem Задаёт переменную кодировщика
 set encoder=-c:v copy
@@ -1117,6 +1194,7 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitrate% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 pause
 goto welcome
@@ -1161,6 +1239,7 @@ if %errorlevel%==7 set encoder=-c:v h264_qsv && goto next_h264_qsv
 rem Флаги h264_nvenc - ffmpeg -h encoder=h264_nvenc
 rem ОПТИМИЗАЦИЯ РОЛИКА ДЛЯ YOUTUBE -------------------------------------------------------------------------------
 :OptimizeYT
+title Optimize For YouTube - FFpepeg script [FFmpeg]
 cls
 echo In this section, you can adjust your video to the recommended uploading parameters and with minimal loss of quality.
 echo The video will be optimized for Youtube, but it will also be suitable for other services
@@ -1192,6 +1271,7 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c copy -movflags +faststart "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -1250,7 +1330,7 @@ if %errorlevel%==8 set threads=-threads 24
 if %errorlevel%==9 set threads=-threads 32
 
 cls
-echo Note about Audiocodec. For AAC-LC We use aac instead of libfdk_aac. The license of libfdk_aac is not compatible with GPL, so the GPL does not permit distribution of binaries containing incompatible code when GPL-licensed code is also included. Therefore this encoder have been designated as "non-free", and you cannot download a pre-built ffmpeg that supports it. This can be resolved by compiling ffmpeg yourself.
+echo Note about Audiocodec. For AAC-LC We use AAC instead of libfdk_aac. The license of libfdk_aac is not compatible with GPL, so the GPL does not permit distribution of binaries containing incompatible code when GPL-licensed code is also included. Therefore this encoder have been designated as "non-free", and you cannot download a pre-built ffmpeg that supports it. This can be resolved by compiling ffmpeg yourself.
 echo -----
 echo Select the audio type
 echo --------------------------
@@ -1276,6 +1356,7 @@ if %errorlevel%==1 goto OptimizeYT_Encode_Follow
 if %errorlevel%==2 goto OptimizeYT_Encode_Unlimited
 
 :OptimizeYT_Encode_Follow
+title Following YouTube Bitrate - FFpepeg script [FFmpeg]
 cls
 echo Please select quality. This will help us stay within the recommended bitrate
 echo --------------------------
@@ -1326,6 +1407,7 @@ pause
 goto welcome
 
 :OptimizeYT_Encode_Unlimited
+title Optimize Video - Unlimited Bitrate - FFpepeg script [FFmpeg]
 cls
 echo Please select quality. This will help us stay within the recommended bitrate
 echo --------------------------
@@ -1357,6 +1439,7 @@ pause
 goto welcome
 
 :OptimizeYT_EncodeHDR
+title Optimizing HDR video for YouTube - FFpepeg script [FFmpeg]
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
 set tempv=%decode1:?= %
@@ -1436,6 +1519,7 @@ if %errorlevel%==1 goto OptimizeYT_EncodeHDR_Follow
 if %errorlevel%==2 goto OptimizeYT_EncodeHDR_Unlimited
 
 :OptimizeYT_EncodeHDR_Follow
+title Following Bitrate for HDR - FFpepeg script [FFmpeg]
 cls
 echo Please select quality. This will help us stay within the recommended bitrate
 echo --------------------------
@@ -1479,6 +1563,7 @@ pause
 goto welcome
 
 :OptimizeYT_EncodeHDR_Unlimited
+title HDR unlimited bitrate - FFpepeg script [FFmpeg]
 cls
 echo Please select quality. This will help us stay within the recommended bitrate
 echo --------------------------
@@ -1590,6 +1675,7 @@ cls
 goto Conf_Custom_Start
 
 :Conf_Custom_Start
+title Configurator - FFpepeg script [FFmpeg]
 cls
 color e
 echo All settings are optional. Choose everything you need.
@@ -1660,6 +1746,7 @@ if %errorlevel%==17 goto Conf_Custom_Render
 if %errorlevel%==18 goto Conf_Custom_Framerate
 
 :Conf_Custom_threads
+title Threads - Configure - FFpepeg script [FFmpeg]
 cls
 echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
 echo !!! NOTE that some encoders DO NOT SUPPORT multithreading and may crash ffmpeg. If you are not sure of your actions, select "Unset".
@@ -1688,6 +1775,7 @@ if %errorlevel%==9 set threads=-threads 32
 goto Conf_Custom_Start
 
 :Conf_Custom_VInput
+title Input File - FFpepeg script [FFmpeg]
 cls
 echo Input Videofile
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
@@ -1696,6 +1784,7 @@ set filepath=-i "%tempv%"
 goto Conf_Custom_Start
 
 :Conf_Custom_VCodec
+title Videocodec - Configure - FFpepeg script [FFmpeg]
 cls
 echo V..... = Video
 echo .F.... = Frame-level multithreading
@@ -1834,6 +1923,7 @@ set disablevideo=
 goto Conf_Custom_Start
 
 :Conf_Custom_Vbitrate
+title Video bitrate - Configure - FFpepeg script [FFmpeg]
 cls
 echo What type of bitrate do you want to choose?
 echo --------
@@ -1847,6 +1937,7 @@ if %errorlevel%==2 goto Conf_Custom_VbitrateCRF
 if %errorlevel%==3 goto Conf_Custom_VbitrateQP
 
 :Conf_Custom_VbitrateCBR
+title Threads - Configure - FFpepeg script [FFmpeg]
 cls
 echo The minimum and maximum bitrate values can be specified with custom flags using -minrate and -maxrate
 echo Enter the video bitrate in kbps (CBR) (example: 20000)
@@ -1874,6 +1965,7 @@ set vidbitrate=-qp %temp2%
 goto Conf_Custom_Start
 
 :Conf_Custom_Resolution
+title Resolution - Configure - FFpepeg script [FFmpeg]
 cls
 echo Enter the width in pixels (example: 1280)
 set /p temp3=
@@ -1887,6 +1979,7 @@ set size=-s %temp3%x%temp4%
 goto Conf_Custom_Start
 
 :Conf_Custom_Framerate
+title Framerate - Configure - FFpepeg script [FFmpeg]
 cls
 echo Enter the frame rate (example: 60)
 set /p temp5=
@@ -1894,6 +1987,7 @@ set framerate=-r %temp5%
 goto Conf_Custom_Start
 
 :Conf_Custom_AInput
+title Input File - FFpepeg script [FFmpeg]
 cls
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetAudioFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
@@ -1902,6 +1996,7 @@ set inputaudio=-i "%temp6%"
 goto Conf_Custom_Start
 
 :Conf_Custom_ACodec
+title Audiocodec - Configure - FFpepeg script [FFmpeg]
 cls
 echo A..... = Audio
 echo .F.... = Frame-level multithreading
@@ -2009,6 +2104,7 @@ set disableaudio=
 goto Conf_Custom_Start
 
 :Conf_Custom_ABitrate
+title Audio Bitrate - Configure - FFpepeg script [FFmpeg]
 cls
 echo Enter the audio bitrate in kbps (example: 256)
 set /p temp9=
@@ -2017,6 +2113,7 @@ set audiobitrate=-b:a %temp9%K
 goto Conf_Custom_Start
 
 :Conf_Custom_SubInput
+title Input File - FFpepeg script [FFmpeg]
 cls
 echo Select Input File
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetSubtitlesFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
@@ -2025,6 +2122,7 @@ set inputsubtitle=-i "%temp11%"
 goto Conf_Custom_Start
 
 :Conf_Custom_SCodec
+title Subtitle Codec - Configure - FFpepeg script [FFmpeg]
 cls
 echo S..... = Subtitle
 echo .F.... = Frame-level multithreading
@@ -2059,8 +2157,8 @@ set subencoder=-c:s %temp12%
 goto Conf_Custom_Start
 
 :Conf_Custom_flags
+title FFmpeg Custom Flags - Configure
 cls
-color 4
 color e
 echo Do not make mistakes, otherwise ffmpeg may return an error
 echo Run this one again in a new window and use the flags help (Press H, then 4, select "encoder" and then enter the name of the codec you are interested in)
@@ -2073,6 +2171,7 @@ set /p flags=
 goto Conf_Custom_Start
 
 :Conf_Custom_Render
+title Preparing - Configure [FFmpeg]
 cls
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
 set /p outputname=
@@ -2105,9 +2204,11 @@ color 8f
 echo !!! Starting FFMPEG
 TIMEOUT /T 5
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 color f
 echo ::::::::::::::::::::::::::::::::::::
+title Configure - FFpepeg script [FFmpeg]
 echo E - Exit to main menu
 echo Q - Back to configurator
 choice /c EQ
@@ -2118,6 +2219,7 @@ exit
 
 rem GLOBAL FUNCTIONS -------------------------------------------------------------------------------
 :globalthreads
+title GLOBAL THREADS SELECTOR - FFpepeg script [FFmpeg]
 cls
 echo Select the number of threads to encode, larger numbers means more processor resources will be used for coding
 echo We recommend leaving some free CPU cores. If you select all cores, your processor will probably be 100% loaded until the encoding is completed.

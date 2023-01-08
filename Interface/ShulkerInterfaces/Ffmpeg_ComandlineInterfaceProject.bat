@@ -7,7 +7,7 @@ echo https://ffmpeg.org/
 timeout /t 3
 ffmpeg --enable-libfdk-aac --enable-nonfree
 :welcome
-title Main Menu - FFpepeg script (v0.10b)
+title Main Menu - FFpepeg script (v0.11b)
 rem Список для очистки переменных во избежание разных ошибок
 set filepath=
 set inputaudio=
@@ -49,7 +49,7 @@ set temp12=
 set globalredirect=
 cls
 color e
-echo --ScriptVersion 0.10 -beta --copyright "SHULKER Play" --ffmpeg.org (n5.1.1-1-g4424a6223b-20220905)
+echo --ScriptVersion 0.11 -beta --copyright "SHULKER Play" --ffmpeg.org (n5.1.1-1-g4424a6223b-20220905)
 echo !!! Each person can have their own usage of this script and ffmpeg in general. 
 echo !!! We can't check all the combinations ourselves. 
 echo !!! If you have a problem, or you want to suggest a preset to add to the menu, please contact us!
@@ -62,7 +62,7 @@ echo Y - Select Video Preset
 echo A - Audio Converting
 echo P - Photo Converting
 echo T - Select Tool
-echo N - Configure Video Encoder
+echo N - Configure Video Encoder (In Development...)
 echo Q - Half-Manual Mode
 echo K - Audio to Video Encoding
 echo C - Commandline mode
@@ -217,9 +217,7 @@ echo 3 - avi (Mpeg-4/Xvid, audiocodec mp3, audio bitrate 320kbps)
 echo 4 - GIF (gif, Configurable)
 echo 5 - mp4 (H.264, AAC, audio bitrate 384kbps)
 echo 6 - mp4 (H.265 (HEVC), AAC, audio bitrate 384kbps)
-echo 7 - mp4 (av1 or SVT-AV1, In Development)
-rem av1 имеет лучшую степень сжатия, в то время как svt-av1 обладает скоростью сжатия выше чем у предшественника
-echo 8 - ... (-)
+echo 7 - mp4 (av1 or SVT-AV1, AAC, audio bitrate 384kbps)
 echo 9 - Optimize for Youtube Upload
 echo N - CONFIGURE 
 echo --------------------------
@@ -232,10 +230,81 @@ if %errorlevel%==4 goto Preset_gif
 if %errorlevel%==5 goto Preset_h264
 if %errorlevel%==6 goto Preset_h265
 if %errorlevel%==7 goto Preset_libaom
-if %errorlevel%==8 goto Preset_
+if %errorlevel%==8 goto Preset
 if %errorlevel%==9 goto OptimizeYT
 if %errorlevel%==10 goto configure
 exit
+
+:preset_libaom
+title Preset AV1 - FFpepeg script [FFmpeg]
+echo Select Input File
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+cls
+echo Select encoder
+echo --------------------------
+echo 1 - AV1 - Better Compression
+echo 2 - SVT-AV1 - Higher enconing speed (Scalable Video Technology for AV1)
+echo --------------------------
+
+choice /C 123 /N
+
+if %errorlevel%==1 set encoder=libaom-av1
+if %errorlevel%==2 set encoder=libsvtav1
+
+cls
+echo --------------------------
+echo E - Enable Audio
+echo D - Disable Audio
+echo --------------------------
+
+choice /C ED /N
+
+if %errorlevel%==1 set audiocodec=-c:a aac -b:a 384K -ar 48000
+if %errorlevel%==2 set audiocodec=-an
+
+cls
+echo Select quality
+echo --------------------------
+echo 0 - lossless
+echo 8 - CRF 8 - Large file size, better quality
+echo 6 - CRF 16
+echo 4 - CRF 24
+echo 2 - CRF 32 - Small file size, poor quality
+echo --------------------------
+choice /C 08642 /N
+
+if %errorlevel%==1 set vidbitrate=-crf 0
+if %errorlevel%==2 set vidbitrate=-crf 8
+if %errorlevel%==3 set vidbitrate=-crf 16
+if %errorlevel%==4 set vidbitrate=-crf 24
+if %errorlevel%==5 set vidbitrate=-crf 32
+cls
+choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame rate"
+if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
+if %errorlevel%==2 set framerate=-r %temp5%
+set errorlevel=7
+if %encoder%==libsvtav1 cls && echo Select Encoding preset && echo Lower presets produce a smaller file, for a given visual quality and also require more compute time during the encode process && echo -------------------------- && echo 1 - represent extremely high efficiency, for use when encode time is not important and quality/size of the resulting video file is critical && echo 2 - commonly used by home enthusiasts as they represent a balance of efficiency and reasonable compute time && echo 3 - used for fast encoding && echo -------------------------- && choice /C 123 /N
+if %errorlevel%==1 set preset=-preset 3
+if %errorlevel%==2 set preset=-preset 5
+if %errorlevel%==3 set preset=-preset 9
+
+if %encoder%==libaom-av1 set preset=-cpu-used 5
+
+cls
+echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
+set /p outputname=
+color a
+color f
+echo select output folder
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
+ffmpeg %filepath% -c:v %encoder% %preset% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+pause
+goto welcome
 
 :preset_h265
 title Preset H265/HEVC - FFpepeg script [FFmpeg]
@@ -244,7 +313,7 @@ for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetVideoFile
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Select encoder
 echo H.265 == HEVC
 echo --------------------------
 echo 1 - H.265 (libx265) - The standard HEVC encoder. Uses CPU
@@ -303,7 +372,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -315,7 +384,7 @@ for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetVideoFile
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Select encoder
 echo --------------------------
 echo 1 - H.264 (libx264) - The standard H264 encoder. Uses CPU
 echo ::::::::::
@@ -422,12 +491,11 @@ echo --------------
 
 choice /C 0123459 /N
 
-if %errorlevel%==1 set temp5=fps=5&&set math1=5
-if %errorlevel%==2 set temp5=fps=10&&set math1=10
-if %errorlevel%==3 set temp5=fps=15&&set math1=15
-if %errorlevel%==4 set temp5=fps=30&&set math1=30
-if %errorlevel%==5 set temp5=fps=50&&set math1=50
-if %errorlevel%==6 set temp5=fps=60&&set math1=60
+if %errorlevel%==1 set temp5=fps=5
+if %errorlevel%==2 set temp5=fps=10
+if %errorlevel%==4 set temp5=fps=30
+if %errorlevel%==5 set temp5=fps=50
+if %errorlevel%==6 set temp5=fps=60
 
 cls
 echo Select the gif resolution (height). Smaller resolution - smaller size
@@ -470,7 +538,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.gif"
 ffmpeg %temp2% %temp4% %filepath% -vf "%temp5%,%temp6%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" %temp7% -y "%outputfolder%\%outputname%.gif"
 color e
 echo ::::::::::::::::::::
@@ -496,7 +564,7 @@ for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetVideoFile
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Select encoder
 echo --------------------------
 echo 1 - Mpeg-4
 echo 2 - Microsoft Mpeg-4 Ver.3 
@@ -550,7 +618,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.avi"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
 pause
 goto welcome
@@ -562,7 +630,7 @@ for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetVideoFile
 set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
-echo Select a codec
+echo Select encoder
 echo --------------------------
 echo 1 - Mpeg-1
 echo 2 - Mpeg-2
@@ -616,7 +684,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mpeg"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
 pause
 goto welcome
@@ -667,7 +735,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.webm"
 ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
 pause
 goto welcome
@@ -818,7 +886,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 pause
 goto welcome
@@ -872,7 +940,7 @@ choice /C 12 /N
 if %errorlevel%==1 set audiocodec=-c:a copy && set outputformat=mka
 if %errorlevel%==2 set audiocodec=-c:a libmp3lame -b:a 384K && set outputformat=mp3
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\"
 ffmpeg %filepath% -vn -map 0:a:0 %audiocodec% "%outputfolder%\%outputname%_audio0.%outputformat%" -map 0:a:1? %audiocodec% "%outputfolder%\%outputname%_audio1.%outputformat%" -map 0:a:2? %audiocodec% "%outputfolder%\%outputname%_audio2.%outputformat%" -map 0:a:3? %audiocodec% "%outputfolder%\%outputname%_audio3.%outputformat%" -map 0:a:4? %audiocodec% "%outputfolder%\%outputname%_audio4.%outputformat%" -map 0:a:5? %audiocodec% "%outputfolder%\%outputname%_audio5.%outputformat%" -y -strict -2
 pause
 goto welcome
@@ -980,7 +1048,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -1126,7 +1194,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitrate% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 pause
 goto welcome
@@ -1203,7 +1271,7 @@ echo select output folder
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c copy -movflags +faststart "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -2136,7 +2204,7 @@ color 8f
 echo !!! Starting FFMPEG
 TIMEOUT /T 5
 
-title ENCODING [FFmpeg]
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 color f
 echo ::::::::::::::::::::::::::::::::::::
