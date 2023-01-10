@@ -285,7 +285,7 @@ choice /c YN /N /T 3 /D Y /m "Y - Autodetect Framerate, N - Set a custom frame r
 if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp5=
 if %errorlevel%==2 set framerate=-r %temp5%
 set errorlevel=7
-if %encoder%==libsvtav1 cls && echo Select Encoding preset && echo Lower presets produce a smaller file, for a given visual quality and also require more compute time during the encode process && echo -------------------------- && echo 1 - represent extremely high efficiency, for use when encode time is not important and quality/size of the resulting video file is critical && echo 2 - commonly used by home enthusiasts as they represent a balance of efficiency and reasonable compute time && echo 3 - used for fast encoding && echo -------------------------- && choice /C 123 /N
+if %encoder%==libsvtav1 cls && echo Select Encoding preset && echo Lower presets produce a smaller file, for a given visual quality and also require more compute time during the encode process && echo -------------------------- && echo 1 - Represent extremely high efficiency, for use when encode time is not important and quality/size of the resulting video file is critical && echo 2 - Commonly used by home enthusiasts as they represent a balance of efficiency and reasonable compute time && echo 3 - Used for fast encoding && echo -------------------------- && choice /C 123 /N
 if %errorlevel%==1 set preset=-preset 3
 if %errorlevel%==2 set preset=-preset 5
 if %errorlevel%==3 set preset=-preset 9
@@ -489,7 +489,7 @@ echo 4 - 50 FPS
 echo 5 - 60 FPS
 echo --------------
 
-choice /C 0123459 /N
+choice /C 012345 /N
 
 if %errorlevel%==1 set temp5=fps=5
 if %errorlevel%==2 set temp5=fps=10
@@ -507,7 +507,7 @@ echo 4 - 480px
 echo 5 - 720px
 echo --------------
 
-choice /C 1234567 /N
+choice /C 12345 /N
 if %errorlevel%==1 set temp6=scale=-2:144
 if %errorlevel%==2 set temp6=scale=-2:240
 if %errorlevel%==3 set temp6=scale=-2:360
@@ -1402,6 +1402,7 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -1434,6 +1435,7 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -1558,6 +1560,7 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -1590,6 +1593,7 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
+title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -1937,7 +1941,6 @@ if %errorlevel%==2 goto Conf_Custom_VbitrateCRF
 if %errorlevel%==3 goto Conf_Custom_VbitrateQP
 
 :Conf_Custom_VbitrateCBR
-title Threads - Configure - FFpepeg script [FFmpeg]
 cls
 echo The minimum and maximum bitrate values can be specified with custom flags using -minrate and -maxrate
 echo Enter the video bitrate in kbps (CBR) (example: 20000)
