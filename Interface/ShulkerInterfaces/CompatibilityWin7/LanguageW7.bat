@@ -1,0 +1,77 @@
+@echo off
+chcp 866
+:start
+if not exist "ShulkerInterfaces\PS\pwsh.exe" goto GetPowerShell
+cls
+color b
+echo Обратите внимание, если у вас нет локальных файлов языка, они будут скачаны на основе последнего релиза. Если у вас старая или автоматическая собранная сборка, она будет перезаписана файлами последнего релиза.
+echo Выберите язык
+echo ::::::::::::::::::::::::::
+echo E : Английский
+echo R : Русский
+echo U - ОБНОВИТЬ ФАЙЛЫ ЯЗЫКА
+echo ::::::::::::::::::::::::::
+choice /C ERU /N
+
+if %errorlevel%==1 goto English
+if %errorlevel%==2 goto Russian
+if %errorlevel%==3 goto DlLang
+goto start
+
+:English
+if not exist "ShulkerInterfaces\Lang\en-us.7z" goto DlLang
+ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\Lang\en-us.7z"
+color a
+echo .
+echo .
+echo .
+echo ГОТОВО!
+pause
+exit
+
+:Russian
+if not exist "ShulkerInterfaces\Lang\ru-ru.7z" goto DlLang
+ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\Lang\ru-ru.7z"
+color a
+echo .
+echo .
+echo .
+echo ГОТОВО!
+pause
+exit
+
+:DlLang
+echo Обновление языковых файлов...
+ShulkerInterfaces\PS\pwsh.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/xq71atprad9bqa0/LangW7.7z?dl=1','%~p0\ShulkerInterfaces\LangW7.7z')
+if not exist "ShulkerInterfaces\LangW7.7z" goto DoError
+ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\LangW7.7z"
+echo .
+echo .
+echo .
+echo Теперь вы можете сменить язык
+pause
+goto Start
+
+:DoError
+color 4
+echo Ошибка. Загруженные файлы не были найдены. Это может произойти из-за проблем с интернет соединением.
+pause
+goto start
+
+:GetPowerShell
+cls
+color e 
+echo Установка пакета совместимости
+if not exist "ShulkerInterfaces\PS.7z" goto PowerShellDownload
+if not exist "ShulkerInterfaces\PScript.7z" goto PowerShellDownload
+ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\PS.7z"
+ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\PScript.7z"
+if exist "ShulkerInterfaces\PS\pwsh.exe" del /Q "ShulkerInterfaces\PS.7z"
+if exist "ShulkerInterfaces\compatibility.txt" del /Q "ShulkerInterfaces\PScript.7z"
+goto checkOS
+
+:PowerShellDownload
+color 4
+echo Ошибка. Необходимые файлы не были найдены. Пожалуйста, переустановите релиз.
+pause 
+exit
