@@ -2,11 +2,12 @@
 0000studio:clip
 17live
 17live:clip
+1News: 1news.co.nz article videos
 1tv: Первый канал
-20.detik.com
 20min
 23video
 247sports
+24tv.ua
 24video
 3qsdn: 3Q SDN
 3sat
@@ -21,19 +22,19 @@
 9now.com.au
 abc.net.au
 abc.net.au:iview
-abc.net.au:iview:showseries
+abc.net.au:​iview:showseries
 abcnews
 abcnews:video
 abcotvs: ABC Owned Television Stations
 abcotvs:clips
-AbemaTV: [abematv]
+AbemaTV: abematv
 AbemaTVTitle
 AcademicEarth:Course
 acast
 acast:channel
 AcFunBangumi
 AcFunVideo
-ADN: [animedigitalnetwork] Anime Digital Network
+ADN: animationdigitalnetwork Animation Digital Network
 AdobeConnect
 adobetv
 adobetv:channel
@@ -44,24 +45,32 @@ AdultSwim
 aenetworks: A+E Networks: A&E, Lifetime, History.com, FYI Network and History Vault
 aenetworks:collection
 aenetworks:show
-afreecatv: [afreecatv] afreecatv.com
-afreecatv:live: [afreecatv] afreecatv.com
+AeonCo
+afreecatv: afreecatv afreecatv.com
+afreecatv:live: afreecatv afreecatv.com
 afreecatv:user
 AirMozilla
+AirTV
+AitubeKZVideo
 AliExpressLive
 AlJazeera
 Allocine
 AlphaPorno
 Alsace20TV
 Alsace20TVEmbed
-Alura: [alura]
-AluraCourse: [aluracourse]
+Alura: alura
+AluraCourse: aluracourse
 Amara
+AmazonMiniTV
+amazonminitv:season: Amazon MiniTV Season, "minitv:season:" prefix
+amazonminitv:series: Amazon MiniTV Series, "minitv:series:" prefix
+AmazonReviews
 AmazonStore
 AMCNetworks
 AmericasTestKitchen
 AmericasTestKitchenSeason
 AmHistoryChannel
+AnchorFMEpisode
 anderetijden: npo.nl, ntr.nl, omroepwnl.nl, zapp.nl and npo3.nl
 Angel
 AnimalPlanet
@@ -90,7 +99,7 @@ ArteTVEmbed
 ArteTVPlaylist
 AsianCrush
 AsianCrushPlaylist
-AtresPlayer: [atresplayer]
+AtresPlayer: atresplayer
 AtScaleConfEvent
 ATTTechChannel
 ATVAt
@@ -117,22 +126,24 @@ Bandcamp
 Bandcamp:album
 Bandcamp:user
 Bandcamp:weekly
-bangumi.bilibili.com: BiliBili番剧
 BannedVideo
-bbc: [bbc] BBC
-bbc.co.uk: [bbc] BBC iPlayer
+bbc: bbc BBC
+bbc.co.uk: bbc BBC iPlayer
 bbc.co.uk:article: BBC articles
-bbc.co.uk:iplayer:episodes
-bbc.co.uk:iplayer:group
+bbc.co.uk:​iplayer:episodes
+bbc.co.uk:​iplayer:group
 bbc.co.uk:playlist
-BBVTV: [bbvtv]
-BBVTVLive: [bbvtv]
-BBVTVRecordings: [bbvtv]
+BBVTV: bbvtv
+BBVTVLive: bbvtv
+BBVTVRecordings: bbvtv
+BeatBumpPlaylist
+BeatBumpVideo
 Beatport
 Beeg
 BehindKink
 Bellator
 BellMedia
+BerufeTV
 Bet
 bfi:player
 bfmtv
@@ -146,11 +157,15 @@ BiliBili
 Bilibili category extractor
 BilibiliAudio
 BilibiliAudioAlbum
-BilibiliChannel
+BiliBiliBangumi
+BiliBiliBangumiMedia
 BiliBiliPlayer
 BiliBiliSearch: Bilibili video search; "bilisearch:" prefix
-BiliIntl: [biliintl]
-BiliIntlSeries: [biliintl]
+BilibiliSpaceAudio
+BilibiliSpacePlaylist
+BilibiliSpaceVideo
+BiliIntl: biliintl
+biliIntl:series: biliintl
 BiliLive
 BioBioChileTV
 Biography
@@ -162,12 +177,15 @@ bitwave:stream
 BlackboardCollaborate
 BleacherReport
 BleacherReportCMS
+blerp
 blogger.com
 Bloomberg
 BokeCC
 BongaCams
+BooyahClips
 BostonGlobe
 Box
+BoxCastVideo
 Bpb: Bundeszentrale für politische Bildung
 BR: Bayerischer Rundfunk
 BravoTV
@@ -178,6 +196,7 @@ brightcove:new
 BRMediathek: Bayerischer Rundfunk Mediathek
 bt:article: Bergens Tidende Articles
 bt:vestlendingen: Bergens Tidende - Vestlendingen
+Bundesliga
 BusinessInsider
 BuzzFeed
 BYUtv
@@ -188,6 +207,7 @@ CAM4
 Camdemy
 CamdemyFolder
 CamModels
+Camsoda
 CamtasiaEmbed
 CamWithHer
 CanalAlpha
@@ -211,7 +231,7 @@ cbssports
 cbssports:embed
 CCMA
 CCTV: 央视网
-CDA
+CDA: cdapl
 Cellebrite
 CeskaTelevize
 CGTN
@@ -226,6 +246,7 @@ chirbit:profile
 cielotv.it
 Cinchcast
 Cinemax
+CinetecaMilano
 CiscoLiveSearch
 CiscoLiveSession
 ciscowebex: Cisco Webex
@@ -246,6 +267,7 @@ CNBCVideo
 CNN
 CNNArticle
 CNNBlogs
+CNNIndonesia
 ComedyCentral
 ComedyCentralTV
 CondeNast: Condé Nast media group: Allure, Architectural Digest, Ars Technica, Bon Appétit, Brides, Condé Nast, Condé Nast Traveler, Details, Epicurious, GQ, Glamour, Golf Digest, SELF, Teen Vogue, The New Yorker, Vanity Fair, Vogue, W Magazine, WIRED
@@ -263,10 +285,8 @@ Craftsy
 CrooksAndLiars
 CrowdBunker
 CrowdBunkerChannel
-crunchyroll: [crunchyroll]
-crunchyroll:beta: [crunchyroll]
-crunchyroll:playlist: [crunchyroll]
-crunchyroll:playlist:beta: [crunchyroll]
+crunchyroll: crunchyroll
+crunchyroll:playlist: crunchyroll
 CSpan: C-SPAN
 CSpanCongress
 CtsNews: 華視新聞
@@ -274,18 +294,18 @@ CTV
 CTVNews
 cu.ntv.co.jp: Nippon Television Network
 CultureUnplugged
-curiositystream: [curiositystream]
-curiositystream:collections: [curiositystream]
-curiositystream:series: [curiositystream]
+curiositystream: curiositystream
+curiositystream:collections: curiositystream
+curiositystream:series: curiositystream
 CWTV
-Cybrary: [cybrary]
-CybraryCourse: [cybrary]
+Cybrary: cybrary
+CybraryCourse: cybrary
 Daftsex
 DagelijkseKost: dagelijksekost.een.be
 DailyMail
-dailymotion: [dailymotion]
-dailymotion:playlist: [dailymotion]
-dailymotion:user: [dailymotion]
+dailymotion: dailymotion
+dailymotion:playlist: dailymotion
+dailymotion:user: dailymotion
 DailyWire
 DailyWirePodcast
 damtomo:record
@@ -302,9 +322,12 @@ DeezerPlaylist
 defense.gouv.fr
 democracynow
 DestinationAmerica
+DetikEmbed
+DeuxM
+DeuxMNews
 DHM: Filmarchiv - Deutsches Historisches Museum
 Digg
-DigitalConcertHall: [digitalconcerthall] DigitalConcertHall extractor
+DigitalConcertHall: digitalconcerthall DigitalConcertHall extractor
 DigitallySpeaking
 Digiteka
 Discovery
@@ -319,7 +342,6 @@ Disney
 DIYNetwork
 dlive:stream
 dlive:vod
-DoodStream
 Dotsub
 Douyin
 DouyuShow
@@ -328,11 +350,13 @@ DPlay
 DRBonanza
 Drooble
 Dropbox
-Dropout: [dropout]
+Dropout: dropout
 DropoutSeason
 DrTuber
 drtv
 drtv:live
+drtv:season
+drtv:series
 DTube
 duboku: www.duboku.io
 duboku:list: www.duboku.io entire series
@@ -342,14 +366,15 @@ dw
 dw:article
 EaglePlatform
 EbaumsWorld
+Ebay
 EchoMsk
 egghead:course: egghead.io course
 egghead:lesson: egghead.io lesson
 ehftv
 eHow
-EinsUndEinsTV: [1und1tv]
-EinsUndEinsTVLive: [1und1tv]
-EinsUndEinsTVRecordings: [1und1tv]
+EinsUndEinsTV: 1und1tv
+EinsUndEinsTVLive: 1und1tv
+EinsUndEinsTVRecordings: 1und1tv
 Einthusan
 eitb.tv
 EllenTube
@@ -364,7 +389,7 @@ Epicon
 EpiconSeries
 Epoch
 Eporner
-EroProfile: [eroprofile]
+EroProfile: eroprofile
 EroProfile:album
 ertflix: ERTFLIX videos
 ertflix:codename: ERTFLIX videos by codename
@@ -375,23 +400,24 @@ ESPNArticle
 ESPNCricInfo
 EsriVideo
 Europa
+EuroParlWebstream
 EuropeanTour
 Eurosport
 EUScreen
-EWETV: [ewetv]
-EWETVLive: [ewetv]
-EWETVRecordings: [ewetv]
+EWETV: ewetv
+EWETVLive: ewetv
+EWETVRecordings: ewetv
 ExpoTV
 Expressen
 ExtremeTube
 EyedoTV
-facebook: [facebook]
+facebook: facebook
 facebook:reel
 FacebookPluginsVideo
-fancode:live: [fancode]
-fancode:vod: [fancode]
+fancode:live: fancode
+fancode:vod: fancode
 faz.net
-fc2: [fc2]
+fc2: fc2
 fc2:embed
 fc2:live
 Fczenit
@@ -413,6 +439,7 @@ FOX9News
 Foxgay
 foxnews: Fox News and Fox Business Video
 foxnews:article
+FoxNewsVideo
 FoxSports
 fptplay: fptplay.vn
 FranceCulture
@@ -424,20 +451,20 @@ Freesound
 freespeech.org
 freetv:series
 FreeTvMovies
-FrontendMasters: [frontendmasters]
-FrontendMastersCourse: [frontendmasters]
-FrontendMastersLesson: [frontendmasters]
+FrontendMasters: frontendmasters
+FrontendMastersCourse: frontendmasters
+FrontendMastersLesson: frontendmasters
 FujiTVFODPlus7
-Funimation: [funimation]
-funimation:page: [funimation]
-funimation:show: [funimation]
+Funimation: funimation
+funimation:page: funimation
+funimation:show: funimation
 Funk
 Fusion
 Fux
 FuyinTV
 Gab
 GabTV
-Gaia: [gaia]
+Gaia: gaia
 GameInformer
 GameJolt
 GameJoltCommunity
@@ -449,21 +476,23 @@ GameSpot
 GameStar
 Gaskrank
 Gazeta
-GDCVault: [gdcvault]
+GDCVault: gdcvault
 GediDigital
-gem.cbc.ca: [cbcgem]
+gem.cbc.ca: cbcgem
 gem.cbc.ca:live
 gem.cbc.ca:playlist
+Genius
+GeniusLyrics
 Gettr
 GettrStreaming
 Gfycat
 GiantBomb
 Giga
-GlattvisionTV: [glattvisiontv]
-GlattvisionTVLive: [glattvisiontv]
-GlattvisionTVRecordings: [glattvisiontv]
+GlattvisionTV: glattvisiontv
+GlattvisionTVLive: glattvisiontv
+GlattvisionTVRecordings: glattvisiontv
 Glide: Glide mobile video messages (glide.me)
-Globo: [globo]
+Globo: globo
 GloboArticle
 glomex: Glomex videos
 glomex:embed: Glomex embedded videos
@@ -474,9 +503,10 @@ Gofile
 Golem
 goodgame:stream
 google:podcasts
-google:podcasts:feed
+google:​podcasts:feed
 GoogleDrive
 GoogleDrive:Folder
+GoPlay: goplay
 GoPro
 Goshgay
 GoToStage
@@ -496,7 +526,7 @@ hetklokhuis
 hgtv.com:show
 HGTVDe
 HGTVUsa
-HiDive: [hidive]
+HiDive: hidive
 HistoricFilms
 history:player
 history:topic: History.com Topic
@@ -508,12 +538,13 @@ Holodex
 HotNewHipHop
 hotstar
 hotstar:playlist
+hotstar:season
 hotstar:series
 Howcast
 HowStuffWorks
 hrfernsehen
-HRTi: [hrti]
-HRTiPlaylist: [hrti]
+HRTi: hrti
+HRTiPlaylist: hrti
 HSEProduct
 HSEShow
 html5
@@ -526,11 +557,14 @@ huya:live: huya.com
 Hypem
 Hytale
 Icareus
+iflix:episode
+IflixSeries
 ign.com
 IGNArticle
 IGNVideo
 IHeartRadio
 iheartradio:podcast
+Iltalehti
 imdb: Internet Movie Database trailers
 imdb:list: Internet Movie Database lists
 Imgur
@@ -540,21 +574,22 @@ Ina
 Inc
 IndavideoEmbed
 InfoQ
-Instagram: [instagram]
-instagram:story: [instagram]
-instagram:tag: [instagram] Instagram hashtag search URLs
-instagram:user: [instagram] Instagram user profile
+Instagram: instagram
+instagram:story: instagram
+instagram:tag: instagram Instagram hashtag search URLs
+instagram:user: instagram Instagram user profile
 InstagramIOS: IOS instagram:// URL
 Internazionale
 InternetVideoArchive
 InvestigationDiscovery
-IPrima: [iprima]
+IPrima: iprima
 IPrimaCNN
 iq.com: International version of iQiyi
 iq.com:album
-iqiyi: [iqiyi] 爱奇艺
+iqiyi: iqiyi 爱奇艺
 IslamChannel
 IslamChannelSeries
+IsraelNationalNews
 ITProTV
 ITProTVCourse
 ITTF
@@ -563,6 +598,7 @@ ITVBTCC
 ivi: ivi.ru
 ivi:compilation: ivi.ru compilations
 ivideon: Ivideon TV
+IVXPlayer
 Iwara
 iwara:playlist
 iwara:user
@@ -578,6 +614,8 @@ Jove
 JWPlatform
 Kakao
 Kaltura
+Kanal2
+KankaNews
 Karaoketv
 KarriereVideos
 Katsomo
@@ -586,10 +624,13 @@ KelbyOne
 Ketnet
 khanacademy
 khanacademy:unit
+Kick
 Kicker
 KickStarter
+KickVOD
 KinjaEmbed
 KinoPoisk
+Kommunetv
 KompasVideo
 KonserthusetPlay
 Koo
@@ -604,7 +645,7 @@ kuwo:mv: 酷我音乐 - MV
 kuwo:singer: 酷我音乐 - 歌手
 kuwo:song: 酷我音乐
 la7.it
-la7.it:pod:episode
+la7.it:​pod:episode
 la7.it:podcast
 laola1tv
 laola1tv:embed
@@ -618,9 +659,11 @@ Lcp
 LcpPlay
 Le: 乐视网
 Lecture2Go
-Lecturio: [lecturio]
-LecturioCourse: [lecturio]
-LecturioDeCourse: [lecturio]
+Lecturio: lecturio
+LecturioCourse: lecturio
+LecturioDeCourse: lecturio
+LeFigaroVideoEmbed
+LeFigaroVideoSection
 LEGO
 Lemonde
 Lenta
@@ -636,11 +679,12 @@ limelight:channel
 limelight:channel_list
 LineLive
 LineLiveChannel
-LinkedIn: [linkedin]
-linkedin:learning: [linkedin]
-linkedin:learning:course: [linkedin]
-LinuxAcademy: [linuxacademy]
+LinkedIn: linkedin
+linkedin:learning: linkedin
+linkedin:​learning:course: linkedin
+LinuxAcademy: linuxacademy
 Liputan6
+ListenNotes
 LiTV
 LiveJournal
 livestream
@@ -653,13 +697,14 @@ LocalNews8
 LoveHomePorn
 LRTStream
 LRTVOD
-lynda: [lynda] lynda.com videos
-lynda:course: [lynda] lynda.com online courses
+Lumni
+lynda: lynda lynda.com videos
+lynda:course: lynda lynda.com online courses
 m6
 MagentaMusik360
 mailru: Видео@Mail.Ru
 mailru:music: Музыка@Mail.Ru
-mailru:music:search: Музыка@Mail.Ru
+mailru:​music:search: Музыка@Mail.Ru
 MainStreaming: MainStreaming Player
 MallTV
 mangomolo:live
@@ -687,6 +732,8 @@ MediasetShow
 Mediasite
 MediasiteCatalog
 MediasiteNamedCatalog
+MediaStream
+MediaWorksNZVOD
 Medici
 megaphone.fm: megaphone.fm embedded players
 megatvcom: megatv.com videos
@@ -699,10 +746,11 @@ Metacritic
 mewatch
 Mgoon
 MiaoPai
+MicrosoftEmbed
 microsoftstream: Microsoft Stream
 mildom: Record ongoing live by specific user in Mildom
 mildom:clip: Clip in Mildom
-mildom:user:vod: Download all VODs from specific user in Mildom
+mildom:​user:vod: Download all VODs from specific user in Mildom
 mildom:vod: VOD in Mildom
 minds
 minds:channel
@@ -720,23 +768,26 @@ mixcloud
 mixcloud:playlist
 mixcloud:user
 MLB
-MLBTV: [mlb]
+MLBArticle
+MLBTV: mlb
 MLBVideo
 MLSSoccer
 Mnet
-MNetTV: [mnettv]
-MNetTVLive: [mnettv]
-MNetTVRecordings: [mnettv]
+MNetTV: mnettv
+MNetTVLive: mnettv
+MNetTVRecordings: mnettv
 MochaVideo
 MoeVideo: LetitBit video services: moevideo.net, playreplay.net and videochart.net
 Mofosex
 MofosexEmbed
 Mojvideo
+MonsterSirenHypergryphMusic
 Morningstar: morningstar.com
 Motherless
 MotherlessGroup
 Motorsport: motorsport.com
 MotorTrend
+MotorTrendOnDemand
 MovieClips
 MovieFap
 Moviepilot
@@ -787,7 +838,7 @@ Naver:live
 navernow
 NBA
 nba:watch
-nba⌚collection
+nba:​watch:collection
 NBAChannel
 NBAEmbed
 NBAWatchEmbed
@@ -798,13 +849,14 @@ nbcolympics:stream
 NBCSports
 NBCSportsStream
 NBCSportsVPlayer
+NBCStations
 ndr: NDR.de - Norddeutscher Rundfunk
 ndr:embed
-ndr:embed:base
+ndr:​embed:base
 NDTV
-Nebula: [watchnebula]
-nebula:channel: [watchnebula]
-nebula:subscriptions: [watchnebula]
+Nebula: watchnebula
+nebula:channel: watchnebula
+nebula:subscriptions: watchnebula
 NerdCubedFeed
 netease:album: 网易云音乐 - 专辑
 netease:djradio: 网易云音乐 - 电台
@@ -813,11 +865,12 @@ netease:playlist: 网易云音乐 - 歌单
 netease:program: 网易云音乐 - 电台节目
 netease:singer: 网易云音乐 - 歌手
 netease:song: 网易云音乐
-NetPlusTV: [netplus]
-NetPlusTVLive: [netplus]
-NetPlusTVRecordings: [netplus]
+NetPlusTV: netplus
+NetPlusTVLive: netplus
+NetPlusTVRecordings: netplus
 Netverse
 NetversePlaylist
+NetverseSearch: "netsearch:" prefix
 Netzkino
 Newgrounds
 Newgrounds:playlist
@@ -832,8 +885,10 @@ Nexx
 NexxEmbed
 NFB
 NFHSNetwork
-nfl.com: (Currently broken)
-nfl.com:article: (Currently broken)
+nfl.com
+nfl.com:article
+nfl.com:​plus:episode
+nfl.com:​plus:replay
 NhkForSchoolBangumi
 NhkForSchoolProgramList
 NhkForSchoolSubject: Portal page for each school subjects, like Japanese (kokugo, 国語) or math (sansuu/suugaku or 算数・数学)
@@ -845,25 +900,27 @@ nick.de
 nickelodeon:br
 nickelodeonru
 nicknight
-niconico: [niconico] ニコニコ動画
-niconico:history: NicoNico user history. Requires cookies.
+niconico: niconico ニコニコ動画
+niconico:history: NicoNico user history or likes. Requires cookies.
 niconico:playlist
 niconico:series
 niconico:tag: NicoNico video tag URLs
 NiconicoUser
 nicovideo:search: Nico video search; "nicosearch:" prefix
-nicovideo:search:date: Nico video search, newest first; "nicosearchdate:" prefix
+nicovideo:​search:date: Nico video search, newest first; "nicosearchdate:" prefix
 nicovideo:search_url: Nico video search URLs
 Nintendo
 Nitter
 njoy: N-JOY
 njoy:embed
-NJPWWorld: [njpwworld] 新日本プロレスワールド
+NJPWWorld: njpwworld 新日本プロレスワールド
 NobelPrize
+NoicePodcast
 NonkTube
 NoodleMagazine
 Noovo
 Normalboots
+NOSNLArticle
 NosVideo
 Nova: TN.cz, Prásk.tv, Nova.cz, Novaplus.cz, FANDA.tv, Krásná.cz and Doma.cz
 NovaEmbed
@@ -875,7 +932,7 @@ Noz
 npo: npo.nl, ntr.nl, omroepwnl.nl, zapp.nl and npo3.nl
 npo.nl:live
 npo.nl:radio
-npo.nl📻fragment
+npo.nl:​radio:fragment
 Npr
 NRK
 NRKPlaylist
@@ -894,15 +951,20 @@ NYTimes
 NYTimesArticle
 NYTimesCooking
 nzherald
+NZOnScreen
 NZZ
 ocw.mit.edu
 OdaTV
 Odnoklassniki
+OfTV
+OfTVPlaylist
 OktoberfestTV
 OlympicsReplay
 on24: ON24
+OnDemandChinaEpisode
 OnDemandKorea
 OneFootball
+OnePlacePodcast
 onet.pl
 onet.tv
 onet.tv:channel
@@ -916,15 +978,15 @@ openrec
 openrec:capture
 openrec:movie
 OraTV
-orf:fm4:story: fm4.orf.at stories
+orf:​fm4:story: fm4.orf.at stories
 orf:iptv: iptv.ORF.at
 orf:radio
 orf:tvthek: ORF TVthek
-OsnatelTV: [osnateltv]
-OsnatelTVLive: [osnateltv]
-OsnatelTVRecordings: [osnateltv]
+OsnatelTV: osnateltv
+OsnatelTVLive: osnateltv
+OsnatelTVRecordings: osnateltv
 OutsideTV
-PacktPub: [packtpub]
+PacktPub: packtpub
 PacktPubCourse
 PalcoMP3:artist
 PalcoMP3:song
@@ -947,7 +1009,7 @@ PeekVids
 peer.tv
 PeerTube
 PeerTube:Playlist
-peloton: [peloton]
+peloton: peloton
 peloton:live: Peloton Live
 People
 PerformGroup
@@ -956,7 +1018,7 @@ periscope:user: Periscope user videos
 PhilharmonieDeParis: Philharmonie de Paris
 phoenix.de
 Photobucket
-Piapro: [piapro]
+Piapro: piapro
 Picarto
 PicartoVod
 Piksel
@@ -964,14 +1026,14 @@ Pinkbike
 Pinterest
 PinterestCollection
 pixiv:sketch
-pixiv:sketch:user
+pixiv:​sketch:user
 Pladform
 PlanetMarathi
-Platzi: [platzi]
-PlatziCourse: [platzi]
+Platzi: platzi
+PlatziCourse: platzi
 play.fm
 player.sky.it
-PlayPlusTV: [playplustv]
+PlayPlusTV: playplustv
 PlayStuff
 PlaysTV
 PlaySuisse
@@ -979,22 +1041,26 @@ Playtvak: Playtvak.cz, iDNES.cz and Lidovky.cz
 Playvid
 PlayVids
 Playwire
-pluralsight: [pluralsight]
+pluralsight: pluralsight
 pluralsight:course
 PlutoTV
+PodbayFM
+PodbayFMChannel
 Podchaser
 podomatic
 Pokemon
 PokemonWatch
-PokerGo: [pokergo]
-PokerGoCollection: [pokergo]
+PokerGo: pokergo
+PokerGoCollection: pokergo
 PolsatGo
 PolskieRadio
+polskieradio:audition
+polskieradio:category
 polskieradio:kierowcow
+polskieradio:legacy
 polskieradio:player
 polskieradio:podcast
-polskieradio:podcast:list
-PolskieRadioCategory
+polskieradio:​podcast:list
 Popcorntimes
 PopcornTV
 PornCom
@@ -1002,15 +1068,19 @@ PornerBros
 Pornez
 PornFlip
 PornHd
-PornHub: [pornhub] PornHub and Thumbzilla
-PornHubPagedVideoList: [pornhub]
-PornHubPlaylist: [pornhub]
-PornHubUser: [pornhub]
-PornHubUserVideosUpload: [pornhub]
+PornHub: pornhub PornHub and Thumbzilla
+PornHubPagedVideoList: pornhub
+PornHubPlaylist: pornhub
+PornHubUser: pornhub
+PornHubUserVideosUpload: pornhub
 Pornotube
 PornoVoisines
 PornoXO
+PornTop
 PornTube
+Pr0gramm
+Pr0grammStatic
+PrankCast
 PremiershipRugby
 PressTV
 ProjectVeritas
@@ -1024,14 +1094,15 @@ puhutv
 puhutv:serie
 Puls4
 Pyvideo
+QingTing
 qqmusic: QQ音乐
 qqmusic:album: QQ音乐 - 专辑
 qqmusic:playlist: QQ音乐 - 歌单
 qqmusic:singer: QQ音乐 - 歌手
 qqmusic:toplist: QQ音乐 - 排行榜
-QuantumTV: [quantumtv]
-QuantumTVLive: [quantumtv]
-QuantumTVRecordings: [quantumtv]
+QuantumTV: quantumtv
+QuantumTVLive: quantumtv
+QuantumTVRecordings: quantumtv
 Qub
 R7
 R7Article
@@ -1060,6 +1131,8 @@ RaiPlaySoundPlaylist
 RaiSudtirol
 RayWenderlich
 RayWenderlichCourse
+RbgTum
+RbgTumCourse
 RBMARadio
 RCS
 RCSEmbeds
@@ -1086,15 +1159,16 @@ ReverbNation
 RICE
 RMCDecouverte
 RockstarGames
-Rokfin: [rokfin]
+Rokfin: rokfin
 rokfin:channel: Rokfin Channels
 rokfin:search: Rokfin Search; "rkfnsearch:" prefix
 rokfin:stack: Rokfin Stacks
-RoosterTeeth: [roosterteeth]
-RoosterTeethSeries: [roosterteeth]
+RoosterTeeth: roosterteeth
+RoosterTeethSeries: roosterteeth
 RottenTomatoes
 Rozhlas
-RTBF: [rtbf]
+RozhlasVltava
+RTBF: rtbf
 RTDocumentry
 RTDocumentryPlaylist
 rte: Raidió Teilifís Éireann TV
@@ -1104,7 +1178,7 @@ rtl.lu:tele-vod
 rtl.nl: rtl.nl and rtlxl.nl
 rtl2
 rtl2:you
-rtl2:you:series
+rtl2:​you:series
 RTLLuLive
 RTLLuRadio
 RTNews
@@ -1121,6 +1195,7 @@ RTVS
 rtvslo.si
 RUHD
 Rule34Video
+Rumble
 RumbleChannel
 RumbleEmbed
 Ruptly
@@ -1135,30 +1210,33 @@ RUTV: RUTV.RU
 Ruutu
 Ruv
 ruv.is:spila
-safari: [safari] safaribooksonline.com online video
-safari:api: [safari]
-safari:course: [safari] safaribooksonline.com online courses
+safari: safari safaribooksonline.com online video
+safari:api: safari
+safari:course: safari safaribooksonline.com online courses
 Saitosan
-SAKTV: [saktv]
-SAKTVLive: [saktv]
-SAKTVRecordings: [saktv]
-SaltTV: [salttv]
-SaltTVLive: [salttv]
-SaltTVRecordings: [salttv]
+SAKTV: saktv
+SAKTVLive: saktv
+SAKTVRecordings: saktv
+SaltTV: salttv
+SaltTVLive: salttv
+SaltTVRecordings: salttv
 SampleFocus
+Sangiin: 参議院インターネット審議中継 (archive)
 Sapo: SAPO Vídeos
 savefrom.net
 SBS: sbs.com.au
 schooltv
 ScienceChannel
 screen.yahoo:search: Yahoo screen search; "yvsearch:" prefix
+Screen9
 Screencast
+Screencastify
 ScreencastOMatic
 ScrippsNetworks
 scrippsnetworks:watch
 Scrolller
-SCTE: [scte]
-SCTECourse: [scte]
+SCTE: scte
+SCTECourse: scte
 Seeker
 SenateGov
 SenateISVP
@@ -1167,12 +1245,16 @@ Servus
 Sexu
 SeznamZpravy
 SeznamZpravyArticle
-Shahid: [shahid]
+Shahid: shahid
 ShahidShow
 Shared: shared.sx
 ShareVideosEmbed
 ShemarooMe
 ShowRoomLive
+ShugiinItvLive: 衆議院インターネット審議中継
+ShugiinItvLiveRoom: 衆議院インターネット審議中継 (中継)
+ShugiinItvVod: 衆議院インターネット審議中継 (ビデオライブラリ)
+SibnetEmbed
 simplecast
 simplecast:episode
 simplecast:podcast
@@ -1180,10 +1262,9 @@ Sina
 Skeb
 sky.it
 sky:news
-sky:news:story
+sky:​news:story
 sky:sports
-sky:sports:news
-skyacademy.it
+sky:​sports:news
 SkylineWebcams
 skynewsarabia:article
 skynewsarabia:video
@@ -1191,17 +1272,19 @@ SkyNewsAU
 Slideshare
 SlidesLive
 Slutload
+Smotrim
 Snotr
 Sohu
-SonyLIV: [sonyliv]
+SonyLIV: sonyliv
 SonyLIVSeries
-soundcloud: [soundcloud]
-soundcloud:playlist: [soundcloud]
-soundcloud:related: [soundcloud]
-soundcloud:search: [soundcloud] Soundcloud search; "scsearch:" prefix
-soundcloud:set: [soundcloud]
-soundcloud:trackstation: [soundcloud]
-soundcloud:user: [soundcloud]
+soundcloud: soundcloud
+soundcloud:playlist: soundcloud
+soundcloud:related: soundcloud
+soundcloud:search: soundcloud Soundcloud search; "scsearch:" prefix
+soundcloud:set: soundcloud
+soundcloud:trackstation: soundcloud
+soundcloud:user: soundcloud
+soundcloud:​user:permalink: soundcloud
 SoundcloudEmbed
 soundgasm
 soundgasm:profile
@@ -1220,8 +1303,8 @@ Spiegel
 Sport5
 SportBox
 SportDeutschland
-spotify: Spotify episodes
-spotify:show: Spotify shows
+spotify: Spotify episodes (Currently broken)
+spotify:show: Spotify shows (Currently broken)
 Spreaker
 SpreakerPage
 SpreakerShow
@@ -1258,6 +1341,7 @@ SVT
 SVTPage
 SVTPlay: SVT Play and Öppet arkiv
 SVTSeries
+SwearnetEpisode
 SWRMediathek
 Syfy
 SYVDK
@@ -1267,13 +1351,13 @@ Tagesschau
 Tass
 TBS
 TDSLifeway
-Teachable: [teachable]
-TeachableCourse: [teachable]
+Teachable: teachable
+TeachableCourse: teachable
 teachertube: teachertube.com videos
-teachertube:user:collection: teachertube.com user and collection videos
+teachertube:​user:collection: teachertube.com user and collection videos
 TeachingChannel
 Teamcoco
-TeamTreeHouse: [teamtreehouse]
+TeamTreeHouse: teamtreehouse
 TechTalks
 techtv.mit.edu
 TedEmbed
@@ -1283,6 +1367,7 @@ TedTalk
 Tele13
 Tele5
 TeleBruxelles
+TelecaribePlay
 Telecinco: telecinco.es, cuatro.com and mediaset.es
 Telegraaf
 telegram:embed
@@ -1296,8 +1381,8 @@ TeleQuebecVideo
 TeleTask
 Telewebion
 Tempo
-TennisTV: [tennistv]
-TenPlay: [10play]
+TennisTV: tennistv
+TenPlay: 10play
 TF1
 TFO
 TheHoleTv
@@ -1312,13 +1397,17 @@ TheWeatherChannel
 ThisAmericanLife
 ThisAV
 ThisOldHouse
+ThisVid
+ThisVidMember
+ThisVidPlaylist
 ThreeSpeak
 ThreeSpeakUser
 TikTok
-tiktok:effect
-tiktok:sound
-tiktok:tag
-tiktok:user
+tiktok:effect: (Currently broken)
+tiktok:live
+tiktok:sound: (Currently broken)
+tiktok:tag: (Currently broken)
+tiktok:user: (Currently broken)
 tinypic: tinypic.com videos
 TLC
 TMZ
@@ -1328,33 +1417,35 @@ toggle
 toggo
 Tokentube
 Tokentube:channel
+tokfm:audition
+tokfm:podcast
 ToonGoggles
-tou.tv: [toutv]
+tou.tv: toutv
 Toypics: Toypics video
 ToypicsUser: Toypics user profile
 TrailerAddict: (Currently broken)
 TravelChannel
-Triller: [triller]
-TrillerUser: [triller]
+Triller: triller
+TrillerUser: triller
 Trilulilu
 Trovo
 TrovoChannelClip: All Clips of a trovo.live channel; "trovoclip:" prefix
 TrovoChannelVod: All VODs of a trovo.live channel; "trovovod:" prefix
 TrovoVod
+TrtCocukVideo
 TrueID
 TruNews
 Truth
 TruTV
 Tube8
-TubeTuGraz: [tubetugraz] tube.tugraz.at
-TubeTuGrazSeries: [tubetugraz]
-TubiTv: [tubitv]
+TubeTuGraz: tubetugraz tube.tugraz.at
+TubeTuGrazSeries: tubetugraz
+TubiTv: tubitv
 TubiTvShow
-Tumblr: [tumblr]
-tunein:clip
-tunein:program
-tunein:station
-tunein:topic
+Tumblr: tumblr
+TuneInPodcast
+TuneInPodcastEpisode
+TuneInStation
 TunePk
 Turbo
 tv.dfb.de
@@ -1391,36 +1482,40 @@ tvopengr:embed: tvopen.gr embedded videos
 tvopengr:watch: tvopen.gr (and ethnos.gr) videos
 tvp: Telewizja Polska
 tvp:embed: Telewizja Polska
-tvp:series
 tvp:stream
+tvp:vod
+tvp:​vod:series
 TVPlayer
 TVPlayHome
 Tweakers
 TwitCasting
 TwitCastingLive
 TwitCastingUser
-twitch:clips: [twitch]
-twitch:stream: [twitch]
-twitch:vod: [twitch]
-TwitchCollection: [twitch]
-TwitchVideos: [twitch]
-TwitchVideosClips: [twitch]
-TwitchVideosCollections: [twitch]
+twitch:clips: twitch
+twitch:stream: twitch
+twitch:vod: twitch
+TwitchCollection: twitch
+TwitchVideos: twitch
+TwitchVideosClips: twitch
+TwitchVideosCollections: twitch
 twitter
 twitter:amplify
 twitter:broadcast
 twitter:card
 twitter:shortener
-udemy: [udemy]
-udemy:course: [udemy]
+twitter:spaces
+Txxx
+udemy: udemy
+udemy:course: udemy
 UDNEmbed: 聯合影音
-UFCArabia: [ufcarabia]
-UFCTV: [ufctv]
+UFCArabia: ufcarabia
+UFCTV: ufctv
 ukcolumn
 UKTVPlay
 umg:de: Universal Music Deutschland
 Unistra
 Unity
+UnscriptedNewsVideo
 uol.com.br
 uplynk
 uplynk:preplay
@@ -1438,12 +1533,13 @@ Vbox7
 VeeHD
 Veo
 Veoh
+veoh:user
 Vesti: Вести.Ru
 Vevo
 VevoPlaylist
 VGTV: VGTV, BTTV, FTV, Aftenposten and Aftonbladet
 vh1.com
-vhx:embed: [vimeo]
+vhx:embed: vimeo
 Viafree
 vice
 vice:article
@@ -1457,30 +1553,34 @@ video.sky.it
 video.sky.it:live
 VideoDetective
 videofy.me
+VideoKen
+VideoKenCategory
+VideoKenPlayer
+VideoKenPlaylist
+VideoKenTopic
 videomore
 videomore:season
 videomore:video
 VideoPress
-Vidio: [vidio]
-VidioLive: [vidio]
-VidioPremier: [vidio]
+Vidio: vidio
+VidioLive: vidio
+VidioPremier: vidio
 VidLii
-vier: [vier] vier.be and vijf.be
-vier:videos
 viewlift
 viewlift:embed
 Viidea
-viki: [viki]
-viki:channel: [viki]
-vimeo: [vimeo]
-vimeo:album: [vimeo]
-vimeo:channel: [vimeo]
-vimeo:group: [vimeo]
-vimeo:likes: [vimeo] Vimeo user likes
-vimeo:ondemand: [vimeo]
-vimeo:review: [vimeo] Review pages on vimeo
-vimeo:user: [vimeo]
-vimeo:watchlater: [vimeo] Vimeo watch later list, ":vimeowatchlater" keyword (requires authentication)
+viki: viki
+viki:channel: viki
+vimeo: vimeo
+vimeo:album: vimeo
+vimeo:channel: vimeo
+vimeo:group: vimeo
+vimeo:likes: vimeo Vimeo user likes
+vimeo:ondemand: vimeo
+vimeo:pro: vimeo
+vimeo:review: vimeo Review pages on vimeo
+vimeo:user: vimeo
+vimeo:watchlater: vimeo Vimeo watch later list, ":vimeowatchlater" keyword (requires authentication)
 Vimm:recording
 Vimm:stream
 ViMP
@@ -1490,22 +1590,22 @@ Vine
 vine:user
 Viqeo
 Viu
-viu:ott: [viu]
+viu:ott: viu
 viu:playlist
+ViuOTTIndonesia
 Vivo: vivo.sx
-vk: [vk] VK
-vk:uservideos: [vk] VK - User's Videos
-vk:wallpost: [vk]
-vlive: [vlive]
-vlive:channel: [vlive]
-vlive:post: [vlive]
+vk: vk VK
+vk:uservideos: vk VK - User's Videos
+vk:wallpost: vk
 vm.tiktok
+Vocaroo
 Vodlocker
 VODPl
 VODPlatform
 VoiceRepublic
 voicy
 voicy:channel
+VolejTV
 Voot
 VootSeries
 VoxMedia
@@ -1515,14 +1615,14 @@ vqq:series
 vqq:video
 Vrak
 VRT: VRT NWS, Flanders News, Flandern Info and Sporza
-VrtNU: [vrtnu] VrtNU.be
-vrv: [vrv]
+VrtNU: vrtnu VrtNU.be
+vrv: vrv
 vrv:series
 VShare
 VTM
-VTXTV: [vtxtv]
-VTXTVLive: [vtxtv]
-VTXTVRecordings: [vtxtv]
+VTXTV: vtxtv
+VTXTVLive: vtxtv
+VTXTVRecordings: vtxtv
 VuClip
 Vupload
 VVVVID
@@ -1531,9 +1631,9 @@ VyboryMos
 Vzaar
 Wakanim
 Walla
-WalyTV: [walytv]
-WalyTVLive: [walytv]
-WalyTVRecordings: [walytv]
+WalyTV: walytv
+WalyTVLive: walytv
+WalyTVRecordings: walytv
 wasdtv:clip
 wasdtv:record
 wasdtv:stream
@@ -1547,7 +1647,9 @@ WDR
 wdr:mobile: (Currently broken)
 WDRElefant
 WDRPage
+web.archive:vlive: web.archive.org saved vlive videos
 web.archive:youtube: web.archive.org saved youtube videos, "ytarchive:" prefix
+Webcamerapl
 Webcaster
 WebcasterFeed
 WebOfStories
@@ -1561,25 +1663,30 @@ whowatch
 wikimedia.org
 Willow
 WimTV
+WinSportsVideo
 Wistia
+WistiaChannel
 WistiaPlaylist
 wnl: npo.nl, ntr.nl, omroepwnl.nl, zapp.nl and npo3.nl
+wordpress:mb.miniAudioPlayer
+wordpress:playlist
 WorldStarHipHop
 wppilot
 wppilot:channels
+WrestleUniversePPV
+WrestleUniverseVOD
 WSJ: Wall Street Journal
 WSJArticle
 WWE
+wyborcza:video
+WyborczaPodcast
+Xanimu
 XBef
 XboxClips
 XFileShare: XFileShare based sites: Aparat, ClipWatching, GoUnlimited, GoVid, HolaVid, Streamty, TheVideoBee, Uqload, VidBom, vidlo, VidLocker, VidShare, VUp, WolfStream, XVideoSharing
 XHamster
 XHamsterEmbed
 XHamsterUser
-xiami:album: 虾米音乐 - 专辑
-xiami:artist: 虾米音乐 - 歌手
-xiami:collection: 虾米音乐 - 精选集
-xiami:song: 虾米音乐
 ximalaya: 喜马拉雅FM
 ximalaya:album: 喜马拉雅FM 专辑
 xinpianchang: xinpianchang.com
@@ -1590,22 +1697,25 @@ XTube
 XTubeUser: XTube user profile
 Xuite: 隨意窩Xuite影音
 XVideos
+xvideos:quickies
 XXXYMovies
 Yahoo: Yahoo screen and movies
 yahoo:gyao
-yahoo:gyao:player
+yahoo:​gyao:player
 yahoo:japannews: Yahoo! Japan News
 YandexDisk
 yandexmusic:album: Яндекс.Музыка - Альбом
-yandexmusic🧑‍🎨albums: Яндекс.Музыка - Артист - Альбомы
-yandexmusic🧑‍🎨tracks: Яндекс.Музыка - Артист - Треки
+yandexmusic:​artist:albums: Яндекс.Музыка - Артист - Альбомы
+yandexmusic:​artist:tracks: Яндекс.Музыка - Артист - Треки
 yandexmusic:playlist: Яндекс.Музыка - Плейлист
 yandexmusic:track: Яндекс.Музыка - Трек
 YandexVideo
 YandexVideoPreview
 YapFiles
+Yappy
 YesJapan
 yinyuetai:video: 音悦Tai
+YleAreena
 Ynet
 YouJizz
 youku: 优酷
@@ -1620,13 +1730,14 @@ youtube: YouTube
 youtube:clip
 youtube:favorites: YouTube liked videos; ":ytfav" keyword (requires cookies)
 youtube:history: Youtube watch history; ":ythis" keyword (requires cookies)
-youtube:music:search_url: YouTube music search URLs with selectable sections, e.g. #songs
+youtube:​music:search_url: YouTube music search URLs with selectable sections, e.g. #songs
 youtube:notif: YouTube notifications; ":ytnotif" keyword (requires cookies)
 youtube:playlist: YouTube playlists
 youtube:recommended: YouTube recommended videos; ":ytrec" keyword
 youtube:search: YouTube search; "ytsearch:" prefix
-youtube:search:date: YouTube search, newest videos first; "ytsearchdate:" prefix
+youtube:​search:date: YouTube search, newest videos first; "ytsearchdate:" prefix
 youtube:search_url: YouTube search URLs with sorting and filter support
+youtube:​shorts:pivot:audio: YouTube Shorts audio pivot (Shorts using audio of a given video)
 youtube:stories: YouTube channel stories; "ytstories:" prefix
 youtube:subscriptions: YouTube subscriptions feed; ":ytsubs" keyword (requires cookies)
 youtube:tab: YouTube Tabs
@@ -1635,14 +1746,15 @@ youtube:watchlater: Youtube watch later list; ":ytwatchlater" keyword (requires 
 YoutubeLivestreamEmbed: YouTube livestream embeds
 YoutubeYtBe: youtu.be
 Zapiks
-Zattoo: [zattoo]
-ZattooLive: [zattoo]
-ZattooMovies: [zattoo]
-ZattooRecordings: [zattoo]
+Zattoo: zattoo
+ZattooLive: zattoo
+ZattooMovies: zattoo
+ZattooRecordings: zattoo
 ZDF
 ZDFChannel
-Zee5: [zee5]
+Zee5: zee5
 zee5:series
+ZeeNews
 ZenYandex
 ZenYandexChannel
 Zhihu
