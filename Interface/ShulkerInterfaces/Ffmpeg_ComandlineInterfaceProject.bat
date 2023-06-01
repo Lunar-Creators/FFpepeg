@@ -553,7 +553,7 @@ ffmpeg %temp2% %temp4% %filepath% -vf "%temp5%,%temp6%:flags=lanczos,split[s0][s
 color e
 echo ::::::::::::::::::::
 echo Check the GIF size. Does it match your size limit?
-echo For example, the Discord file size limit is 8MB
+echo For example, the Discord file size limit is 15MB (Without Nitro)
 echo Do you want to change the settings or continue?
 choice /c YN /N /m "Y - Continue, N - Change settings"
 if %errorlevel%==2 goto Preset_gifRes
@@ -561,6 +561,7 @@ goto welcome
 
 :Preset_gifLoop
 cls
+echo (May not work depending on software that open gif)
 echo For example a value of 10 will cause the GIF to play 11 times
 echo Enter a value (example: 10)
 set /p temp8=
