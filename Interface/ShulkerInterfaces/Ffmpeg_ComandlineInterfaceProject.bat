@@ -918,7 +918,7 @@ choice /C N123 /N
 if %errorlevel%==1 goto welcome
 if %errorlevel%==2 goto PresetTool_ExtractAll
 if %errorlevel%==3 goto PresetTool_Upscaling
-if %errorlevel%==3 goto PresetTool_osuoptimize
+if %errorlevel%==4 goto PresetTool_osuoptimize
 
 :PresetTool_ExtractAll
 title Extract multiple audio streams from video - FFpepeg script [FFmpeg]
