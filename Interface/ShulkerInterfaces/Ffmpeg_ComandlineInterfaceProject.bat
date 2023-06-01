@@ -911,12 +911,14 @@ echo Choose tool preset (In Development)
 echo --------------------------
 echo 1 - Extract multiple audio streams from video (extract audio to .mp3 or .mka up to 6 streams) 
 echo 2 - Upscale or downscale video using different algorithms
+echo 3 - Optimize background image/video and music according OSU! ranking criteria
 echo N - Back to main menu
-choice /C N12 /N
+choice /C N123 /N
 
 if %errorlevel%==1 goto welcome
 if %errorlevel%==2 goto PresetTool_ExtractAll
 if %errorlevel%==3 goto PresetTool_Upscaling
+if %errorlevel%==3 goto PresetTool_osuoptimize
 
 :PresetTool_ExtractAll
 title Extract multiple audio streams from video - FFpepeg script [FFmpeg]
@@ -1061,6 +1063,70 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+pause
+goto welcome
+
+:PresetTool_osuoptimize
+cls
+title OSU! Optimizer - FFpepeg script [FFmpeg]
+echo Is there a video in the background of your beatmap?
+echo N - No
+echo Y - Yes
+choice /C NY /N
+if %errorlevel%==1 set osuvideo=false
+if %errorlevel%==2 set osuvideo=true
+cls
+echo Select Output Folder
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+cls
+echo Select Your Audiofile
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetAudioFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+set temp1=%filepath% -c:a libvorbis -vn -sn -map_metadata -1 -map_chapters -1 -b:a 192K -y "%outputfolder%\OSUBG_Audio.ogg"
+cls
+echo Select Your Background Image
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetPictureFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+set temp2=%filepath% -vf scale=-2:1080 -y -strict -2 "%outputfolder%\OSUBG_Image.jpg"
+if %osuvideo%==true goto PresetTool_osuoptimize_Video
+goto PresetTool_osuoptimize_Process
+
+:PresetTool_osuoptimize_Video
+cls
+echo Select Your Background video
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+cls
+echo Select Quality
+echo --------------------------
+echo 1 - CRF 20 - Higher Filesize
+echo 2 - CRF 22
+echo 3 - CRF 24
+echo 4 - CRF 26
+echo 5 - CRF 30 - Lower Filesize
+echo --------------------------
+choice /C 12345 /N
+if %errorlevel%==1 set vidbitrate=-crf 20
+if %errorlevel%==2 set vidbitrate=-crf 22
+if %errorlevel%==3 set vidbitrate=-crf 24
+if %errorlevel%==4 set vidbitrate=-crf 26
+if %errorlevel%==5 set vidbitrate=-crf 30
+set temp3=%filepath% -c:v libx264 %vidbitrate% -preset veryslow -vf scale=-1:720 -an -sn -map_metadata -1 -map_chapters -1 -y "%outputfolder%\OSUBG_Video.mp4"
+goto PresetTool_osuoptimize_Process
+
+:PresetTool_osuoptimize_Process
+title ENCODING [FFmpeg] "%outputfolder%\"
+cls
+ffmpeg %temp1%
+ffmpeg %temp2%
+if %osuvideo%==true ffmpeg %temp3%
+color a
+echo DONE!
+explorer.exe %outputfolder%
 pause
 goto welcome
 
