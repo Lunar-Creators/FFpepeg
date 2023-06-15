@@ -3,13 +3,13 @@
 ![Discord](https://img.shields.io/discord/683814496942424078?label=Discord)
 ![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCWoypHEOaTh6N9zwCtRzr0w?label=YouTube%20Views&style=flat-square)
 
-> Также доступна [ветка на русском языке](https://github.com/SHULKERPLAY/FFpepeg/tree/FFmpeg-Batch-RU)
+> Также доступна [ветка на русском языке](https://github.com/Lunar-Creators/FFpepeg/tree/FFmpeg-Batch-RU)
 
-*If you have Windows 7 and below, then look for the version with a note in the file name "Windows7" [in the releases](https://github.com/SHULKERPLAY/FFpepeg/releases)*
+*If you have Windows 7 and below, then look for the version with a note in the file name "Windows7" [in the releases](https://github.com/Lunar-Creators/FFpepeg/releases)*
 
-*The version for Windows 8.1 and higher can be [downloaded in releases](https://github.com/SHULKERPLAY/FFpepeg/releases), or use the script to [automatically build the release from GitHub](https://www.dropbox.com/s/w5wayk86bi8ip8t/ReleaseAutoBuilder.bat?dl=1) with the latest [commits](https://github.com/SHULKERPLAY/FFpepeg/commits/FFmpeg-Batch).*
+*The version for Windows 8.1 and higher can be [downloaded in releases](https://github.com/Lunar-Creators/FFpepeg/releases), or use the script to [automatically build the release from GitHub](https://www.dropbox.com/s/w5wayk86bi8ip8t/ReleaseAutoBuilder.bat?dl=1) with the latest [commits](https://github.com/Lunar-Creators/FFpepeg/commits/FFmpeg-Batch).*
 
-*You can find out a lot about the tool on [our wiki](https://github.com/SHULKERPLAY/FFpepeg/wiki)*
+*You can find out a lot about the tool on [our wiki](https://github.com/Lunar-Creators/FFpepeg/wiki)*
 # FFmpeg and Yt-Dlp Batch
 *The script that lets you to convert and perform operations with photos, videos, audio via FFmpeg in a few clicks on the keyboard.*
 
@@ -66,7 +66,7 @@ And much more. This tool is designed to let people to save time on some tasks
  # Development and plans
  This tool was created for me, but I decided to expand it and show it to everyone to save even more time for people and make their lives easier.
  
- You can support our work, and also offer ideas of your presets and tools that we can add. You can send them to the [issues section](https://github.com/SHULKERPLAY/FFpepeg/issues)
+ You can support our work, and also offer ideas of your presets and tools that we can add. You can send them to the [issues section](https://github.com/Lunar-Creators/FFpepeg/issues)
  ### Of course, we have some plans, and here are what we would like to announce. Not all of them can be done, but...
  - [ ] Finally, someday to finish the configurators for different codecs
  - [ ] Add features such as color space selection in the photo converter
