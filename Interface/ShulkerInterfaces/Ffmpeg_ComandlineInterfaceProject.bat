@@ -5,9 +5,8 @@ rem %globalredirect% Created for global parameters to specify the goto value at 
 echo Script based on FFmpeg. FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video.
 echo https://ffmpeg.org/
 timeout /t 3
-ffmpeg --enable-libfdk-aac --enable-nonfree
 :welcome
-title Main Menu - FFpepeg script (v0.11.2)
+title Main Menu - FFpepeg script (v0.12)
 rem Список для очистки переменных во избежание разных ошибок
 set filepath=
 set inputaudio=
@@ -62,7 +61,6 @@ echo Y - Select Video Preset
 echo A - Audio Converting
 echo P - Photo Converting
 echo T - Select Tool
-rem N - Configure Video Encoder (In Development...)
 echo Q - Half-Manual Mode
 echo K - Audio to Video Encoding
 echo C - Commandline mode
@@ -313,6 +311,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v %encoder% %preset% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -384,6 +383,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -555,6 +555,7 @@ echo ::::::::::::::::::::
 echo Check the GIF size. Does it match your size limit?
 echo For example, the Discord file size limit is 15MB (Without Nitro)
 echo Do you want to change the settings or continue?
+explorer.exe %outputfolder%
 choice /c YN /N /m "Y - Continue, N - Change settings"
 if %errorlevel%==2 goto Preset_gifRes
 goto welcome
@@ -631,6 +632,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.avi"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -697,6 +699,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mpeg"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -748,6 +751,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.webm"
 ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -788,6 +792,7 @@ for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPat
 set outputfolder=%decode2:?= %
 
 ffmpeg %filepath% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -899,6 +904,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -955,6 +961,7 @@ if %errorlevel%==2 set audiocodec=-c:a libmp3lame -b:a 384K && set outputformat=
 
 title ENCODING [FFmpeg] "%outputfolder%\"
 ffmpeg %filepath% -vn -map 0:a:0 %audiocodec% "%outputfolder%\%outputname%_audio0.%outputformat%" -map 0:a:1? %audiocodec% "%outputfolder%\%outputname%_audio1.%outputformat%" -map 0:a:2? %audiocodec% "%outputfolder%\%outputname%_audio2.%outputformat%" -map 0:a:3? %audiocodec% "%outputfolder%\%outputname%_audio3.%outputformat%" -map 0:a:4? %audiocodec% "%outputfolder%\%outputname%_audio4.%outputformat%" -map 0:a:5? %audiocodec% "%outputfolder%\%outputname%_audio5.%outputformat%" -y -strict -2
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1063,6 +1070,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1273,6 +1281,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitrate% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1350,6 +1359,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c copy -movflags +faststart "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1481,6 +1491,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1514,6 +1525,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1639,6 +1651,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1671,6 +1684,7 @@ for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPat
 set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -2293,6 +2307,7 @@ TIMEOUT /T 5
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+explorer.exe %outputfolder%
 color f
 echo ::::::::::::::::::::::::::::::::::::
 title Configure - FFpepeg script [FFmpeg]

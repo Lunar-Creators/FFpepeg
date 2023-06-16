@@ -9,7 +9,7 @@ echo https://github.com/yt-dlp/yt-dlp
 timeout /t 3
 cls
 :welcome
-title Main Menu - FFpepeg script (v0.10b)
+title Main Menu - FFpepeg script (v0.10)
 color e
 set url=
 set thumbnail=

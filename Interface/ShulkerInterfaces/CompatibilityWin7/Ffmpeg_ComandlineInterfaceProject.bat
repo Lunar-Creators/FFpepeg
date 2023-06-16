@@ -62,7 +62,6 @@ echo Y - Select Video Preset
 echo A - Audio Converting
 echo P - Photo Converting
 echo T - Select Tool
-echo N - Configure Video Encoder (In Development...)
 echo Q - Half-Manual Mode
 echo K - Audio to Video Encoding
 echo C - Commandline mode
