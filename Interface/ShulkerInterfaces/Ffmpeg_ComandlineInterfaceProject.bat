@@ -64,11 +64,12 @@ echo T - Select Tool
 echo Q - Half-Manual Mode
 echo K - Audio to Video Encoding
 echo C - Commandline mode
+echo D - Direct Tools
 echo X - Our Github
 echo V - Open Video Downloader
 echo E - Exit
 echo --------------------------
-choice /C YNHECQAXVPT /N
+choice /C YNHECQAXVPTD /N
 
 if %errorlevel%==1 goto preset
 if %errorlevel%==2 goto welcome
@@ -81,6 +82,7 @@ if %errorlevel%==8 explorer.exe "https://github.com/Lunar-Creators/FFpepeg"
 if %errorlevel%==9 yt-dl_init.bat
 if %errorlevel%==10 goto photoformat
 if %errorlevel%==11 goto presetTool
+if %errorlevel%==12 goto directexec
 goto welcome
 
 :SUPERCUSTOMMODE
@@ -201,6 +203,122 @@ pause
 goto lhelpselect
 
 rem Доступные пресеты (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
+
+:directexec
+cls
+title Direct Tool Selector - FFpepeg script [FFmpeg]
+echo AVAILABLE TOOLNAMES
+echo :::::::::::: Global ::::::::::::
+echo main (Main Menu)
+echo ytdl (YouTube (Media) Downloaer)
+echo cmd (Commandline mode)
+echo release (Look for a new Releases)
+echo exit (Close This Window)
+
+echo :::::::::::: GIT ::::::::::::
+echo git-ffmpeg (ffmpeg Github)
+echo git-ytdlp (YT-Dlp Github)
+echo git-pwsh (Powershell Github)
+echo git-this (Script Repo)
+echo git-org (Github of our org)
+
+echo :::::::::::: FFMPEG ::::::::::::
+echo ----------- help -----------
+echo fhelp (Open FFmpeg Help)
+echo fhelp-list-0 (Short help)
+echo fhelp-list-1 (Long Help)
+echo fhelp-list-2 (FULL HELP - EXTREAMLY LONG)
+echo fhelp-enc (List of available encoders)
+echo fhelp-flags (Flags help for available Encoders)
+echo ----------- Tools -----------
+echo ffmpeg-custom (Custom configuration)
+echo ffmpeg-extract (Extracting multiple audio streams from videofile)
+echo ffmpeg-osu (Optimize mediafiles according OSU! ranking criteria)
+echo ffmpeg-upscale (Upscale/Downscale video using different algorithms)
+echo ffmpeg-yt (Optimize video for Youtube upload)
+echo ----------- Process -----------
+echo ffmpeg-aud (Converting Audio)
+echo ffmpeg-av (AOM AV1 .mp4 encoding)
+echo ffmpeg-gif (GIF creating)
+echo ffmpeg-avc (AVC/H.264 .mp4 encoding)
+echo ffmpeg-hevc (HEVC/H.265 .mp4 encoding)
+echo ffmpeg-img (Converting Images)
+echo ffmpeg-mpeg-old (mpeg 1/2 .mpeg encoding)
+echo ffmpeg-mpeg4 (mpeg-4/Xvid .avi encoding)
+echo ffmpeg-remux (Remux Video)
+echo ffmpeg-vp9 (Google VP9 .webm encoding)
+
+echo :::::::::::: Fast ::::::::::::
+echo audio (Converting Audio)
+echo av1 (AOM AV1 .mp4 encoding)
+echo gif (GIF creating)
+echo avc (AVC/H.264 .mp4 encoding)
+echo hevc (HEVC/H.265 .mp4 encoding)
+echo img (Converting Images)
+echo mpeg (mpeg-4/Xvid .avi encoding)
+echo remux (Remux Video)
+echo vp9 (Google VP9 .webm encoding)
+echo git (Script Repo)
+echo custom (Custom configuration)
+echo extract (Extracting multiple audio streams from videofile)
+echo osu (Optimize mediafiles according OSU! ranking criteria)
+echo upscale (Upscale/Downscale video using different algorithms)
+echo youtube (Optimize video for Youtube upload)
+echo enc (List of available encoders)
+echo ::::::::::::::::::::::::
+echo ::::::::::::::::::::::::
+echo Use Ctrl+F for search and enter command
+set /p directex=
+if directex==main goto welcome
+if directex==ytdl yt-dl_init.bat
+if directex==cmd goto SUPERCUSTOMMODE
+if directex==release explorer.exe https://github.com/Lunar-Creators/FFpepeg/releases
+if directex==exit exit
+if directex==git-ffmpeg explorer.exe https://github.com/FFmpeg/FFmpeg
+if directex==git-ytdlp explorer.exe https://github.com/yt-dlp/yt-dlp
+if directex==git-pwsh explorer.exe https://github.com/PowerShell/PowerShell
+if directex==git-this explorer.exe https://github.com/Lunar-Creators/FFpepeg
+if directex==git-org explorer.exe https://github.com/Lunar-Creators
+if directex==fhelp goto helpff
+if directex==fhelp-list-0 ffmpeg -h && pause
+if directex==fhelp-list-1 ffmpeg -h long && pause
+if directex==fhelp-list-2 ffmpeg -h full && pause
+if directex==fhelp-enc ffmpeg -encoders && pause
+if directex==fhelp-flags set helptype=encoder && goto helpselectlib
+if directex==ffmpeg-custom goto Conf_Custom_Start
+if directex==ffmpeg-extract goto PresetTool_ExtractAll
+if directex==ffmpeg-osu goto PresetTool_osuoptimize
+if directex==ffmpeg-upscale goto PresetTool_Upscaling
+if directex==ffmpeg-yt goto OptimizeYT
+if directex==ffmpeg-aud goto audiopreset
+if directex==ffmpeg-av goto Preset_libaom
+if directex==ffmpeg-gif goto Preset_gif
+if directex==ffmpeg-avc goto preset_h264
+if directex==ffmpeg-hevc goto Preset_h265
+if directex==ffmpeg-img goto photoformat
+if directex==ffmpeg-mpeg-old goto Preset_mpeg
+if directex==ffmpeg-mpeg4 goto Preset_mpeg4
+if directex==ffmpeg-remux goto Conf_copy
+if directex==ffmpeg-vp9 goto Preset_vp9ts
+if directex==audio goto audiopreset
+if directex==av1 goto Preset_libaom
+if directex==gif goto Preset_gif
+if directex==avc goto preset_h264
+if directex==hevc goto Preset_h265
+if directex==img goto photoformat
+if directex==mpeg goto Preset_mpeg4
+if directex==remux goto Conf_copy
+if directex==vp9 goto Preset_vp9ts
+if directex==git explorer.exe https://github.com/Lunar-Creators/FFpepeg
+if directex==custom goto Conf_Custom_Start
+if directex==extract goto PresetTool_ExtractAll
+if directex==osu goto PresetTool_osuoptimize
+if directex==upscale goto PresetTool_Upscaling
+if directex==youtube goto OptimizeYT
+if directex==enc ffmpeg -encoders && pause
+cls
+goto directexec
+
 
 :preset
 title Preset Selector - FFpepeg script [FFmpeg]
