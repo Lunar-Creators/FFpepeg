@@ -81,8 +81,7 @@ del /Q "ShulkerInterfaces\ffmpegBin.7z"
 goto FileVerify
 
 :downloadLibs
-if not exist "ShulkerInterfaces\PS\pwsh.exe" echo Error. The required files were not found. Please reinstall the release. && pause && exit
-ShulkerInterfaces\PS\pwsh.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/r0t2e6b4z9n8yb9/ffmpegBin.7z?dl=1','%~p0\ShulkerInterfaces\ffmpegBin.7z')
+PS\pwsh.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/r0t2e6b4z9n8yb9/ffmpegBin.7z?dl=1','%~p0\ShulkerInterfaces\ffmpegBin.7z')
 if not exist "ShulkerInterfaces\ffmpegBin.7z" goto DoError
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\ffmpegBin.7z"
 if not exist "ShulkerInterfaces\ffmpeg.exe" echo FFmpeg still not found && pause && exit
@@ -98,9 +97,9 @@ pause
 exit
 
 :PsScriptNotFound
-if not exist "ShulkerInterfaces\PS\pwsh.exe" echo Error. The required files were not found. Please reinstall the release. && pause && exit
+color 4
 echo One or more Powershell files were not found. Downloading them from the cloud...
-ShulkerInterfaces\PS\pwsh.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/9qu8gv7yz9m6nvt/PSfunc.7z?dl=1','%~p0\ShulkerInterfaces\PSfunc.7z')
+PS\pwsh.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/9qu8gv7yz9m6nvt/PSfunc.7z?dl=1','%~p0\ShulkerInterfaces\PSfunc.7z')
 if not exist "ShulkerInterfaces\PSfunc.7z" goto DoError
 ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\PSfunc.7z"
 goto FileVerify
@@ -118,10 +117,14 @@ if exist "ShulkerInterfaces\compatibility.txt" del /Q "ShulkerInterfaces\PScript
 goto checkOS
 
 :PowerShellDownload
-color 4
-echo Error. The required files were not found. Please reinstall the release.
-pause 
-exit
+echo Compatibility package has been removed, or a release for Win 8.1 and higher versions has been downloaded. 
+echo Downloading the latest Compatibility package from the cloud
+echo Connecting to dropbox...
+PS\pwsh.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/2i1a4b9n7522aqn/PS.7z?dl=1','%~p0\ShulkerInterfaces\PS.7z')
+PS\pwsh.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/ercpl507ujp0qnh/PScript.7z?dl=1','%~p0\ShulkerInterfaces\PScript.7z')
+if not exist "ShulkerInterfaces\PS.7z" goto DoError
+timeout /t 5
+goto GetPowerShell
 
 :DoError
 color 4
@@ -134,7 +137,7 @@ exit
 cls
 color e
 echo I hope you like our tools
-echo "<3" (Release 0.11 extps) - Click "R" to check lastest release
+echo "<3" (Release 0.12 extps) - Click "R" to check lastest release
 echo _______  _______  _______  _______  _______  _______  _______ 
 echo (  ____ \(  ____ \(  ____ )(  ____ \(  ____ )(  ____ \(  ____ \
 echo : (    \/: (    \/: (    ):: (    \/: (    ):: (    \/: (    \/
@@ -158,7 +161,7 @@ if %errorlevel%==2 cd ShulkerInterfaces && yt-dl_init.bat
 if %errorlevel%==3 explorer.exe "https://github.com/Lunar-Creators/FFpepeg"
 if %errorlevel%==4 goto Credits
 if %errorlevel%==5 explorer.exe "https://github.com/Lunar-Creators/FFpepeg/releases"
-if %errorlevel%==6 LanguageW7.bat
+if %errorlevel%==6 Language.bat
 goto start
 
 :Credits

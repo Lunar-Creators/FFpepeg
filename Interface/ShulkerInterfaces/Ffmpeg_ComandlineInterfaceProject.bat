@@ -48,7 +48,7 @@ set temp12=
 set globalredirect=
 cls
 color e
-echo --ScriptVersion 0.11 -beta --copyright "SHULKER Play" --ffmpeg.org (N-110014-ga6e9d01f88-20230315)
+echo --ScriptVersion 0.12 --copyright "Lunar Creators" --ffmpeg.org (N-110014-ga6e9d01f88-20230315)
 echo !!! Each person can have their own usage of this script and ffmpeg in general. 
 echo !!! We can't check all the combinations ourselves. 
 echo !!! If you have a problem, or you want to suggest a preset to add to the menu, please contact us!
@@ -318,7 +318,6 @@ if directex==youtube goto OptimizeYT
 if directex==enc ffmpeg -encoders && pause
 cls
 goto directexec
-
 
 :preset
 title Preset Selector - FFpepeg script [FFmpeg]

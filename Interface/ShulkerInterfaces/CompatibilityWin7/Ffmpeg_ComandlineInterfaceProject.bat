@@ -5,9 +5,8 @@ rem %globalredirect% Created for global parameters to specify the goto value at 
 echo Script based on FFmpeg. FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video.
 echo https://ffmpeg.org/
 timeout /t 3
-ffmpeg --enable-libfdk-aac --enable-nonfree
 :welcome
-title Main Menu - FFpepeg script (v0.11b)
+title Main Menu - FFpepeg script (v0.12)
 rem Список для очистки переменных во избежание разных ошибок
 set filepath=
 set inputaudio=
@@ -49,7 +48,7 @@ set temp12=
 set globalredirect=
 cls
 color e
-echo --ScriptVersion 0.11 -beta --copyright "SHULKER Play" --ffmpeg.org (n5.1.1-1-g4424a6223b-20220905)
+echo --ScriptVersion 0.12 --copyright "Lunar Creators" --ffmpeg.org (N-110014-ga6e9d01f88-20230315)
 echo !!! Each person can have their own usage of this script and ffmpeg in general. 
 echo !!! We can't check all the combinations ourselves. 
 echo !!! If you have a problem, or you want to suggest a preset to add to the menu, please contact us!
@@ -65,14 +64,15 @@ echo T - Select Tool
 echo Q - Half-Manual Mode
 echo K - Audio to Video Encoding
 echo C - Commandline mode
+echo D - Direct Tools
 echo X - Our Github
 echo V - Open Video Downloader
 echo E - Exit
 echo --------------------------
-choice /C YNHECQAXVPT /N
+choice /C YNHECQAXVPTD /N
 
 if %errorlevel%==1 goto preset
-if %errorlevel%==2 goto configure
+if %errorlevel%==2 goto welcome
 if %errorlevel%==3 goto helpff
 if %errorlevel%==4 exit
 if %errorlevel%==5 goto SUPERCUSTOMMODE
@@ -82,6 +82,7 @@ if %errorlevel%==8 explorer.exe "https://github.com/Lunar-Creators/FFpepeg"
 if %errorlevel%==9 yt-dl_init.bat
 if %errorlevel%==10 goto photoformat
 if %errorlevel%==11 goto presetTool
+if %errorlevel%==12 goto directexec
 goto welcome
 
 :SUPERCUSTOMMODE
@@ -203,6 +204,122 @@ goto lhelpselect
 
 rem Доступные пресеты (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
 
+:directexec
+cls
+title Direct Tool Selector - FFpepeg script [FFmpeg]
+echo AVAILABLE TOOLNAMES
+echo :::::::::::: Global ::::::::::::
+echo main (Main Menu)
+echo ytdl (YouTube (Media) Downloaer)
+echo cmd (Commandline mode)
+echo release (Look for a new Releases)
+echo exit (Close This Window)
+
+echo :::::::::::: GIT ::::::::::::
+echo git-ffmpeg (ffmpeg Github)
+echo git-ytdlp (YT-Dlp Github)
+echo git-pwsh (Powershell Github)
+echo git-this (Script Repo)
+echo git-org (Github of our org)
+
+echo :::::::::::: FFMPEG ::::::::::::
+echo ----------- help -----------
+echo fhelp (Open FFmpeg Help)
+echo fhelp-list-0 (Short help)
+echo fhelp-list-1 (Long Help)
+echo fhelp-list-2 (FULL HELP - EXTREAMLY LONG)
+echo fhelp-enc (List of available encoders)
+echo fhelp-flags (Flags help for available Encoders)
+echo ----------- Tools -----------
+echo ffmpeg-custom (Custom configuration)
+echo ffmpeg-extract (Extracting multiple audio streams from videofile)
+echo ffmpeg-osu (Optimize mediafiles according OSU! ranking criteria)
+echo ffmpeg-upscale (Upscale/Downscale video using different algorithms)
+echo ffmpeg-yt (Optimize video for Youtube upload)
+echo ----------- Process -----------
+echo ffmpeg-aud (Converting Audio)
+echo ffmpeg-av (AOM AV1 .mp4 encoding)
+echo ffmpeg-gif (GIF creating)
+echo ffmpeg-avc (AVC/H.264 .mp4 encoding)
+echo ffmpeg-hevc (HEVC/H.265 .mp4 encoding)
+echo ffmpeg-img (Converting Images)
+echo ffmpeg-mpeg-old (mpeg 1/2 .mpeg encoding)
+echo ffmpeg-mpeg4 (mpeg-4/Xvid .avi encoding)
+echo ffmpeg-remux (Remux Video)
+echo ffmpeg-vp9 (Google VP9 .webm encoding)
+
+echo :::::::::::: Fast ::::::::::::
+echo audio (Converting Audio)
+echo av1 (AOM AV1 .mp4 encoding)
+echo gif (GIF creating)
+echo avc (AVC/H.264 .mp4 encoding)
+echo hevc (HEVC/H.265 .mp4 encoding)
+echo img (Converting Images)
+echo mpeg (mpeg-4/Xvid .avi encoding)
+echo remux (Remux Video)
+echo vp9 (Google VP9 .webm encoding)
+echo git (Script Repo)
+echo custom (Custom configuration)
+echo extract (Extracting multiple audio streams from videofile)
+echo osu (Optimize mediafiles according OSU! ranking criteria)
+echo upscale (Upscale/Downscale video using different algorithms)
+echo youtube (Optimize video for Youtube upload)
+echo enc (List of available encoders)
+echo ::::::::::::::::::::::::
+echo ::::::::::::::::::::::::
+echo Use Ctrl+F for search and enter command
+set /p directex=
+if directex==main goto welcome
+if directex==ytdl yt-dl_init.bat
+if directex==cmd goto SUPERCUSTOMMODE
+if directex==release explorer.exe https://github.com/Lunar-Creators/FFpepeg/releases
+if directex==exit exit
+if directex==git-ffmpeg explorer.exe https://github.com/FFmpeg/FFmpeg
+if directex==git-ytdlp explorer.exe https://github.com/yt-dlp/yt-dlp
+if directex==git-pwsh explorer.exe https://github.com/PowerShell/PowerShell
+if directex==git-this explorer.exe https://github.com/Lunar-Creators/FFpepeg
+if directex==git-org explorer.exe https://github.com/Lunar-Creators
+if directex==fhelp goto helpff
+if directex==fhelp-list-0 ffmpeg -h && pause
+if directex==fhelp-list-1 ffmpeg -h long && pause
+if directex==fhelp-list-2 ffmpeg -h full && pause
+if directex==fhelp-enc ffmpeg -encoders && pause
+if directex==fhelp-flags set helptype=encoder && goto helpselectlib
+if directex==ffmpeg-custom goto Conf_Custom_Start
+if directex==ffmpeg-extract goto PresetTool_ExtractAll
+if directex==ffmpeg-osu goto PresetTool_osuoptimize
+if directex==ffmpeg-upscale goto PresetTool_Upscaling
+if directex==ffmpeg-yt goto OptimizeYT
+if directex==ffmpeg-aud goto audiopreset
+if directex==ffmpeg-av goto Preset_libaom
+if directex==ffmpeg-gif goto Preset_gif
+if directex==ffmpeg-avc goto preset_h264
+if directex==ffmpeg-hevc goto Preset_h265
+if directex==ffmpeg-img goto photoformat
+if directex==ffmpeg-mpeg-old goto Preset_mpeg
+if directex==ffmpeg-mpeg4 goto Preset_mpeg4
+if directex==ffmpeg-remux goto Conf_copy
+if directex==ffmpeg-vp9 goto Preset_vp9ts
+if directex==audio goto audiopreset
+if directex==av1 goto Preset_libaom
+if directex==gif goto Preset_gif
+if directex==avc goto preset_h264
+if directex==hevc goto Preset_h265
+if directex==img goto photoformat
+if directex==mpeg goto Preset_mpeg4
+if directex==remux goto Conf_copy
+if directex==vp9 goto Preset_vp9ts
+if directex==git explorer.exe https://github.com/Lunar-Creators/FFpepeg
+if directex==custom goto Conf_Custom_Start
+if directex==extract goto PresetTool_ExtractAll
+if directex==osu goto PresetTool_osuoptimize
+if directex==upscale goto PresetTool_Upscaling
+if directex==youtube goto OptimizeYT
+if directex==enc ffmpeg -encoders && pause
+cls
+goto directexec
+
+
 :preset
 title Preset Selector - FFpepeg script [FFmpeg]
 cls
@@ -210,6 +327,7 @@ echo To use additional parameters, such as changing the color space, use the con
 echo -
 echo Choose encoding preset
 echo --------------------------
+echo 0 - Copy Encoder settings from Input File (Remux)
 echo 1 - Webm [Transperent support] [VP9, Opus, audio bitrate 320kbps]
 echo 2 - mpeg (Mpeg-1/2, audiocodec mp3, audio bitrate 320kbps)
 echo 3 - avi (Mpeg-4/Xvid, audiocodec mp3, audio bitrate 320kbps)
@@ -218,9 +336,9 @@ echo 5 - mp4 (H.264, AAC, audio bitrate 384kbps)
 echo 6 - mp4 (H.265 (HEVC), AAC, audio bitrate 384kbps)
 echo 7 - mp4 (av1 or SVT-AV1, AAC, audio bitrate 384kbps)
 echo 9 - Optimize for Youtube Upload
-echo N - CONFIGURE 
+echo N - Back
 echo --------------------------
-choice /C 123456789N /N
+choice /C 123456709N /N
 
 if %errorlevel%==1 goto Preset_vp9ts
 if %errorlevel%==2 goto Preset_mpeg
@@ -229,9 +347,9 @@ if %errorlevel%==4 goto Preset_gif
 if %errorlevel%==5 goto Preset_h264
 if %errorlevel%==6 goto Preset_h265
 if %errorlevel%==7 goto Preset_libaom
-if %errorlevel%==8 goto Preset
+if %errorlevel%==8 goto Conf_copy
 if %errorlevel%==9 goto OptimizeYT
-if %errorlevel%==10 goto configure
+if %errorlevel%==10 goto welcome
 exit
 
 :preset_libaom
@@ -245,12 +363,21 @@ echo Select encoder
 echo --------------------------
 echo 1 - AV1 - Better Compression
 echo 2 - SVT-AV1 - Higher enconing speed (Scalable Video Technology for AV1)
+echo ::::::::::
+echo 3 - AMD AMF AV1 encoder (av1_amf) - AV1 encoder with AMD acceleration. Uses the resources of the graphics card. If your AMD graphics card does not support AMF AV1, the encoder will return an error
+echo ::::::::::
+echo 4 - NVENC AV1 Encoder (av1_nvenc) - AV1 encoder with NVIDIA acceleration. Uses the resources of the graphics card. If your Nvidia graphics card does not support AV1 Nvenc, the encoder will return an error
+echo ::::::::::
+echo 5 - AV1 QSV (Intel Quick Sync acceleration) AV1 encoder with Intel acceleration. Uses the resources of the graphics chip. If your Intel graphics does not support AV1 Intel Quick Sync acceleration, the encoder will return an error
 echo --------------------------
 
-choice /C 123 /N
+choice /C 12345 /N
 
 if %errorlevel%==1 set encoder=libaom-av1
 if %errorlevel%==2 set encoder=libsvtav1
+if %errorlevel%==3 set encoder=av1_amf
+if %errorlevel%==4 set encoder=av1_nvenc
+if %errorlevel%==5 set encoder=av1_qsv
 
 cls
 echo --------------------------
@@ -302,6 +429,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v %encoder% %preset% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -317,7 +445,7 @@ echo H.265 == HEVC
 echo --------------------------
 echo 1 - H.265 (libx265) - The standard HEVC encoder. Uses CPU
 echo ::::::::::
-echo 2 - AMF HEVC encoder (hevc_amf) - H265 encoder with AMD acceleration. Uses the resources of the graphics card. If your AMD graphics card does not support AMF HEVC, the encoder will return an error
+echo 2 - AMD AMF HEVC encoder (hevc_amf) - H265 encoder with AMD acceleration. Uses the resources of the graphics card. If your AMD graphics card does not support AMF HEVC, the encoder will return an error
 echo ::::::::::
 echo 3 - NVENC HEVC Encoder (hevc_nvenc) - H265 encoder with NVIDIA acceleration. Uses the resources of the graphics card. If your Nvidia graphics card does not support HEVC Nvenc, the encoder will return an error
 echo ::::::::::
@@ -373,6 +501,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -387,7 +516,7 @@ echo Select encoder
 echo --------------------------
 echo 1 - H.264 (libx264) - The standard H264 encoder. Uses CPU
 echo ::::::::::
-echo 2 - AMF H.264 Encoder (h264_amf) - H264 encoder with AMD acceleration. Uses the resources of the graphics card. If your AMD graphics card does not support AMF, the encoder will return an error
+echo 2 - AMD AMF H.264 Encoder (h264_amf) - H264 encoder with AMD acceleration. Uses the resources of the graphics card. If your AMD graphics card does not support AMF, the encoder will return an error
 echo ::::::::::
 echo 3 - NVENC H.264 Encoder (h264_nvenc) - H264 encoder with NVIDIA acceleration. Uses the resources of the graphics card. If your Nvidia graphics card does not support Nvenc, the encoder will return an error
 echo ::::::::::
@@ -542,14 +671,16 @@ ffmpeg %temp2% %temp4% %filepath% -vf "%temp5%,%temp6%:flags=lanczos,split[s0][s
 color e
 echo ::::::::::::::::::::
 echo Check the GIF size. Does it match your size limit?
-echo For example, the Discord file size limit is 8MB
+echo For example, the Discord file size limit is 15MB (Without Nitro)
 echo Do you want to change the settings or continue?
+explorer.exe %outputfolder%
 choice /c YN /N /m "Y - Continue, N - Change settings"
 if %errorlevel%==2 goto Preset_gifRes
 goto welcome
 
 :Preset_gifLoop
 cls
+echo (May not work depending on software that open gif)
 echo For example a value of 10 will cause the GIF to play 11 times
 echo Enter a value (example: 10)
 set /p temp8=
@@ -619,6 +750,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.avi"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -685,6 +817,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mpeg"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -736,6 +869,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.webm"
 ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -776,6 +910,7 @@ for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPa
 set outputfolder=%decode2:?= %
 
 ffmpeg %filepath% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -887,6 +1022,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -899,12 +1035,14 @@ echo Choose tool preset (In Development)
 echo --------------------------
 echo 1 - Extract multiple audio streams from video (extract audio to .mp3 or .mka up to 6 streams) 
 echo 2 - Upscale or downscale video using different algorithms
+echo 3 - Optimize background image/video and music according OSU! ranking criteria
 echo N - Back to main menu
-choice /C N12 /N
+choice /C N123 /N
 
 if %errorlevel%==1 goto welcome
 if %errorlevel%==2 goto PresetTool_ExtractAll
 if %errorlevel%==3 goto PresetTool_Upscaling
+if %errorlevel%==4 goto PresetTool_osuoptimize
 
 :PresetTool_ExtractAll
 title Extract multiple audio streams from video - FFpepeg script [FFmpeg]
@@ -941,6 +1079,7 @@ if %errorlevel%==2 set audiocodec=-c:a libmp3lame -b:a 384K && set outputformat=
 
 title ENCODING [FFmpeg] "%outputfolder%\"
 ffmpeg %filepath% -vn -map 0:a:0 %audiocodec% "%outputfolder%\%outputname%_audio0.%outputformat%" -map 0:a:1? %audiocodec% "%outputfolder%\%outputname%_audio1.%outputformat%" -map 0:a:2? %audiocodec% "%outputfolder%\%outputname%_audio2.%outputformat%" -map 0:a:3? %audiocodec% "%outputfolder%\%outputname%_audio3.%outputformat%" -map 0:a:4? %audiocodec% "%outputfolder%\%outputname%_audio4.%outputformat%" -map 0:a:5? %audiocodec% "%outputfolder%\%outputname%_audio5.%outputformat%" -y -strict -2
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1049,6 +1188,71 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
+pause
+goto welcome
+
+:PresetTool_osuoptimize
+cls
+title OSU! Optimizer - FFpepeg script [FFmpeg]
+echo Is there a video in the background of your beatmap?
+echo N - No
+echo Y - Yes
+choice /C NY /N
+if %errorlevel%==1 set osuvideo=false
+if %errorlevel%==2 set osuvideo=true
+cls
+echo Select Output Folder
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set outputfolder=%decode2:?= %
+cls
+echo Select Your Audiofile
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetAudioFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+set temp1=%filepath% -c:a libvorbis -vn -sn -map_metadata -1 -map_chapters -1 -b:a 192K -y "%outputfolder%\OSUBG_Audio.ogg"
+cls
+echo Select Your Background Image
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetPictureFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+set temp2=%filepath% -vf scale=-2:1080 -y -strict -2 "%outputfolder%\OSUBG_Image.jpg"
+if %osuvideo%==true goto PresetTool_osuoptimize_Video
+goto PresetTool_osuoptimize_Process
+
+:PresetTool_osuoptimize_Video
+cls
+echo Select Your Background video
+for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetVideoFileFullPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+set tempv=%decode1:?= %
+set filepath=-i "%tempv%"
+cls
+echo Select Quality
+echo --------------------------
+echo 1 - CRF 20 - Higher Filesize
+echo 2 - CRF 22
+echo 3 - CRF 24
+echo 4 - CRF 26
+echo 5 - CRF 30 - Lower Filesize
+echo --------------------------
+choice /C 12345 /N
+if %errorlevel%==1 set vidbitrate=-crf 20
+if %errorlevel%==2 set vidbitrate=-crf 22
+if %errorlevel%==3 set vidbitrate=-crf 24
+if %errorlevel%==4 set vidbitrate=-crf 26
+if %errorlevel%==5 set vidbitrate=-crf 30
+set temp3=%filepath% -c:v libx264 %vidbitrate% -preset veryslow -vf scale=-1:720 -an -sn -map_metadata -1 -map_chapters -1 -y "%outputfolder%\OSUBG_Video.mp4"
+goto PresetTool_osuoptimize_Process
+
+:PresetTool_osuoptimize_Process
+title ENCODING [FFmpeg] "%outputfolder%\"
+cls
+ffmpeg %temp1%
+ffmpeg %temp2%
+if %osuvideo%==true ffmpeg %temp3%
+color a
+echo DONE!
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1195,6 +1399,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitrate% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1272,6 +1477,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c copy -movflags +faststart "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1403,6 +1609,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1436,6 +1643,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1561,6 +1769,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1593,6 +1802,7 @@ for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPa
 set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
+explorer.exe %outputfolder%
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -1797,35 +2007,38 @@ echo ....B. = Supports draw_horiz_band
 echo .....D = Supports direct rendering method 1
 echo V....D a64multi             Multicolor charset for Commodore 64 (codec a64_multi)
 echo V....D a64multi5            Multicolor charset for Commodore 64, extended with 5th color (colram) (codec a64_multi5)
-echo V..... alias_pix            Alias/Wavefront PIX image
+echo V....D alias_pix            Alias/Wavefront PIX image
 echo V..... amv                  AMV Video
 echo V....D apng                 APNG (Animated Portable Network Graphics) image
-echo V..... asv1                 ASUS V1
-echo V..... asv2                 ASUS V2
+echo V....D asv1                 ASUS V1
+echo V....D asv2                 ASUS V2
 echo V....D libaom-av1           libaom AV1 (codec av1)
 echo V....D librav1e             librav1e AV1 (codec av1)
 echo V..... libsvtav1            SVT-AV1(Scalable Video Technology for AV1) encoder (codec av1)
+echo V....D av1_nvenc            NVIDIA NVENC av1 encoder (codec av1)
+echo V..... av1_qsv              AV1 (Intel Quick Sync Video acceleration) (codec av1)
+echo V....D av1_amf              AMD AMF AV1 encoder (codec av1)
 echo V....D avrp                 Avid 1:1 10-bit RGB Packer
 echo V....D libxavs2             libxavs2 AVS2-P2/IEEE1857.4 (codec avs2)
 echo V..X.D avui                 Avid Meridien Uncompressed
 echo V....D ayuv                 Uncompressed packed MS 4:4:4:4
 echo VF...D bitpacked            Bitpacked
 echo V....D bmp                  BMP (Windows and OS/2 bitmap)
-echo VF.... cfhd                 GoPro CineForm HD
-echo V..... cinepak              Cinepak
+echo VF...D cfhd                 GoPro CineForm HD
+echo V....D cinepak              Cinepak
 echo V....D cljr                 Cirrus Logic AccuPak
 echo V.S..D vc2                  SMPTE VC-2 (codec dirac)
 echo VFS..D dnxhd                VC3/DNxHD
 echo V....D dpx                  DPX (Digital Picture Exchange) image
 echo VFS..D dvvideo              DV (Digital Video)
 echo VF...D exr                  OpenEXR image
-echo V.S... ffv1                 FFmpeg video codec #1
-echo VF.... ffvhuff              Huffyuv FFmpeg variant
+echo V.S..D ffv1                 FFmpeg video codec #1
+echo VF...D ffvhuff              Huffyuv FFmpeg variant
 echo V....D fits                 Flexible Image Transport System
-echo V..... flashsv              Flash Screen Video
-echo V..... flashsv2             Flash Screen Video Version 2
+echo V....D flashsv              Flash Screen Video
+echo V....D flashsv2             Flash Screen Video Version 2
 echo V..... flv                  FLV / Sorenson Spark / Sorenson H.263 (Flash Video) (codec flv1)
-echo V..... gif                  GIF (Graphics Interchange Format)
+echo V....D gif                  GIF (Graphics Interchange Format)
 echo V..... h261                 H.261
 echo V..... h263                 H.263 / H.263-1996
 echo V.S... h263p                H.263+ / H.263-1998 / H.263 version 2
@@ -1836,79 +2049,82 @@ echo V....D h264_amf             AMD AMF H.264 Encoder (codec h264)
 echo V....D h264_mf              H264 via MediaFoundation (codec h264)
 echo V....D h264_nvenc           NVIDIA NVENC H.264 encoder (codec h264)
 echo V..... h264_qsv             H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10 (Intel Quick Sync Video acceleration) (codec h264)
+echo VF...D hdr                  HDR (Radiance RGBE format) image
 echo V....D libx265              libx265 H.265 / HEVC (codec hevc)
 echo V....D hevc_amf             AMD AMF HEVC encoder (codec hevc)
 echo V....D hevc_mf              HEVC via MediaFoundation (codec hevc)
 echo V....D hevc_nvenc           NVIDIA NVENC hevc encoder (codec hevc)
 echo V..... hevc_qsv             HEVC (Intel Quick Sync Video acceleration) (codec hevc)
 echo V....D libkvazaar           libkvazaar H.265 / HEVC (codec hevc)
-echo VF.... huffyuv              Huffyuv / HuffYUV
-echo V..... jpeg2000             JPEG 2000
+echo VF...D huffyuv              Huffyuv / HuffYUV
+echo V....D jpeg2000             JPEG 2000
 echo VF.... libopenjpeg          OpenJPEG JPEG 2000 (codec jpeg2000)
 echo VF...D jpegls               JPEG-LS
 echo V..... libjxl               libjxl JPEG XL (codec jpegxl)
-echo VF.... ljpeg                Lossless JPEG
-echo VF.... magicyuv             MagicYUV video
+echo VF...D ljpeg                Lossless JPEG
+echo VF...D magicyuv             MagicYUV video
 echo VFS... mjpeg                MJPEG (Motion JPEG)
 echo V..... mjpeg_qsv            MJPEG (Intel Quick Sync Video acceleration) (codec mjpeg)
 echo V.S... mpeg1video           MPEG-1 video
 echo V.S... mpeg2video           MPEG-2 video
 echo V..... mpeg2_qsv            MPEG-2 video (Intel Quick Sync Video acceleration) (codec mpeg2video)
 echo V.S... mpeg4                MPEG-4 part 2
-echo V..... libxvid              libxvidcore MPEG-4 part 2 (codec mpeg4)
+echo V....D libxvid              libxvidcore MPEG-4 part 2 (codec mpeg4)
 echo V..... msmpeg4v2            MPEG-4 part 2 Microsoft variant version 2
 echo V..... msmpeg4              MPEG-4 part 2 Microsoft variant version 3 (codec msmpeg4v3)
 echo V..... msvideo1             Microsoft Video-1
 echo V....D pam                  PAM (Portable AnyMap) image
 echo V....D pbm                  PBM (Portable BitMap) image
-echo V..... pcx                  PC Paintbrush PCX image
+echo V....D pcx                  PC Paintbrush PCX image
 echo V....D pfm                  PFM (Portable FloatMap) image
 echo V....D pgm                  PGM (Portable GrayMap) image
 echo V....D pgmyuv               PGMYUV (Portable GrayMap YUV) image
 echo V....D phm                  PHM (Portable HalfFloatMap) image
-echo VF.... png                  PNG (Portable Network Graphics) image
+echo VF...D png                  PNG (Portable Network Graphics) image
 echo V....D ppm                  PPM (Portable PixelMap) image
-echo VF.... prores               Apple ProRes
-echo VF.... prores_aw            Apple ProRes (codec prores)
+echo VF...D prores               Apple ProRes
+echo VF...D prores_aw            Apple ProRes (codec prores)
 echo VFS... prores_ks            Apple ProRes (iCodec Pro) (codec prores)
-echo VF.... qoi                  QOI (Quite OK Image format) image
-echo V..... qtrle                QuickTime Animation (RLE) video
+echo VF...D qoi                  QOI (Quite OK Image format) image
+echo V....D qtrle                QuickTime Animation (RLE) video
 echo V....D r10k                 AJA Kona 10-bit RGB Codec
 echo V....D r210                 Uncompressed RGB 10-bit
 echo VF...D rawvideo             raw video
-echo V..... roqvideo             id RoQ video (codec roq)
-echo V..... rpza                 QuickTime video (RPZA)
+echo V....D roqvideo             id RoQ video (codec roq)
+echo V....D rpza                 QuickTime video (RPZA)
 echo V..... rv10                 RealVideo 1.0
 echo V..... rv20                 RealVideo 2.0
-echo V..... sgi                  SGI image
-echo V..... smc                  QuickTime Graphics (SMC)
-echo V..... snow                 Snow
+echo V....D sgi                  SGI image
+echo V....D smc                  QuickTime Graphics (SMC)
+echo V....D snow                 Snow
 echo V..... speedhq              NewTek SpeedHQ
-echo V..... sunrast              Sun Rasterfile image
-echo V..... svq1                 Sorenson Vector Quantizer 1 / Sorenson Video 1 / SVQ1
-echo V..... targa                Truevision Targa image
+echo V....D sunrast              Sun Rasterfile image
+echo V....D svq1                 Sorenson Vector Quantizer 1 / Sorenson Video 1 / SVQ1
+echo V....D targa                Truevision Targa image
 echo V....D libtheora            libtheora Theora (codec theora)
-echo VF.... tiff                 TIFF image
-echo VF.... utvideo              Ut Video
+echo VF...D tiff                 TIFF image
+echo VF...D utvideo              Ut Video
 echo VF...D v210                 Uncompressed 4:2:2 10-bit
 echo V....D v308                 Uncompressed packed 4:4:4
 echo V....D v408                 Uncompressed packed QT 4:4:4:4
 echo V....D v410                 Uncompressed 4:4:4 10-bit
 echo V.S..D vbn                  Vizrt Binary Image
+echo V..... vnull                null video
 echo V....D libvpx               libvpx VP8 (codec vp8)
 echo V....D libvpx-vp9           libvpx VP9 (codec vp9)
 echo V..... vp9_qsv              VP9 video (Intel Quick Sync Video acceleration) (codec vp9)
+echo VF...D wbmp                 WBMP (Wireless Application Protocol Bitmap) image
 echo V....D libwebp_anim         libwebp WebP image (codec webp)
 echo V....D libwebp              libwebp WebP image (codec webp)
 echo V..... wmv1                 Windows Media Video 7
 echo V..... wmv2                 Windows Media Video 8
 echo V..... wrapped_avframe      AVFrame to AVPacket passthrough
-echo V..... xbm                  XBM (X BitMap) image
+echo V....D xbm                  XBM (X BitMap) image
 echo V....D xface                X-face image
 echo V....D xwd                  XWD (X Window Dump) image
 echo V....D y41p                 Uncompressed YUV 4:1:1 12-bit
 echo V....D yuv4                 Uncompressed packed 4:2:0
-echo VF.... zlib                 LCL (Lossless Codec Library) ZLIB
+echo VF...D zlib                 LCL (LossLess Codec Library) ZLIB
 echo V....D zmbv                 Zip Motion Blocks Video
 echo -------------               copy          Copies the codec of the source file
 echo -------------               novid         Sets the -vn flag to disable the video
@@ -2006,7 +2222,7 @@ echo ..S... = Slice-level multithreading
 echo ...X.. = Codec is experimental
 echo ....B. = Supports draw_horiz_band
 echo .....D = Supports direct rendering method 1
-echo A..... aac                  AAC (Advanced Audio Coding)
+echo A....D aac                  AAC (Advanced Audio Coding)
 echo A....D aac_mf               AAC via MediaFoundation (codec aac)
 echo A....D ac3                  ATSC A/52A (AC-3)
 echo A....D ac3_fixed            ATSC A/52A (AC-3) (codec ac3)
@@ -2026,8 +2242,9 @@ echo A....D adpcm_ima_ws         ADPCM IMA Westwood
 echo A....D adpcm_ms             ADPCM Microsoft
 echo A....D adpcm_swf            ADPCM Shockwave Flash
 echo A....D adpcm_yamaha         ADPCM Yamaha
-echo A..... alac                 ALAC (Apple Lossless Audio Codec)
-echo A..... libopencore_amrnb    OpenCORE AMR-NB (Adaptive Multi-Rate Narrow-Band) (codec amr_nb)
+echo A....D alac                 ALAC (Apple Lossless Audio Codec)
+echo A....D libopencore_amrnb    OpenCORE AMR-NB (Adaptive Multi-Rate Narrow-Band) (codec amr_nb)
+echo A..... anull                null audio
 echo A....D aptx                 aptX (Audio Processing Technology for Bluetooth)
 echo A....D aptx_hd              aptX HD (Audio Processing Technology for Bluetooth)
 echo A....D comfortnoise         RFC 3389 comfort noise generator
@@ -2036,15 +2253,15 @@ echo A..X.D dca                  DCA (DTS Coherent Acoustics) (codec dts)
 echo A....D eac3                 ATSC A/52 E-AC-3
 echo A....D flac                 FLAC (Free Lossless Audio Codec)
 echo A....D g723_1               G.723.1
-echo A..X.. mlp                  MLP (Meridian Lossless Packing)
-echo A..... mp2                  MP2 (MPEG audio layer 2)
-echo A..... mp2fixed             MP2 fixed point (MPEG audio layer 2) (codec mp2)
-echo A..... libtwolame           libtwolame MP2 (MPEG audio layer 2) (codec mp2)
+echo A..X.D mlp                  MLP (Meridian Lossless Packing)
+echo A....D mp2                  MP2 (MPEG audio layer 2)
+echo A....D mp2fixed             MP2 fixed point (MPEG audio layer 2) (codec mp2)
+echo A....D libtwolame           libtwolame MP2 (MPEG audio layer 2) (codec mp2)
 echo A....D libmp3lame           libmp3lame MP3 (MPEG audio layer 3) (codec mp3)
 echo A....D mp3_mf               MP3 via MediaFoundation (codec mp3)
 echo A....D nellymoser           Nellymoser Asao
-echo A..X.. opus                 Opus
-echo A..... libopus              libopus Opus (codec opus)
+echo A..X.D opus                 Opus
+echo A....D libopus              libopus Opus (codec opus)
 echo A....D pcm_alaw             PCM A-law / G.711 A-law
 echo A....D pcm_bluray           PCM signed 16/20/24-bit big-endian for Blu-ray media
 echo A....D pcm_dvd              PCM signed 16/20/24-bit big-endian for DVD media
@@ -2080,15 +2297,15 @@ echo A....D real_144             RealAudio 1.0 (14.4K) (codec ra_144)
 echo A....D roq_dpcm             id RoQ DPCM
 echo A..X.D s302m                SMPTE 302M
 echo A....D sbc                  SBC (low-complexity subband codec)
-echo A..X.. sonic                Sonic
-echo A..X.. sonicls              Sonic lossless
-echo A..X.. truehd               TrueHD
-echo A..... tta                  TTA (True Audio)
-echo A..X.. vorbis               Vorbis
+echo A..X.D sonic                Sonic
+echo A..X.D sonicls              Sonic lossless
+echo A..X.D truehd               TrueHD
+echo A....D tta                  TTA (True Audio)
+echo A..X.D vorbis               Vorbis
 echo A....D libvorbis            libvorbis (codec vorbis)
-echo A..... wavpack              WavPack
-echo A..... wmav1                Windows Media Audio 1
-echo A..... wmav2                Windows Media Audio 2
+echo A....D wavpack              WavPack
+echo A....D wmav1                Windows Media Audio 1
+echo A....D wmav2                Windows Media Audio 2
 echo -------------               copy          Copies the codec of the source file
 echo -------------               noaud         Sets the -an flag to disable the audio
 echo If the encoder name is incorrect, ffmpeg throws an error at the end of the process!!!
@@ -2208,6 +2425,7 @@ TIMEOUT /T 5
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+explorer.exe %outputfolder%
 color f
 echo ::::::::::::::::::::::::::::::::::::
 title Configure - FFpepeg script [FFmpeg]

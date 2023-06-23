@@ -9,6 +9,7 @@ echo https://github.com/yt-dlp/yt-dlp
 timeout /t 3
 cls
 :welcome
+title Main Menu - FFpepeg script (v0.10)
 color e
 set url=
 set thumbnail=
@@ -22,7 +23,7 @@ cls
 echo Used Libraries
 echo yt-dlp: A youtube-dl fork with additional features and fixes
 echo FORK FROM: youtube-dl - Command-line program to download videos from YouTube and other video sites
-echo --Script-version 1.3 -stable --copyright "SHULKER Play" --yt-dlp (2022.09.01)
+echo --Script-version 1.4 -stable --copyright "SHULKER Play" --yt-dlp (2022.09.01)
 echo //////////////////////////////
 echo WELCOME TO THE UNIVERSAL VIDEO (or audio and subtitles) DOWNLOADER!
 echo --------------------------
@@ -59,6 +60,7 @@ if %errorlevel%==14 goto specFormat
 goto welcome
 
 :DlWith
+title Download ... - FFpepeg script [YT-DLP]
 cls
 echo --------------------------
 echo D - Download video (Also choose subtitles or previews or description to download)
@@ -73,6 +75,7 @@ if %errorlevel%==2 goto DlPlaylist
 if %errorlevel%==3 goto DlChannel
 
 :SUPERCUSTOMMODE
+title FREE CMD
 cls
 echo In this mode you can run your command
 echo (Example: yt-dlp "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -o "%%(uploader)s/%%(title)s" -f "bestvideo+bestaudio/best"
@@ -86,6 +89,7 @@ pause
 goto SUPERCUSTOMMODE
 
 :getinfo
+title Formats Info - FFpepeg script [YT-DLP]
 cls
 color c
 echo PLEASE NOTE! Some videos may start downloading instead of just looking at a list of existing formats
@@ -104,6 +108,7 @@ pause
 goto welcome
 
 :git
+title GitHub - FFpepeg script [YT-DLP]
 cls
 echo --------------------------
 echo L - Gitgub yt-dl
@@ -116,6 +121,7 @@ if %errorlevel%==2 explorer.exe "https://github.com/yt-dlp/yt-dlp"
 goto welcome
 
 :Dlvid
+title Download Video - FFpepeg script [YT-DLP]
 echo Input video Link
 set /p url=
 cls
@@ -138,24 +144,26 @@ choice /C YN /N
 if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath= -o "subtitle:%folder%/%%(uploader)s/%%(title)s"
 if %errorlevel%==2 set subtitles=
 cls
-
+title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5
 pause
 goto welcome
 
 :DlVidOnly
+title Download Only Video - FFpepeg script [YT-DLP]
 echo Input video Link
 set /p url=
 cls
 echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
-
+title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --retries 5
 pause
 goto welcome
 
 :DlPlaylist
+title Download Playlist - FFpepeg script [YT-DLP]
 echo Input Playlist Link
 set /p url=
 cls
@@ -183,12 +191,13 @@ choice /C YN /N
 if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath= -o "subtitle:%folder%/%%(playlist_title)s/%%(title)s %subfolder%"
 if %errorlevel%==2 set subtitles=
 cls
-
+title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(playlist_title)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
 pause
 goto welcome
 
 :DlChannel
+title Download Channel - FFpepeg script [YT-DLP]
 echo Input Channel Link
 set /p url=
 cls
@@ -216,12 +225,13 @@ choice /C YN /N
 if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath= -o "subtitle:%folder%/%%(uploader)s/%%(title)s %subfolder%"
 if %errorlevel%==2 set subtitles=
 cls
-
+title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
 pause
 goto welcome
 
 :DlAudOnly
+title Download Audio Only - FFpepeg script [YT-DLP]
 echo Input Video/Playlist/Channel Link
 set /p url=
 cls
@@ -229,11 +239,13 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
+title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestaudio[abr<=?51024]" -x --audio-format mp3 --retries 5 --no-abort-on-error
 pause
 goto welcome
 
 :DlSubtitlesOnly
+title Download Subtitles Only - FFpepeg script [YT-DLP]
 echo Input Video/Playlist/Channel Link
 set /p url=
 cls
@@ -241,11 +253,13 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
+title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s/%%(title)s" --skip-download --write-subs --sub-langs "all" --retries 5 --no-abort-on-error
 pause
 goto welcome
 
 :DlVidVid
+title Download Video Without Audio - FFpepeg script [YT-DLP]
 echo Input Video/Playlist/Channel Link
 set /p url=
 cls
@@ -253,11 +267,13 @@ echo select output folder
 for /F "usebackq" %%a in (`PS\pwsh.exe -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
+title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]" --retries 5 --no-abort-on-error
 pause
 goto welcome
 
 :specFormat
+title CUSTOM FORMAT - FFpepeg script [YT-DLP]
 cls
 color c
 echo For some sites, this tool may not work. In this case, use the usual tools. 
@@ -278,6 +294,7 @@ echo Enter the video format that you want to download from the table. The format
 echo In the case of YouTube and some other services, you can download the video+audio format (example: 337+251). ffmpeg will try to merge the formats into 1 file
 echo Enter the format(s) ID you want
 set /p formats=
+title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(title)s.%%(ext)s" -f "%formats%" --retries 5 --no-abort-on-error
 pause
 goto welcome

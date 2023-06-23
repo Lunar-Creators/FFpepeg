@@ -137,7 +137,7 @@ exit
 cls
 color e
 echo I hope you like our tools
-echo "<3" (Release 0.11 sysps) - Click "R" to check lastest release
+echo "<3" (Release 0.12 sysps) - Click "R" to check lastest release
 echo _______  _______  _______  _______  _______  _______  _______ 
 echo (  ____ \(  ____ \(  ____ )(  ____ \(  ____ )(  ____ \(  ____ \
 echo : (    \/: (    \/: (    ):: (    \/: (    ):: (    \/: (    \/
