@@ -126,7 +126,7 @@ echo Input video Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 echo Download thumbnail as a separate file? Y - Yes, N - No
@@ -146,6 +146,7 @@ if %errorlevel%==2 set subtitles=
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5
+explorer.exe %folder%
 pause
 goto welcome
 
@@ -155,10 +156,11 @@ echo Input video Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --retries 5
+explorer.exe %folder%
 pause
 goto welcome
 
@@ -168,7 +170,7 @@ echo Input Playlist Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 echo Create a separate folder for each video? Y - Yes, N - No
@@ -193,6 +195,7 @@ if %errorlevel%==2 set subtitles=
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(playlist_title)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
+explorer.exe %folder%
 pause
 goto welcome
 
@@ -202,7 +205,7 @@ echo Input Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 echo Create a separate folder for each video? Y - Yes, N - No
@@ -227,6 +230,7 @@ if %errorlevel%==2 set subtitles=
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
+explorer.exe %folder%
 pause
 goto welcome
 
@@ -236,11 +240,12 @@ echo Input Video/Playlist/Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestaudio[abr<=?51024]" -x --audio-format mp3 --retries 5 --no-abort-on-error
+explorer.exe %folder%
 pause
 goto welcome
 
@@ -250,11 +255,12 @@ echo Input Video/Playlist/Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s/%%(title)s" --skip-download --write-subs --sub-langs "all" --retries 5 --no-abort-on-error
+explorer.exe %folder%
 pause
 goto welcome
 
@@ -264,11 +270,12 @@ echo Input Video/Playlist/Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]" --retries 5 --no-abort-on-error
+explorer.exe %folder%
 pause
 goto welcome
 
@@ -285,7 +292,7 @@ echo Input Video Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file GetFolderPath.ps1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set folder=%decode2:?= %
 cls
 yt-dlp "%url%" --list-formats --skip-download
@@ -296,5 +303,6 @@ echo Enter the format(s) ID you want
 set /p formats=
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(title)s.%%(ext)s" -f "%formats%" --retries 5 --no-abort-on-error
+explorer.exe %folder%
 pause
 goto welcome
