@@ -63,4 +63,13 @@ $OpenFileDialog.ShowDialog()
 $encode = $OpenFileDialog.filename 
 $encode -replace ' ','?'
 }
+if ($fftype -eq 8) #EXECUTABLE
+{
+$OpenFileDialog = New-Object System.Windows.Forms.OpenFileDialog
+$OpenFileDialog.initialDirectory = "C:\Users"
+$OpenFileDialog.filter = "Executable (*.exe)|*.exe|All Files (*.*)|*.*"
+$OpenFileDialog.ShowDialog()
+$encode = $OpenFileDialog.filename 
+$encode -replace ' ','?'
+}
 sleep 1
