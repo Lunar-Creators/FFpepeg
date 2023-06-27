@@ -7,14 +7,11 @@ if exist settings\pwshdisable.lc set set-powershell=DISABLED
 if exist settings\pwsh.lc set /p set-powershell=<settings\pwsh.lc
 if not exist settings\pwshdisable.lc if not exist settings\pwsh.lc set set-powershell=SYSTEM
 rem ffmpeg package
-if exist settings\ffmpeg.lc set set-ffmpeg=<settings\ffmpeg.lc
-if not exist settings\ffmpeg.lc set set-ffmpeg=DEFAULT
+if exist settings\ffmpeg.lc (set /p set-ffmpeg=<settings\ffmpeg.lc) else set set-ffmpeg=DEFAULT
 rem explorer
-if exist settings\enablexplr.lc set set-explorer=ALWAYS
-if not exist settings\enablexplr.lc set set-explorer=NEVER
+if exist settings\enablexplr.lc (set set-explorer=ALWAYS) else set set-explorer=NEVER
 rem Experimental Features
-if exist settings\experimental.lc set set-experimental=ENABLED
-if not exist settings\experimental.lc set set-experimental=DISABLED
+if exist settings\experimental.lc (set set-experimental=ENABLED) else set set-experimental=DISABLED
 rem FFMPEG LICENSE
 if exist settings\default.lcx set set-fflicense=DEFAULT (GPL)
 cls
@@ -66,13 +63,12 @@ choice /C QE /N
 goto DisplaySettings
 
 :set_explorer
-if exist settings\enablexplr.lc del /f /q settings\enablexplr.lc
-if not exist settings\enablexplr.lc echo Display explorer. Lunar Creators File>settings\enablexplr.lc
+if exist settings\enablexplr.lc (del /f /q settings\enablexplr.lc) else settings\enablexplr.lc echo Display explorer. Lunar Creators File>settings\enablexplr.lc
+
 goto DisplaySettings
 
 :set_experimental
-if exist settings\experimental.lc del /f /q settings\experimental.lc
-if not exist settings\experimental.lc echo Enable experimental features. Lunar Creators File>settings\experimental.lc
+if exist settings\experimental.lc (del /f /q settings\experimental.lc) else echo Enable experimental features. Lunar Creators File>settings\experimental.lc
 goto DisplaySettings
 
 :set_powershell
