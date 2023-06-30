@@ -1,4 +1,7 @@
 @echo off
+if exist settings\pwshdisable.lc set powershell=false
+if exist settings\pwsh.lc set /p powershell=<settings\pwsh.lc
+if not exist settings\pwshdisable.lc if not exist settings\pwsh.lc set powershell=powershell.exe
 rem Доступные переменные - %filepath% %inputaudio% %encoder% %outputformat% %outputname% %preset% %Profile% %tune% %vidbitrate% %maxbitrate% %audiocodec% %audiotype% %threads% %audiobitrate% %volume% %flags% %SUPERCUSTOMMODE% %outputfolder% %subencoder% %inputsubtitle% %disablevideo% %disableaudio% %disablesubtitles% %framerate% %size%
 rem Конфигурация libx264 - Запрос подраздела кодировщика, пресет кодирования, Выбор профиля, Выбор опции, Изменить разрешение, CBR или CRF битрейт, задать значение, вывод аудио, Выбор кодека или стандартные настройки, задать значение битрейта аудио, Запрос субтитров, дополнительные ключи, Запрос нового имени, Запрос нового формата
 rem %globalredirect% Created for global parameters to specify the goto value at the end
@@ -354,8 +357,9 @@ exit
 :preset_libaom
 title Preset AV1 - FFpepeg script [FFmpeg]
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Select encoder
@@ -423,8 +427,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v %encoder% %preset% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
@@ -435,8 +440,9 @@ goto welcome
 :preset_h265
 title Preset H265/HEVC - FFpepeg script [FFmpeg]
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Select encoder
@@ -495,8 +501,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
@@ -507,8 +514,9 @@ goto welcome
 :preset_h264
 title Preset H264/AVC/MPEG-4 Part 10 - FFpepeg script [FFmpeg]
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Select encoder
@@ -565,8 +573,9 @@ if %encoder%==h264_mf set globalredirect=preset_h26xF&&goto globalthreads
 
 :Preset_gif
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo This preset will create a gif with its own palette of colors
@@ -662,8 +671,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.gif"
 ffmpeg %temp2% %temp4% %filepath% -vf "%temp5%,%temp6%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" %temp7% -y "%outputfolder%\%outputname%.gif"
@@ -689,8 +699,9 @@ goto Preset_gifEncode
 :preset_mpeg4
 title Preset MPEG-4/Xvid - FFpepeg script [FFmpeg]
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Select encoder
@@ -744,8 +755,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.avi"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
@@ -756,8 +768,9 @@ goto welcome
 :preset_mpeg
 title Preset MPEG-1/MPEG-2 - FFpepeg script [FFmpeg]
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Select encoder
@@ -811,8 +824,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mpeg"
 ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
@@ -823,8 +837,9 @@ goto welcome
 :Preset_vp9ts
 title Preset VP9 - FFpepeg script [FFmpeg]
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo --------------------------
@@ -863,8 +878,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.webm"
 ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
@@ -878,8 +894,9 @@ cls
 echo Using many programs, such as Photoshop, you can understand that just changing the letters after the dot is not enough to change the photo format to a supported one. We are here to help
 pause
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 5`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 5`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Select the format to which the file will be converted
@@ -905,8 +922,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 ffmpeg %filepath% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 explorer.exe %outputfolder%
@@ -937,8 +955,9 @@ goto audiopreset_encode
 :audiopreset
 title Audio Converting - FFpepeg script [FFmpeg]
 echo Select Audio or Video File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 2`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 2`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Select the codec to which the file will be converted
@@ -1016,8 +1035,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
@@ -1046,8 +1066,9 @@ if %errorlevel%==4 goto PresetTool_osuoptimize
 :PresetTool_ExtractAll
 title Extract multiple audio streams from video - FFpepeg script [FFmpeg]
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Input filenames prefix (example: lol0 [NOT lol0.mkv!!!])
@@ -1055,8 +1076,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 cls
 color e
 echo Since audio codecs are very different, most need a separate audio container.
@@ -1172,8 +1194,9 @@ if %errorlevel%==2 cls && echo Enter the frame rate (example: 60) && set /p temp
 if %errorlevel%==2 set framerate=-r %temp5%
 
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 color a
 color f
@@ -1182,7 +1205,8 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
@@ -1202,18 +1226,21 @@ if %errorlevel%==1 set osuvideo=false
 if %errorlevel%==2 set osuvideo=true
 cls
 echo Select Output Folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 cls
 echo Select Your Audiofile
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 set temp1=%filepath% -c:a libvorbis -vn -sn -map_metadata -1 -map_chapters -1 -b:a 192K -y "%outputfolder%\OSUBG_Audio.ogg"
 cls
 echo Select Your Background Image
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 5`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 5`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 set temp2=%filepath% -vf scale=-2:1080 -y -strict -2 "%outputfolder%\OSUBG_Image.jpg"
 if %osuvideo%==true goto PresetTool_osuoptimize_Video
@@ -1222,8 +1249,9 @@ goto PresetTool_osuoptimize_Process
 :PresetTool_osuoptimize_Video
 cls
 echo Select Your Background video
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Select Quality
@@ -1264,8 +1292,9 @@ cls
 color f
 rem Ввод имени входящего файла
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 color a
 color f
@@ -1357,8 +1386,9 @@ if %errorlevel%==3 set subencoder=-c:s copy && goto copyLib
 :Conf_Copy_selectSC
 cls
 echo Select Subtitles File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 6`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set temp11=%decode1:?= %
+if exist settings\pwshdisable.lc set /p temp11=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 6`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set temp11=%decode1:?= %
 set inputsubtitle=-i "%temp11%"
 cls
 echo Choose subtitles format
@@ -1393,8 +1423,9 @@ set /p outputformat=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 ffmpeg %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitrate% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
@@ -1462,8 +1493,9 @@ if %errorlevel%==3 goto OptimizeYT_EncodeHDR
 
 :OptimizeYT_faststart
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Input NEW filename (example: lol0 [NOT lol0.mkv!!!])
@@ -1471,8 +1503,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c copy -movflags +faststart "%outputfolder%\%outputname%.mp4"
@@ -1482,8 +1515,9 @@ goto welcome
 
 :OptimizeYT_Encode
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Choose x264 encoding preset
@@ -1603,8 +1637,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
@@ -1637,8 +1672,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
@@ -1649,8 +1685,9 @@ goto welcome
 :OptimizeYT_EncodeHDR
 title Optimizing HDR video for YouTube - FFpepeg script [FFmpeg]
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 cls
 echo Choose x264 encoding preset
@@ -1763,8 +1800,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
@@ -1797,8 +1835,9 @@ set /p outputname=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 explorer.exe %outputfolder%
@@ -1990,8 +2029,9 @@ goto Conf_Custom_Start
 title Input File - FFpepeg script [FFmpeg]
 cls
 echo Input Videofile
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set tempv=%decode1:?= %
+if exist settings\pwshdisable.lc set /p tempv=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 7`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set tempv=%decode1:?= %
 set filepath=-i "%tempv%"
 goto Conf_Custom_Start
 
@@ -2207,8 +2247,9 @@ goto Conf_Custom_Start
 title Input File - FFpepeg script [FFmpeg]
 cls
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set temp6=%decode1:?= %
+if exist settings\pwshdisable.lc set /p temp6=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 1`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set temp6=%decode1:?= %
 set inputaudio=-i "%temp6%"
 goto Conf_Custom_Start
 
@@ -2334,8 +2375,9 @@ goto Conf_Custom_Start
 title Input File - FFpepeg script [FFmpeg]
 cls
 echo Select Input File
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 6`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
-set temp11=%decode1:?= %
+if exist settings\pwshdisable.lc set /p temp11=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 6`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode1=%%a
+if not exist settings\pwshdisable.lc set temp11=%decode1:?= %
 set inputsubtitle=-i "%temp11%"
 goto Conf_Custom_Start
 
@@ -2402,8 +2444,9 @@ set /p outputformat=
 color a
 color f
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set outputfolder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p outputfolder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 cls
 if not novid==%temp1% echo Videocodec: %temp1%, Bitrate: %vidbitrate%, %temp3%x%temp4%, %temp5% FPS
 if novid==%temp1% echo VIDEO DISABLED
@@ -2464,19 +2507,3 @@ if %errorlevel%==7 set threads=-threads 16
 if %errorlevel%==8 set threads=-threads 24
 if %errorlevel%==9 set threads=-threads 32
 goto %globalredirect%
-
-rem НЕРАБОЧАЯ ОБЛАСТЬ -------------------------------------------------------------------------------
-exit
-#:ex
-set /p gnida=
-pause
-echo %gnida%
-pause
-
-#:libvpx-vp9
-ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx-vp9 -crf 8 -an -threads 8 -lag-in-frames 0 -auto-alt-ref 0 -f webm -y "E:\RENDERS\SceneOverlayvp9.webm"
-pause
-
-#:example
-ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -f webm -y "E:\RENDERS\SceneOverlay.webm"
-pause

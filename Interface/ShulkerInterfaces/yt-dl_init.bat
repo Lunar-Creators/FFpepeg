@@ -126,8 +126,9 @@ echo Input video Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set folder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 echo Download thumbnail as a separate file? Y - Yes, N - No
 choice /C YN /N
@@ -156,8 +157,9 @@ echo Input video Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set folder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --retries 5
 explorer.exe %folder%
@@ -170,8 +172,9 @@ echo Input Playlist Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set folder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 echo Create a separate folder for each video? Y - Yes, N - No
 choice /C YN /N
@@ -205,8 +208,9 @@ echo Input Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set folder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 echo Create a separate folder for each video? Y - Yes, N - No
 choice /C YN /N
@@ -240,8 +244,9 @@ echo Input Video/Playlist/Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set folder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestaudio[abr<=?51024]" -x --audio-format mp3 --retries 5 --no-abort-on-error
@@ -255,8 +260,9 @@ echo Input Video/Playlist/Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set folder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s/%%(title)s" --skip-download --write-subs --sub-langs "all" --retries 5 --no-abort-on-error
@@ -270,8 +276,9 @@ echo Input Video/Playlist/Channel Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set folder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]" --retries 5 --no-abort-on-error
@@ -292,8 +299,9 @@ echo Input Video Link
 set /p url=
 cls
 echo select output folder
-for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
-set folder=%decode2:?= %
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 yt-dlp "%url%" --list-formats --skip-download
 echo !!!!!!!!!!!!!!!!!!
