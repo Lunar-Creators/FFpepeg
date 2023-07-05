@@ -147,7 +147,7 @@ if %errorlevel%==2 set subtitles=
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5
-explorer.exe %folder%
+if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
 
@@ -162,7 +162,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --retries 5
-explorer.exe %folder%
+if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
 
@@ -198,7 +198,7 @@ if %errorlevel%==2 set subtitles=
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(playlist_title)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
-explorer.exe %folder%
+if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
 
@@ -234,7 +234,7 @@ if %errorlevel%==2 set subtitles=
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
-explorer.exe %folder%
+if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
 
@@ -250,7 +250,7 @@ if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestaudio[abr<=?51024]" -x --audio-format mp3 --retries 5 --no-abort-on-error
-explorer.exe %folder%
+if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
 
@@ -266,7 +266,7 @@ if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s/%%(title)s" --skip-download --write-subs --sub-langs "all" --retries 5 --no-abort-on-error
-explorer.exe %folder%
+if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
 
@@ -282,7 +282,7 @@ if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]" --retries 5 --no-abort-on-error
-explorer.exe %folder%
+if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
 
@@ -311,6 +311,6 @@ echo Enter the format(s) ID you want
 set /p formats=
 title DOWNLOADING... [YT-DLP]
 yt-dlp "%url%" -o "%folder%/%%(title)s.%%(ext)s" -f "%formats%" --retries 5 --no-abort-on-error
-explorer.exe %folder%
+if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome

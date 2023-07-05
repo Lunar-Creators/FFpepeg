@@ -53,8 +53,6 @@ set globalredirect=
 cls
 color e
 echo --ScriptVersion 0.12 --copyright "Lunar Creators" --ffmpeg.org (N-110014-ga6e9d01f88-20230315)
-echo !!! Each person can have their own usage of this script and ffmpeg in general. 
-echo !!! We can't check all the combinations ourselves. 
 echo !!! If you have a problem, or you want to suggest a preset to add to the menu, please contact us!
 timeout /t 1
 echo WELCOME TO FFMPEG MANAGEMENT SCRIPT!
@@ -434,7 +432,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v %encoder% %preset% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -508,7 +506,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -683,7 +681,7 @@ echo ::::::::::::::::::::
 echo Check the GIF size. Does it match your size limit?
 echo For example, the Discord file size limit is 15MB (Without Nitro)
 echo Do you want to change the settings or continue?
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 choice /c YN /N /m "Y - Continue, N - Change settings"
 if %errorlevel%==2 goto Preset_gifRes
 goto welcome
@@ -762,7 +760,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.avi"
 %ffmpeg% %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -831,7 +829,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mpeg"
 %ffmpeg% %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -885,7 +883,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.webm"
 %ffmpeg% %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -928,7 +926,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 %ffmpeg% %filepath% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1042,7 +1040,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 %ffmpeg% %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1101,7 +1099,7 @@ if %errorlevel%==2 set audiocodec=-c:a libmp3lame -b:a 384K && set outputformat=
 
 title ENCODING [FFmpeg] "%outputfolder%\"
 %ffmpeg% %filepath% -vn -map 0:a:0 %audiocodec% "%outputfolder%\%outputname%_audio0.%outputformat%" -map 0:a:1? %audiocodec% "%outputfolder%\%outputname%_audio1.%outputformat%" -map 0:a:2? %audiocodec% "%outputfolder%\%outputname%_audio2.%outputformat%" -map 0:a:3? %audiocodec% "%outputfolder%\%outputname%_audio3.%outputformat%" -map 0:a:4? %audiocodec% "%outputfolder%\%outputname%_audio4.%outputformat%" -map 0:a:5? %audiocodec% "%outputfolder%\%outputname%_audio5.%outputformat%" -y -strict -2
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1212,7 +1210,7 @@ set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1280,7 +1278,7 @@ cls
 if %osuvideo%==true %ffmpeg% %temp3%
 color a
 echo DONE!
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1430,7 +1428,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 %ffmpeg% %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitrate% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1510,7 +1508,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c copy -movflags +faststart "%outputfolder%\%outputname%.mp4"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1644,7 +1642,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1679,7 +1677,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1807,7 +1805,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
 goto welcome
 
@@ -1841,7 +1839,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 %ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
@@ -2468,7 +2466,7 @@ TIMEOUT /T 5
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 %ffmpeg% %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
-explorer.exe %outputfolder%
+if exist settings\enablexplr.lc explorer.exe %outputfolder%
 color f
 echo ::::::::::::::::::::::::::::::::::::
 title Configure - FFpepeg script [FFmpeg]
