@@ -1,6 +1,6 @@
 @echo off
 rem Available variables: %url% %thumbnail% %descriptions% %subtitles% %thumbpath% %subpath% %folder% %subfolder% %formats%
-yt-dlp --rm-cache-dir
+%ytdlp% --rm-cache-dir
 cls
 color a
 echo Please let us know what features we can add to this tool or what bugs we can fix.
@@ -46,7 +46,7 @@ choice /C DPCHLGEYASFMVR /N
 rem Свободны: (P - if %errorlevel%==2), (C - if %errorlevel%==3)
 
 if %errorlevel%==1 goto DlWith
-if %errorlevel%==4 cls && yt-dlp --help && pause
+if %errorlevel%==4 cls && %ytdlp% --help && pause
 if %errorlevel%==5 goto SUPERCUSTOMMODE
 if %errorlevel%==6 goto git
 if %errorlevel%==7 Ffmpeg_ComandlineInterfaceProject.bat
@@ -78,7 +78,7 @@ if %errorlevel%==3 goto DlChannel
 title FREE CMD
 cls
 echo In this mode you can run your command
-echo (Example: yt-dlp "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -o "%%(uploader)s/%%(title)s" -f "bestvideo+bestaudio/best"
+echo (Example: %ytdlp% "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -o "%%(uploader)s/%%(title)s" -f "bestvideo+bestaudio/best"
 echo Close the window to exit
 echo ----------------------------
 set /p SUPERCUSTOMMODE=
@@ -103,7 +103,7 @@ color e
 echo Input video Link
 set /p url=
 cls
-yt-dlp "%url%" --list-formats --skip-download
+%ytdlp% "%url%" --list-formats --skip-download
 pause
 goto welcome
 
@@ -146,7 +146,7 @@ if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath=
 if %errorlevel%==2 set subtitles=
 cls
 title DOWNLOADING... [YT-DLP]
-yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5
 if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
@@ -161,7 +161,7 @@ if exist settings\pwshdisable.lc set /p folder=
 if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 title DOWNLOADING... [YT-DLP]
-yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --retries 5
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --retries 5
 if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
@@ -197,7 +197,7 @@ if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath=
 if %errorlevel%==2 set subtitles=
 cls
 title DOWNLOADING... [YT-DLP]
-yt-dlp "%url%" -o "%folder%/%%(playlist_title)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
+%ytdlp% "%url%" -o "%folder%/%%(playlist_title)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
 if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
@@ -233,7 +233,7 @@ if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath=
 if %errorlevel%==2 set subtitles=
 cls
 title DOWNLOADING... [YT-DLP]
-yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
 if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
@@ -249,7 +249,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
-yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestaudio[abr<=?51024]" -x --audio-format mp3 --retries 5 --no-abort-on-error
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestaudio[abr<=?51024]" -x --audio-format mp3 --retries 5 --no-abort-on-error
 if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
@@ -265,7 +265,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
-yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s/%%(title)s" --skip-download --write-subs --sub-langs "all" --retries 5 --no-abort-on-error
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s/%%(title)s" --skip-download --write-subs --sub-langs "all" --retries 5 --no-abort-on-error
 if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
@@ -281,7 +281,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
 title DOWNLOADING... [YT-DLP]
-yt-dlp "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]" --retries 5 --no-abort-on-error
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]" --retries 5 --no-abort-on-error
 if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome
@@ -303,14 +303,14 @@ if exist settings\pwshdisable.lc set /p folder=
 if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 if not exist settings\pwshdisable.lc set folder=%decode2:?= %
 cls
-yt-dlp "%url%" --list-formats --skip-download
+%ytdlp% "%url%" --list-formats --skip-download
 echo !!!!!!!!!!!!!!!!!!
 echo Enter the video format that you want to download from the table. The formats are displayed in the ID column and highlighted in green (example: hls-1080p) (example: 337)
 echo In the case of YouTube and some other services, you can download the video+audio format (example: 337+251). ffmpeg will try to merge the formats into 1 file
 echo Enter the format(s) ID you want
 set /p formats=
 title DOWNLOADING... [YT-DLP]
-yt-dlp "%url%" -o "%folder%/%%(title)s.%%(ext)s" -f "%formats%" --retries 5 --no-abort-on-error
+%ytdlp% "%url%" -o "%folder%/%%(title)s.%%(ext)s" -f "%formats%" --retries 5 --no-abort-on-error
 if exist settings\enablexplr.lc explorer.exe %folder%
 pause
 goto welcome

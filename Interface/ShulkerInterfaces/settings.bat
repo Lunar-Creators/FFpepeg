@@ -8,6 +8,8 @@ if exist settings\pwsh.lc set /p set-powershell=<settings\pwsh.lc
 if not exist settings\pwshdisable.lc if not exist settings\pwsh.lc set set-powershell=SYSTEM
 rem ffmpeg package
 if exist settings\ffmpeg.lc (set /p set-ffmpeg=<settings\ffmpeg.lc) else set set-ffmpeg=DEFAULT
+rem ytdlp package
+if exist settings\ytdlp.lc (set /p set-ytdlp=<settings\ytdlp.lc) else set set-ytdlp=DEFAULT
 rem explorer
 if exist settings\enablexplr.lc (set set-explorer=ALWAYS) else set set-explorer=NEVER
 rem Experimental Features
@@ -22,6 +24,8 @@ echo W - FFmpeg package
 echo %set-ffmpeg%
 echo E - Open Output folder after Encoding?
 echo %set-explorer%
+echo R - Yt-DLP package
+echo %set-ytdlp%
 echo O - Enable experimental features
 echo %set-experimental%
 echo P - FFmpeg license
@@ -30,7 +34,7 @@ echo X - Exit
 echo .
 echo M - Reset Defaults
 echo ::::::::::::::::::::::::::
-choice /C QWEOPXM /N
+choice /C QWEOPXMR /N
 
 if %errorlevel%==1 goto set_powershell
 if %errorlevel%==2 goto set_FFmpeg
@@ -39,6 +43,7 @@ if %errorlevel%==4 goto set_experimental
 if %errorlevel%==5 goto set_fflicense
 if %errorlevel%==6 cd ..&run.bat
 if %errorlevel%==7 goto set_reset
+if %errorlevel%==8 goto set_Ytdlp
 goto DisplaySettings
 
 :set_reset
@@ -106,4 +111,20 @@ echo Select FFmpeg executable (ffmpeg.exe)
 for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 8`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 set fftemp=%decode2:?= %
 echo "%fftemp%">settings\ffmpeg.lc
+goto DisplaySettings
+
+:set_Ytdlp
+cls
+echo ::::::::::::::::::::::::::
+echo Q - Default Yt-DLP
+echo X - Set Custom Yt-DLP
+echo E - Return
+echo ::::::::::::::::::::::::::
+choice /C QXE /N
+if %errorlevel%==1 del /f /q settings\ytdlp.lc& goto DisplaySettings
+if %errorlevel%==3 goto DisplaySettings
+echo Select Yt-DLP executable (yt-dlp.exe)
+for /F "usebackq" %%a in (`powershell -executionpolicy bypass -file Get-Path.ps1 8`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+set yttemp=%decode2:?= %
+echo "%yttemp%">settings\ytdlp.lc
 goto DisplaySettings

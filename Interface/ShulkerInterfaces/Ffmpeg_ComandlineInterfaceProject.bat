@@ -3,6 +3,7 @@ if exist settings\pwshdisable.lc set powershell=false
 if exist settings\pwsh.lc set /p powershell=<settings\pwsh.lc
 if not exist settings\pwshdisable.lc if not exist settings\pwsh.lc set powershell=powershell.exe
 if exist settings\ffmpeg.lc (set /p ffmpeg=<settings\ffmpeg.lc) else set ffmpeg=ffmpeg
+if exist settings\ytdlp.lc (set /p ytdlp=<settings\ytdlp.lc) else set ytdlp=yt-dlp
 rem Доступные переменные - %filepath% %inputaudio% %encoder% %outputformat% %outputname% %preset% %Profile% %tune% %vidbitrate% %maxbitrate% %audiocodec% %audiotype% %threads% %audiobitrate% %volume% %flags% %SUPERCUSTOMMODE% %outputfolder% %subencoder% %inputsubtitle% %disablevideo% %disableaudio% %disablesubtitles% %framerate% %size%
 rem Конфигурация libx264 - Запрос подраздела кодировщика, пресет кодирования, Выбор профиля, Выбор опции, Изменить разрешение, CBR или CRF битрейт, задать значение, вывод аудио, Выбор кодека или стандартные настройки, задать значение битрейта аудио, Запрос субтитров, дополнительные ключи, Запрос нового имени, Запрос нового формата
 rem %globalredirect% Created for global parameters to specify the goto value at the end
