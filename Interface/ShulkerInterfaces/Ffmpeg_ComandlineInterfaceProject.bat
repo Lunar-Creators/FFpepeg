@@ -2,6 +2,7 @@
 if exist settings\pwshdisable.lc set powershell=false
 if exist settings\pwsh.lc set /p powershell=<settings\pwsh.lc
 if not exist settings\pwshdisable.lc if not exist settings\pwsh.lc set powershell=powershell.exe
+if exist settings\ffmpeg.lc (set /p ffmpeg=<settings\ffmpeg.lc) else set ffmpeg=ffmpeg
 rem Доступные переменные - %filepath% %inputaudio% %encoder% %outputformat% %outputname% %preset% %Profile% %tune% %vidbitrate% %maxbitrate% %audiocodec% %audiotype% %threads% %audiobitrate% %volume% %flags% %SUPERCUSTOMMODE% %outputfolder% %subencoder% %inputsubtitle% %disablevideo% %disableaudio% %disablesubtitles% %framerate% %size%
 rem Конфигурация libx264 - Запрос подраздела кодировщика, пресет кодирования, Выбор профиля, Выбор опции, Изменить разрешение, CBR или CRF битрейт, задать значение, вывод аудио, Выбор кодека или стандартные настройки, задать значение битрейта аудио, Запрос субтитров, дополнительные ключи, Запрос нового имени, Запрос нового формата
 rem %globalredirect% Created for global parameters to specify the goto value at the end
@@ -92,8 +93,8 @@ goto welcome
 title Free CMD - FFpepeg script [FFmpeg]
 color f
 echo In this mode you can run your command with your flags for ffmpeg
-echo Use this mode if you fully know what you are doing. "ffmpeg -h" for help. 
-echo My working Example: (ffmpeg -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -y "E:\RENDERS\SceneOverlay.webm")
+echo Use this mode if you fully know what you are doing. "%ffmpeg% -h" for help. 
+echo My working Example: (%ffmpeg% -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -y "E:\RENDERS\SceneOverlay.webm")
 echo Close the window to exit or type goto welcome
 :SUPERCUSTOMMODE1
 set /p SUPERCUSTOMMODE=
@@ -120,9 +121,9 @@ echo NOTE! In custom mode, you can enter the help command with your arguments
 choice /C N12345 /N
 
 if %errorlevel%==1 goto welcome
-if %errorlevel%==2 ffmpeg -h && goto helpff
-if %errorlevel%==3 ffmpeg -h long && goto helpff
-if %errorlevel%==4 ffmpeg -h full && goto helpff
+if %errorlevel%==2 %ffmpeg% -h && goto helpff
+if %errorlevel%==3 %ffmpeg% -h long && goto helpff
+if %errorlevel%==4 %ffmpeg% -h full && goto helpff
 if %errorlevel%==5 goto helpselect
 if %errorlevel%==6 goto lhelpselect
 
@@ -155,7 +156,7 @@ if %errorlevel%==8 goto helpff
 :helpselectlib
 cls
 color b
-ffmpeg -%helptype%s
+%ffmpeg% -%helptype%s
 echo Enter the one you are interested in from the list
 echo Enter the one you are interested in from the list
 echo (example: xsub)
@@ -170,7 +171,7 @@ set /p helpname=
 color a
 color f
 cls
-ffmpeg -h %helptype%=%helpname%
+%ffmpeg% -h %helptype%=%helpname%
 pause
 goto helpselect
 
@@ -201,7 +202,7 @@ if %errorlevel%==7 set helptype=protocol
 if %errorlevel%==8 goto helpff
 
 cls
-ffmpeg -%helptype%s
+%ffmpeg% -%helptype%s
 pause
 goto lhelpselect
 
@@ -283,10 +284,10 @@ if directex==git-pwsh explorer.exe https://github.com/PowerShell/PowerShell
 if directex==git-this explorer.exe https://github.com/Lunar-Creators/FFpepeg
 if directex==git-org explorer.exe https://github.com/Lunar-Creators
 if directex==fhelp goto helpff
-if directex==fhelp-list-0 ffmpeg -h && pause
-if directex==fhelp-list-1 ffmpeg -h long && pause
-if directex==fhelp-list-2 ffmpeg -h full && pause
-if directex==fhelp-enc ffmpeg -encoders && pause
+if directex==fhelp-list-0 %ffmpeg% -h && pause
+if directex==fhelp-list-1 %ffmpeg% -h long && pause
+if directex==fhelp-list-2 %ffmpeg% -h full && pause
+if directex==fhelp-enc %ffmpeg% -encoders && pause
 if directex==fhelp-flags set helptype=encoder && goto helpselectlib
 if directex==ffmpeg-custom goto Conf_Custom_Start
 if directex==ffmpeg-extract goto PresetTool_ExtractAll
@@ -318,7 +319,7 @@ if directex==extract goto PresetTool_ExtractAll
 if directex==osu goto PresetTool_osuoptimize
 if directex==upscale goto PresetTool_Upscaling
 if directex==youtube goto OptimizeYT
-if directex==enc ffmpeg -encoders && pause
+if directex==enc %ffmpeg% -encoders && pause
 cls
 goto directexec
 
@@ -432,7 +433,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
-ffmpeg %filepath% -c:v %encoder% %preset% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+%ffmpeg% %filepath% -c:v %encoder% %preset% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -506,7 +507,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
-ffmpeg %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+%ffmpeg% %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -676,7 +677,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.gif"
-ffmpeg %temp2% %temp4% %filepath% -vf "%temp5%,%temp6%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" %temp7% -y "%outputfolder%\%outputname%.gif"
+%ffmpeg% %temp2% %temp4% %filepath% -vf "%temp5%,%temp6%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" %temp7% -y "%outputfolder%\%outputname%.gif"
 color e
 echo ::::::::::::::::::::
 echo Check the GIF size. Does it match your size limit?
@@ -760,7 +761,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.avi"
-ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
+%ffmpeg% %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -829,7 +830,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mpeg"
-ffmpeg %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
+%ffmpeg% %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -883,7 +884,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.webm"
-ffmpeg %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
+%ffmpeg% %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -926,7 +927,7 @@ if exist settings\pwshdisable.lc set /p outputfolder=
 if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
-ffmpeg %filepath% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+%ffmpeg% %filepath% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -1040,7 +1041,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
-ffmpeg %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+%ffmpeg% %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -1099,7 +1100,7 @@ if %errorlevel%==1 set audiocodec=-c:a copy && set outputformat=mka
 if %errorlevel%==2 set audiocodec=-c:a libmp3lame -b:a 384K && set outputformat=mp3
 
 title ENCODING [FFmpeg] "%outputfolder%\"
-ffmpeg %filepath% -vn -map 0:a:0 %audiocodec% "%outputfolder%\%outputname%_audio0.%outputformat%" -map 0:a:1? %audiocodec% "%outputfolder%\%outputname%_audio1.%outputformat%" -map 0:a:2? %audiocodec% "%outputfolder%\%outputname%_audio2.%outputformat%" -map 0:a:3? %audiocodec% "%outputfolder%\%outputname%_audio3.%outputformat%" -map 0:a:4? %audiocodec% "%outputfolder%\%outputname%_audio4.%outputformat%" -map 0:a:5? %audiocodec% "%outputfolder%\%outputname%_audio5.%outputformat%" -y -strict -2
+%ffmpeg% %filepath% -vn -map 0:a:0 %audiocodec% "%outputfolder%\%outputname%_audio0.%outputformat%" -map 0:a:1? %audiocodec% "%outputfolder%\%outputname%_audio1.%outputformat%" -map 0:a:2? %audiocodec% "%outputfolder%\%outputname%_audio2.%outputformat%" -map 0:a:3? %audiocodec% "%outputfolder%\%outputname%_audio3.%outputformat%" -map 0:a:4? %audiocodec% "%outputfolder%\%outputname%_audio4.%outputformat%" -map 0:a:5? %audiocodec% "%outputfolder%\%outputname%_audio5.%outputformat%" -y -strict -2
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -1210,7 +1211,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
-ffmpeg %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
+%ffmpeg% %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -1274,9 +1275,9 @@ goto PresetTool_osuoptimize_Process
 :PresetTool_osuoptimize_Process
 title ENCODING [FFmpeg] "%outputfolder%\"
 cls
-ffmpeg %temp1%
-ffmpeg %temp2%
-if %osuvideo%==true ffmpeg %temp3%
+%ffmpeg% %temp1%
+%ffmpeg% %temp2%
+if %osuvideo%==true %ffmpeg% %temp3%
 color a
 echo DONE!
 explorer.exe %outputfolder%
@@ -1428,7 +1429,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
-ffmpeg %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitrate% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+%ffmpeg% %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitrate% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -1508,7 +1509,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
-ffmpeg %filepath% -c copy -movflags +faststart "%outputfolder%\%outputname%.mp4"
+%ffmpeg% %filepath% -c copy -movflags +faststart "%outputfolder%\%outputname%.mp4"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -1642,7 +1643,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
-ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
+%ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -1677,7 +1678,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
-ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
+%ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -1805,7 +1806,7 @@ if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -ex
 if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
-ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
+%ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
 explorer.exe %outputfolder%
 pause
 goto welcome
@@ -1841,7 +1842,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 explorer.exe %outputfolder%
-ffmpeg %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
+%ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
 pause
 goto welcome
 
@@ -2466,7 +2467,7 @@ echo !!! Starting FFMPEG
 TIMEOUT /T 5
 
 title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
-ffmpeg %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
+%ffmpeg% %filepath% %inputaudio% %inputsubtitle% %encoder% %audiocodec% %subencoder% %vidbitrate% %size% %framerate% %disablevideo% %audiobitrate% %volume% %disableaudio% %threads% %flags% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 explorer.exe %outputfolder%
 color f
 echo ::::::::::::::::::::::::::::::::::::
