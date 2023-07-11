@@ -1,16 +1,18 @@
 @echo off
+:script
 if exist settings\pwshdisable.lc set powershell=false
 if exist settings\pwsh.lc set /p powershell=<settings\pwsh.lc
 if not exist settings\pwshdisable.lc if not exist settings\pwsh.lc set powershell=powershell.exe
 if exist settings\ffmpeg.lc (set /p ffmpeg=<settings\ffmpeg.lc) else set ffmpeg=ffmpeg
 if exist settings\ytdlp.lc (set /p ytdlp=<settings\ytdlp.lc) else set ytdlp=yt-dlp
+%ytdlp% --rm-cache-dir
 rem Доступные переменные - %filepath% %inputaudio% %encoder% %outputformat% %outputname% %preset% %Profile% %tune% %vidbitrate% %maxbitrate% %audiocodec% %audiotype% %threads% %audiobitrate% %volume% %flags% %SUPERCUSTOMMODE% %outputfolder% %subencoder% %inputsubtitle% %disablevideo% %disableaudio% %disablesubtitles% %framerate% %size%
 rem Конфигурация libx264 - Запрос подраздела кодировщика, пресет кодирования, Выбор профиля, Выбор опции, Изменить разрешение, CBR или CRF битрейт, задать значение, вывод аудио, Выбор кодека или стандартные настройки, задать значение битрейта аудио, Запрос субтитров, дополнительные ключи, Запрос нового имени, Запрос нового формата
 rem %globalredirect% Created for global parameters to specify the goto value at the end
 echo Script based on FFmpeg. FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video.
 echo https://ffmpeg.org/
 timeout /t 3
-:welcome
+:welcomeff
 title Main Menu - FFpepeg script (v0.12)
 rem Список для очистки переменных во избежание разных ошибок
 set filepath=
@@ -75,7 +77,7 @@ echo --------------------------
 choice /C YNHECQAXVPTD /N
 
 if %errorlevel%==1 goto preset
-if %errorlevel%==2 goto welcome
+if %errorlevel%==2 goto welcomeff
 if %errorlevel%==3 goto helpff
 if %errorlevel%==4 exit
 if %errorlevel%==5 goto SUPERCUSTOMMODE
@@ -86,7 +88,7 @@ if %errorlevel%==9 yt-dl_init.bat
 if %errorlevel%==10 goto photoformat
 if %errorlevel%==11 goto presetTool
 if %errorlevel%==12 goto directexec
-goto welcome
+goto welcomeff
 
 :SUPERCUSTOMMODE
 title Free CMD - FFpepeg script [FFmpeg]
@@ -94,7 +96,7 @@ color f
 echo In this mode you can run your command with your flags for ffmpeg
 echo Use this mode if you fully know what you are doing. "%ffmpeg% -h" for help. 
 echo My working Example: (%ffmpeg% -i "E:\RENDERS\CONVERT TO WEBM\SceneOverlay.mov" -c:v libvpx -crf 16 -b:v 20000K -an -threads 8 -quality best -lag-in-frames 16 -auto-alt-ref 0 -y "E:\RENDERS\SceneOverlay.webm")
-echo Close the window to exit or type goto welcome
+echo Close the window to exit or type goto welcomeff
 :SUPERCUSTOMMODE1
 set /p SUPERCUSTOMMODE=
 color a
@@ -119,7 +121,7 @@ echo --------------------------
 echo NOTE! In custom mode, you can enter the help command with your arguments
 choice /C N12345 /N
 
-if %errorlevel%==1 goto welcome
+if %errorlevel%==1 goto welcomeff
 if %errorlevel%==2 %ffmpeg% -h && goto helpff
 if %errorlevel%==3 %ffmpeg% -h long && goto helpff
 if %errorlevel%==4 %ffmpeg% -h full && goto helpff
@@ -272,7 +274,7 @@ echo ::::::::::::::::::::::::
 echo ::::::::::::::::::::::::
 echo Use Ctrl+F for search and enter command
 set /p directex=
-if directex==main goto welcome
+if directex==main goto welcomeff
 if directex==ytdl yt-dl_init.bat
 if directex==cmd goto SUPERCUSTOMMODE
 if directex==release explorer.exe https://github.com/Lunar-Creators/FFpepeg/releases
@@ -351,7 +353,7 @@ if %errorlevel%==6 goto Preset_h265
 if %errorlevel%==7 goto Preset_libaom
 if %errorlevel%==8 goto Conf_copy
 if %errorlevel%==9 goto OptimizeYT
-if %errorlevel%==10 goto welcome
+if %errorlevel%==10 goto welcomeff
 exit
 
 :preset_libaom
@@ -435,7 +437,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v %encoder% %preset% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :preset_h265
 title Preset H265/HEVC - FFpepeg script [FFmpeg]
@@ -509,7 +511,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v %encoder% %audiocodec% %threads% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :preset_h264
 title Preset H264/AVC/MPEG-4 Part 10 - FFpepeg script [FFmpeg]
@@ -685,7 +687,7 @@ echo Do you want to change the settings or continue?
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 choice /c YN /N /m "Y - Continue, N - Change settings"
 if %errorlevel%==2 goto Preset_gifRes
-goto welcome
+goto welcomeff
 
 :Preset_gifLoop
 cls
@@ -763,7 +765,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.avi"
 %ffmpeg% %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.avi"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :preset_mpeg
 title Preset MPEG-1/MPEG-2 - FFpepeg script [FFmpeg]
@@ -832,7 +834,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mpeg"
 %ffmpeg% %filepath% %encoder% %audiocodec% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mpeg"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :Preset_vp9ts
 title Preset VP9 - FFpepeg script [FFmpeg]
@@ -886,7 +888,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.webm"
 %ffmpeg% %filepath% -c:v libvpx-vp9 %audiocodec% %vidbitrate% %framerate% -lag-in-frames 0 -auto-alt-ref 0 -y "%outputfolder%\%outputname%.webm"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :photoformat
 title Image Converting - FFpepeg script [FFmpeg]
@@ -929,7 +931,7 @@ if not exist settings\pwshdisable.lc set outputfolder=%decode2:?= %
 %ffmpeg% %filepath% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :audiopreset_wav
 title WAVE AUDIO CONVERTING - FFpepeg script [FFmpeg]
@@ -1043,7 +1045,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 %ffmpeg% %filepath% %audiocodec% %audiobitrate% %samplerate% -vn -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 rem Доступные Инструменты (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
 
@@ -1102,7 +1104,7 @@ title ENCODING [FFmpeg] "%outputfolder%\"
 %ffmpeg% %filepath% -vn -map 0:a:0 %audiocodec% "%outputfolder%\%outputname%_audio0.%outputformat%" -map 0:a:1? %audiocodec% "%outputfolder%\%outputname%_audio1.%outputformat%" -map 0:a:2? %audiocodec% "%outputfolder%\%outputname%_audio2.%outputformat%" -map 0:a:3? %audiocodec% "%outputfolder%\%outputname%_audio3.%outputformat%" -map 0:a:4? %audiocodec% "%outputfolder%\%outputname%_audio4.%outputformat%" -map 0:a:5? %audiocodec% "%outputfolder%\%outputname%_audio5.%outputformat%" -y -strict -2
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :PresetTool_Upscaling
 title Scaling Tool - FFpepeg script [FFmpeg]
@@ -1213,7 +1215,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v libx264 -c:a copy %size% %vidbitrate% %framerate% -y "%outputfolder%\%outputname%.mp4"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :PresetTool_osuoptimize
 cls
@@ -1281,9 +1283,7 @@ color a
 echo DONE!
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
-
-rem Конфигуратор (В РАЗРАБОТКЕ) -------------------------------------------------------------------------------
+goto welcomeff
 
 :configure
 title IN DEVELOPMENT
@@ -1431,7 +1431,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.%outputformat%"
 %ffmpeg% %filepath% %inputsubtitle% %encoder% %audiocodec% %subencoder% %audiobitrate% %disablesubtitles% -y -strict -2 "%outputfolder%\%outputname%.%outputformat%"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 rem КОНФИГУРАЦИЯ H264 -------------------------------------------------------------------------------
 
@@ -1511,7 +1511,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c copy -movflags +faststart "%outputfolder%\%outputname%.mp4"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :OptimizeYT_Encode
 echo Select Input File
@@ -1645,7 +1645,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :OptimizeYT_Encode_Unlimited
 title Optimize Video - Unlimited Bitrate - FFpepeg script [FFmpeg]
@@ -1680,7 +1680,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p -profile:v high -bf 2 -movflags +faststart %threads% "%outputfolder%\%outputname%.mp4"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :OptimizeYT_EncodeHDR
 title Optimizing HDR video for YouTube - FFpepeg script [FFmpeg]
@@ -1808,7 +1808,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 %ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 pause
-goto welcome
+goto welcomeff
 
 :OptimizeYT_EncodeHDR_Unlimited
 title HDR unlimited bitrate - FFpepeg script [FFmpeg]
@@ -1843,7 +1843,7 @@ title ENCODING [FFmpeg] "%outputfolder%\%outputname%.mp4"
 if exist settings\enablexplr.lc explorer.exe %outputfolder%
 %ffmpeg% %filepath% -c:v libx264 %preset% %vidbitrate% -c:a aac %audiobitrate% %audiotype% -pix_fmt yuv420p10le -bf 2 -color_primaries bt2020 -color_trc smpte2084 -colorspace bt2020nc -movflags +faststart %threads% -y "%outputfolder%\%outputname%.mp4"
 pause
-goto welcome
+goto welcomeff
 
 
 rem КОНФИГУРАЦИЯ HEVC -------------------------------------------------------------------------------
@@ -1883,7 +1883,7 @@ pause
 echo Do you want to continue?
 choice /c YN
 if %errorlevel%==1 goto Conf_Custom_Start
-if %errorlevel%==2 goto welcome
+if %errorlevel%==2 goto welcomeff
 
 :Conf_Custom_joke
 color 4
@@ -1911,7 +1911,7 @@ echo Errors are also possible due to various incorrect codec combinations, as we
 pause
 echo Do you want to continue?
 choice /c YN
-if %errorlevel%==2 goto welcome
+if %errorlevel%==2 goto welcomeff
 cls
 color b
 echo And again... Don't say hurtful things to anyone.
@@ -1992,7 +1992,7 @@ if %errorlevel%==12 set disablesubtitles= && set subencoder= && set inputsubtitl
 if %errorlevel%==13 goto Conf_Custom_threads
 if %errorlevel%==14 goto Conf_Custom_flags
 if %errorlevel%==15 set flags= && goto Conf_Custom_Start
-if %errorlevel%==16 goto welcome
+if %errorlevel%==16 goto welcomeff
 if %errorlevel%==17 goto Conf_Custom_Render
 if %errorlevel%==18 goto Conf_Custom_Framerate
 
@@ -2474,10 +2474,327 @@ title Configure - FFpepeg script [FFmpeg]
 echo E - Exit to main menu
 echo Q - Back to configurator
 choice /c EQ
-if %errorlevel%==1 goto welcome
+if %errorlevel%==1 goto welcomeff
 if %errorlevel%==2 goto Conf_Custom_Start
 pause
 exit
+
+rem ### YT-DLP PART
+
+rem Available variables: %url% %thumbnail% %descriptions% %subtitles% %thumbpath% %subpath% %folder% %subfolder% %formats%
+cls
+color a
+echo Please let us know what features we can add to this tool or what bugs we can fix.
+echo Script based on yt-dlp. yt-dlp is a youtube-dl fork based on the now inactive youtube-dlc.
+echo https://github.com/yt-dlp/yt-dlp
+timeout /t 3
+cls
+:welcomedlp
+title Main Menu - FFpepeg script (v0.10)
+color e
+set url=
+set thumbnail=
+set descriptions=
+set subtitles=
+set thumbpath=
+set subpath=
+set folder=
+set subfolder=
+cls
+echo Used Libraries
+echo yt-dlp: A youtube-dl fork with additional features and fixes
+echo FORK FROM: youtube-dl - Command-line program to download videos from YouTube and other video sites
+echo --Script-version 1.4 -stable --copyright "SHULKER Play" --yt-dlp (2022.09.01)
+echo //////////////////////////////
+echo WELCOME TO THE UNIVERSAL VIDEO (or audio and subtitles) DOWNLOADER!
+echo --------------------------
+echo Y - Just Download video for me...
+echo D - Download video/playlist/channel (With optional subtitles or previews or descriptions to download)
+echo V - Download video without audio (Video, Playlist, or Channel)
+echo A - Download Audio only (Video, Playlist, or Channel)
+echo S - Download Subtitles only (Video, Playlist, or Channel)
+echo F - Check all available video bitrates, formats and codecs
+echo R - Download in a specific format (Only for 1 video)
+echo H - yt-dlp Help
+echo L - Command line mode, here you can write a command for yt-dlp yourself
+echo G - Yt-Dlp GitHub
+echo M - List of supported sites
+echo E - Back to ffmpeg
+echo --------------------------
+echo NOTE! If you need to perform various operations, such as changing the codec or format, or adding subtitles and much more, you can use our ffmpeg tool.
+choice /C DPCHLGEYASFMVR /N
+
+rem Свободны: (P - if %errorlevel%==2), (C - if %errorlevel%==3)
+
+if %errorlevel%==1 goto DlWith
+if %errorlevel%==4 cls && %ytdlp% --help && pause
+if %errorlevel%==5 goto SUPERCUSTOMMODE
+if %errorlevel%==6 goto git
+if %errorlevel%==7 Ffmpeg_ComandlineInterfaceProject.bat
+if %errorlevel%==8 goto DlVidOnly
+if %errorlevel%==9 goto DlAudOnly
+if %errorlevel%==10 goto DlSubtitlesOnly
+if %errorlevel%==11 goto getinfo
+if %errorlevel%==12 explorer.exe "yt-dlp_supportedsites.txt"
+if %errorlevel%==13 goto DlVidVid
+if %errorlevel%==14 goto specFormat
+goto welcomedlp
+
+:DlWith
+title Download ... - FFpepeg script [YT-DLP]
+cls
+echo --------------------------
+echo D - Download video (Also choose subtitles or previews or description to download)
+echo P - Download Playlist (Also choose subtitles or previews or description to download)
+echo C - Download All Channel (Also choose subtitles or previews or description to download)
+echo --------------------------
+echo NOTE! If you need to perform various operations, such as changing the codec or format, or adding subtitles and much more, you can use our ffmpeg tool.
+choice /C DPC /N
+
+if %errorlevel%==1 goto Dlvid
+if %errorlevel%==2 goto DlPlaylist
+if %errorlevel%==3 goto DlChannel
+
+:SUPERCUSTOMMODE
+title FREE CMD
+cls
+echo In this mode you can run your command
+echo (Example: %ytdlp% "https://www.youtube.com/watch?v=dQw4w9WgXcQ" -o "%%(uploader)s/%%(title)s" -f "bestvideo+bestaudio/best"
+echo Close the window to exit
+echo ----------------------------
+set /p SUPERCUSTOMMODE=
+color a
+color f
+%SUPERCUSTOMMODE%
+pause
+goto SUPERCUSTOMMODE
+
+:getinfo
+title Formats Info - FFpepeg script [YT-DLP]
+cls
+color c
+echo PLEASE NOTE! Some videos may start downloading instead of just looking at a list of existing formats
+pause
+echo This is not our mistake, we haven't managed to get around it yet...
+pause
+echo Well... If you see a progress bar in percentages, just close the window as soon as possible. Okay?
+pause
+cls
+color e
+echo Input video Link
+set /p url=
+cls
+%ytdlp% "%url%" --list-formats --skip-download
+pause
+goto welcomedlp
+
+:git
+title GitHub - FFpepeg script [YT-DLP]
+cls
+echo --------------------------
+echo L - Gitgub yt-dl
+echo P - Github yt-dlp
+echo --------------------------
+choice /C LP /N
+
+if %errorlevel%==1 explorer.exe "https://github.com/ytdl-org/youtube-dl"
+if %errorlevel%==2 explorer.exe "https://github.com/yt-dlp/yt-dlp"
+goto welcomedlp
+
+:Dlvid
+title Download Video - FFpepeg script [YT-DLP]
+echo Input video Link
+set /p url=
+cls
+echo select output folder
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
+cls
+echo Download thumbnail as a separate file? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set thumbnail= --write-thumbnail && set thumbpath= -o "thumbnail:%folder%/%%(uploader)s/%%(title)s"
+if %errorlevel%==2 set thumbnail=
+cls
+echo Write Descriptions to a .description file? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set descriptions= --write-description
+if %errorlevel%==2 set descriptions=
+cls
+echo Download subtitles? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath= -o "subtitle:%folder%/%%(uploader)s/%%(title)s"
+if %errorlevel%==2 set subtitles=
+cls
+title DOWNLOADING... [YT-DLP]
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5
+if exist settings\enablexplr.lc explorer.exe %folder%
+pause
+goto welcomedlp
+
+:DlVidOnly
+title Download Only Video - FFpepeg script [YT-DLP]
+echo Input video Link
+set /p url=
+cls
+echo select output folder
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
+title DOWNLOADING... [YT-DLP]
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]+bestaudio[abr<=?51024]/best" --retries 5
+if exist settings\enablexplr.lc explorer.exe %folder%
+pause
+goto welcomedlp
+
+:DlPlaylist
+title Download Playlist - FFpepeg script [YT-DLP]
+echo Input Playlist Link
+set /p url=
+cls
+echo select output folder
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
+cls
+echo Create a separate folder for each video? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set subfolder=/%%(title)s.%%(ext)s
+if %errorlevel%==2 set subfolder=
+cls
+echo Download thumbnail as a separate file? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set thumbnail= --write-thumbnail && set thumbpath= -o "thumbnail:%folder%/%%(playlist_title)s/%%(title)s %subfolder%"
+if %errorlevel%==2 set thumbnail=
+cls
+echo Write Descriptions to a .description file? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set descriptions= --write-description
+if %errorlevel%==2 set descriptions=
+cls
+echo Download subtitles? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath= -o "subtitle:%folder%/%%(playlist_title)s/%%(title)s %subfolder%"
+if %errorlevel%==2 set subtitles=
+cls
+title DOWNLOADING... [YT-DLP]
+%ytdlp% "%url%" -o "%folder%/%%(playlist_title)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
+if exist settings\enablexplr.lc explorer.exe %folder%
+pause
+goto welcomedlp
+
+:DlChannel
+title Download Channel - FFpepeg script [YT-DLP]
+echo Input Channel Link
+set /p url=
+cls
+echo select output folder
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
+cls
+echo Create a separate folder for each video? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set subfolder=/%%(title)s.%%(ext)s
+if %errorlevel%==2 set subfolder=
+cls
+echo Download thumbnail as a separate file? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set thumbnail= --write-thumbnail && set thumbpath= -o "thumbnail:%folder%/%%(uploader)s/%%(title)s %subfolder%"
+if %errorlevel%==2 set thumbnail=
+cls
+echo Write Descriptions to a .description file? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set descriptions= --write-description
+if %errorlevel%==2 set descriptions=
+cls
+echo Download subtitles? Y - Yes, N - No
+choice /C YN /N
+if %errorlevel%==1 set subtitles= --write-subs --sub-langs "all" && set subpath= -o "subtitle:%folder%/%%(uploader)s/%%(title)s %subfolder%"
+if %errorlevel%==2 set subtitles=
+cls
+title DOWNLOADING... [YT-DLP]
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s %subfolder%" %subpath% %thumbpath% -f "bestvideo[height<=?8401]+bestaudio[abr<=?1024]/best" %subtitles% %thumbnail% %descriptions% --retries 5 --no-abort-on-error
+if exist settings\enablexplr.lc explorer.exe %folder%
+pause
+goto welcomedlp
+
+:DlAudOnly
+title Download Audio Only - FFpepeg script [YT-DLP]
+echo Input Video/Playlist/Channel Link
+set /p url=
+cls
+echo select output folder
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
+cls
+title DOWNLOADING... [YT-DLP]
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestaudio[abr<=?51024]" -x --audio-format mp3 --retries 5 --no-abort-on-error
+if exist settings\enablexplr.lc explorer.exe %folder%
+pause
+goto welcomedlp
+
+:DlSubtitlesOnly
+title Download Subtitles Only - FFpepeg script [YT-DLP]
+echo Input Video/Playlist/Channel Link
+set /p url=
+cls
+echo select output folder
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
+cls
+title DOWNLOADING... [YT-DLP]
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s/%%(title)s" --skip-download --write-subs --sub-langs "all" --retries 5 --no-abort-on-error
+if exist settings\enablexplr.lc explorer.exe %folder%
+pause
+goto welcomedlp
+
+:DlVidVid
+title Download Video Without Audio - FFpepeg script [YT-DLP]
+echo Input Video/Playlist/Channel Link
+set /p url=
+cls
+echo select output folder
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
+cls
+title DOWNLOADING... [YT-DLP]
+%ytdlp% "%url%" -o "%folder%/%%(uploader)s/%%(title)s.%%(ext)s" -f "bestvideo[height<=?8401]" --retries 5 --no-abort-on-error
+if exist settings\enablexplr.lc explorer.exe %folder%
+pause
+goto welcomedlp
+
+:specFormat
+title CUSTOM FORMAT - FFpepeg script [YT-DLP]
+cls
+color c
+echo For some sites, this tool may not work. In this case, use the usual tools. 
+echo The Library supports a lot of sites and we are not able to check them all. See the list of supported sites in the main menu
+pause
+cls
+color e
+echo Input Video Link
+set /p url=
+cls
+echo select output folder
+if exist settings\pwshdisable.lc set /p folder=
+if not exist settings\pwshdisable.lc for /F "usebackq" %%a in (`%powershell% -executionpolicy bypass -file Get-Path.ps1 3`) do if not "%%a" == "Cancel" if not "%%a" == "OK" set decode2=%%a
+if not exist settings\pwshdisable.lc set folder=%decode2:?= %
+cls
+%ytdlp% "%url%" --list-formats --skip-download
+echo !!!!!!!!!!!!!!!!!!
+echo Enter the video format that you want to download from the table. The formats are displayed in the ID column and highlighted in green (example: hls-1080p) (example: 337)
+echo In the case of YouTube and some other services, you can download the video+audio format (example: 337+251). ffmpeg will try to merge the formats into 1 file
+echo Enter the format(s) ID you want
+set /p formats=
+title DOWNLOADING... [YT-DLP]
+%ytdlp% "%url%" -o "%folder%/%%(title)s.%%(ext)s" -f "%formats%" --retries 5 --no-abort-on-error
+if exist settings\enablexplr.lc explorer.exe %folder%
+pause
+goto welcomedlp
 
 rem GLOBAL FUNCTIONS -------------------------------------------------------------------------------
 :globalthreads

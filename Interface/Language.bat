@@ -17,8 +17,8 @@ if %errorlevel%==3 goto DlLang
 goto start
 
 :English
-if not exist "ShulkerInterfaces\Lang\en-us.7z" goto DlLang
-ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\Lang\en-us.7z"
+if not exist "LunarTools\Lang\en-us.7z" goto DlLang
+LunarTools\7z\7za.exe x -scrcSHA256 -y -bt "LunarTools\Lang\en-us.7z"
 color a
 echo .
 echo .
@@ -28,8 +28,8 @@ pause
 exit
 
 :Russian
-if not exist "ShulkerInterfaces\Lang\ru-ru.7z" goto DlLang
-ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\Lang\ru-ru.7z"
+if not exist "LunarTools\Lang\ru-ru.7z" goto DlLang
+LunarTools\7z\7za.exe x -scrcSHA256 -y -bt "LunarTools\Lang\ru-ru.7z"
 color a
 echo .
 echo .
@@ -40,9 +40,9 @@ exit
 
 :DlLang
 echo Updating Language files
-powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/871xrbnckqts0zw/LangW10.7z?dl=1','%~p0\ShulkerInterfaces\LangW10.7z')
-if not exist "ShulkerInterfaces\LangW10.7z" goto DoError
-ShulkerInterfaces\7z\7za.exe x -scrcSHA256 -y -bt "ShulkerInterfaces\LangW10.7z"
+powershell.exe -Command (new-object System.Net.WebClient).DownloadFile('https://www.dropbox.com/s/871xrbnckqts0zw/LangW10.7z?dl=1','%~p0\LunarTools\LangW10.7z')
+if not exist "LunarTools\LangW10.7z" goto DoError
+LunarTools\7z\7za.exe x -scrcSHA256 -y -bt "LunarTools\LangW10.7z"
 echo .
 echo .
 echo .
