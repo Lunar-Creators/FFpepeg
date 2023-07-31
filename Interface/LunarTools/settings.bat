@@ -10,6 +10,9 @@ rem ffmpeg package
 if exist settings\ffmpeg.lc (set /p set-ffmpeg=<settings\ffmpeg.lc) else set set-ffmpeg=DEFAULT
 rem ytdlp package
 if exist settings\ytdlp.lc (set /p set-ytdlp=<settings\ytdlp.lc) else set set-ytdlp=DEFAULT
+rem LANG
+if exist settings\lang.lcl set set-lang=English
+if exist settings\langru.lcl set set-lang=Russian
 rem explorer
 if exist settings\enablexplr.lc (set set-explorer=ALWAYS) else set set-explorer=NEVER
 rem Experimental Features
@@ -26,6 +29,8 @@ echo E - Open Output folder after Encoding?
 echo %set-explorer%
 echo R - Yt-DLP package
 echo %set-ytdlp%
+echo L - Language (Does not affect this menu)
+echo %set-lang%
 echo O - Enable experimental features
 echo %set-experimental%
 echo P - FFmpeg license
@@ -34,7 +39,7 @@ echo X - Exit
 echo .
 echo M - Reset Defaults
 echo ::::::::::::::::::::::::::
-choice /C QWEOPXMR /N
+choice /C QWEOPXMRL /N
 
 if %errorlevel%==1 goto set_powershell
 if %errorlevel%==2 goto set_FFmpeg
@@ -44,6 +49,7 @@ if %errorlevel%==5 goto set_fflicense
 if %errorlevel%==6 cd ..&run.bat
 if %errorlevel%==7 goto set_reset
 if %errorlevel%==8 goto set_Ytdlp
+if %errorlevel%==9 goto set_lang
 goto DisplaySettings
 
 :set_reset
@@ -54,6 +60,19 @@ md settings
 echo Lunar Creators File>settings\valid.lc
 echo FFmpeg License. Lunar Creators File>settings\default.lcx
 echo Display explorer. Lunar Creators File>settings\enablexplr.lc
+echo Lunar Creators Language File>settings\lang.lcl
+goto DisplaySettings
+
+:set_lang
+cls
+echo ::::::::::::::::::::::::::
+echo Q - English (Default)
+echo X - Russian
+echo E - Return
+echo ::::::::::::::::::::::::::
+choice /C QXE /N
+if %errorlevel%==1 del /f /q settings\*.lcl& echo Lunar Creators Language File>settings\lang.lcl
+if %errorlevel%==2 del /f /q settings\*.lcl& echo Lunar Creators Language File>settings\langru.lcl
 goto DisplaySettings
 
 :set_fflicense

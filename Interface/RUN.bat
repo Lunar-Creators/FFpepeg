@@ -63,17 +63,14 @@ color e
 echo I hope you like our tools
 echo "<3" (YUKO 1.0) - Press "R" to check lastest release
 echo ::::::::::::::::::::::::::
-echo F : Start FFmpeg Interface
-echo D : Start Multiplatform Video Downloader
+echo F : START
 echo G : Our GitHub
 echo C : Credits
 echo S : Settings
-echo L : Change Language
 echo ::::::::::::::::::::::::::
 choice /C FDGCRLS /N
 
-if %errorlevel%==1 cd LunarTools && Ffmpeg_ComandlineInterfaceProject.bat
-if %errorlevel%==2 cd LunarTools && yt-dl_init.bat
+if %errorlevel%==1 cd LunarTools && if exist settings\lang.lcl YUKO.bat& if exist settings\langru.lcl YUKO_ru.bat
 if %errorlevel%==3 explorer.exe "https://github.com/Lunar-Creators/FFpepeg"
 if %errorlevel%==4 goto Credits
 if %errorlevel%==5 explorer.exe "https://github.com/Lunar-Creators/FFpepeg/releases"
