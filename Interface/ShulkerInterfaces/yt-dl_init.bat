@@ -9,7 +9,7 @@ echo https://github.com/yt-dlp/yt-dlp
 timeout /t 3
 cls
 :welcome
-title Main Menu - FFpepeg script (v0.10)
+title Main Menu - FFpepeg script (v0.12)
 color e
 set url=
 set thumbnail=
@@ -23,7 +23,7 @@ cls
 echo Used Libraries
 echo yt-dlp: A youtube-dl fork with additional features and fixes
 echo FORK FROM: youtube-dl - Command-line program to download videos from YouTube and other video sites
-echo --Script-version 1.4 -stable --copyright "SHULKER Play" --yt-dlp (2022.09.01)
+echo --Script-version 1.4 -stable --copyright "SHULKER Play" --yt-dlp (2023.10.13)
 echo //////////////////////////////
 echo WELCOME TO THE UNIVERSAL VIDEO (or audio and subtitles) DOWNLOADER!
 echo --------------------------

@@ -137,7 +137,7 @@ exit
 cls
 color e
 echo I hope you like our tools
-echo "<3" (Release 0.12 extps) - Click "R" to check lastest release
+echo "<3" (Release 0.12.0.1 extps) - Click "R" to check lastest release
 echo _______  _______  _______  _______  _______  _______  _______ 
 echo (  ____ \(  ____ \(  ____ )(  ____ \(  ____ )(  ____ \(  ____ \
 echo : (    \/: (    \/: (    ):: (    \/: (    ):: (    \/: (    \/
@@ -152,16 +152,15 @@ echo F : Start FFmpeg Interface
 echo D : Start Multiplatform Video Downloader (STABLE!)
 echo G : Our GitHub
 echo C : Credits
-echo L : Change Language
+echo (v0.12.0.1 has only one Language)
 echo ::::::::::::::::::::::::::
-choice /C FDGCRL /N
+choice /C FDGCR /N
 
 if %errorlevel%==1 cd ShulkerInterfaces && Ffmpeg_ComandlineInterfaceProject.bat
 if %errorlevel%==2 cd ShulkerInterfaces && yt-dl_init.bat
 if %errorlevel%==3 explorer.exe "https://github.com/Lunar-Creators/FFpepeg"
 if %errorlevel%==4 goto Credits
 if %errorlevel%==5 explorer.exe "https://github.com/Lunar-Creators/FFpepeg/releases"
-if %errorlevel%==6 Language.bat
 goto start
 
 :Credits
